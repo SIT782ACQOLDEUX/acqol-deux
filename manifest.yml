@@ -1,0 +1,10 @@
+applications:
+  - path: .
+    name: acqol-deux
+    environment_json: {}
+    memory: 1024M
+    instances: 1
+    disk_quota: 1024M
+    services:
+      - availability-monitoring-auto
+      - acqol-deux-cloudantNoSQLDB
