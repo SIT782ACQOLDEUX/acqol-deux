@@ -9,7 +9,7 @@ Related documents should submit into /documents folder
 
 FOR DESIGNERS
 --------------------------------------------------------------------------------
-The designers should submit their designs into /documents folder.
+The designers should submit their designs into /designs folder.
 <br>
 
 FOR FRONT END DEVELOPERS
