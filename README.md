@@ -1,16 +1,46 @@
-# Node.js Cloudant Sample
+DEAKIN SIT 782 2018 #ACQOL-DEUX PROJECT
+================================================================================
 
-This application demonstrates how to use the Bluemix Cloudant NoSQL DB service.  It helps users organize their favorite files. The UI talks to a RESTful Express CRUD backend API.
 
-[![Deploy to Bluemix](https://bluemix.net/deploy/button.png)](https://bluemix.net/deploy?repository=https://github.com/IBM-Bluemix/nodejs-cloudant)
+FOR TEAM LEADER
+--------------------------------------------------------------------------------
+Related documents should submit into /documents folder
+<br>
 
-## Run the app locally
+FOR DESIGNERS
+--------------------------------------------------------------------------------
+The designers should submit their designs into /documents folder.
+<br>
 
-1. [Install Node.js][]
-+ cd into this project's root directory
-+ Copy the value for the VCAP_SERVICES envirionment variable from the application running in Bluemix and paste it in a `vcap-local.json` file
-+ Run `npm install` to install the app's dependencies
-+ Run `npm start` to start the app
-+ Access the running app in a browser at <http://localhost:3000>
+FOR FRONT END DEVELOPERS
+--------------------------------------------------------------------------------
+The front end developers should focus on /public folder
+<b>
+Please report backend developers if:
+  <br>
+  you need additional url path components (for example, www.xxx.com.au/path),
+  <br>
+  you need additioanl query components (for example, www.xxx.com.au/post?key1=value1&key2=value2)
+  <br>
+</b>
+Be sure to test the HTML/CSS/JS files before submit the changes in master branch. 
+<br>
+Any error within the html file will also be submitted to server unconditionally.
 
-[Install Node.js]: https://nodejs.org/en/download/
+<br>
+
+FOR BACK END DEVELOPERS
+--------------------------------------------------------------------------------
+Be sure to test the JS files before submit the changes in master branch. <br>
+Any error within the JS file will also be submitted to server unconditionally, this may break the whole progress and shutdown the current server instance.
+
+<br>
+
+CREATE YOUR COPY FROM THIS FORK
+--------------------------------------------------------------------------------
+
+Click the button below to deploy this app.
+
+[![Deploy to Bluemix](https://bluemix.net/deploy/button.png)](https://bluemix.net/deploy)
+
+
