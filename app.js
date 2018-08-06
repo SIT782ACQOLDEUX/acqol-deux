@@ -9,6 +9,23 @@ var express = require('express'),
     path = require('path'),
     fs = require('fs');
 
+/////////////////////////////DATEBASE//////////////////////////////////////
+/* ADD MYSQL DB CONNECTION  WEI 07/08/2018*/
+var mysql = require('mysql');
+var con = mysql.createConnection({
+    host: "sl-us-south-1-portal.31.dblayer.com",
+    port: "52296",
+    user: "admin",
+    password: "EKTWRTIPDMTCEDLI"
+});
+
+con.connect(function(err) {
+    if (err) throw err;
+    console.log("Connected!");
+});
+
+///////////////////////////////////////////////////////////////////////////
+
 var app = express();
 
 var db;
