@@ -7,9 +7,10 @@ var express = require('express'),
     user = require('./routes/user'),
     http = require('http'),
     path = require('path'),
-    fs = require('fs');
-    csv = require('fast-csv'); //Required for CSV Upload
-    multer = require('multer'); //Required for CSV Upload
+    fs = require('fs'),
+    csv = require('fast-csv'), //Required for CSV Upload
+    multer = require('multer'), //Required for CSV Upload
+    upload = multer({dest: 'tmp/csv/'}); //Required for CSV Upload
 
 /////////////////////////////DATEBASE//////////////////////////////////////
 /* ADD MYSQL DB CONNECTION  WEI 07/08/2018*/
