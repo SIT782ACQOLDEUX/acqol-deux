@@ -8,21 +8,25 @@ var express = require('express'),
     http = require('http'),
     path = require('path'),
     fs = require('fs');
+    csv = require('fast-csv'); //Required for CSV Upload
+    multer = require('multer'); //Required for CSV Upload
 
 /////////////////////////////DATEBASE//////////////////////////////////////
 /* ADD MYSQL DB CONNECTION  WEI 07/08/2018*/
+/*Edited var con to connection and added use acqol DB ANSLEY 08/08/2018*/
 var mysql = require('mysql');
-var con = mysql.createConnection({
+var connection = mysql.createConnection({
     host: "sl-us-south-1-portal.31.dblayer.com",
     port: "52296",
     user: "admin",
-    password: "EKTWRTIPDMTCEDLI"
+    password: "EKTWRTIPDMTCEDLI",
+    database: 'acqol'
 });
 
-con.connect(function(err) {
-    if (err) throw err;
-    console.log("Connected!");
-});
+//con.connect(function(err) {
+   // if (err) throw err;
+   // console.log("Connected!");
+//});
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -155,6 +159,69 @@ var saveDocument = function(id, name, value, response) {
     });
 
 }
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/* ADD CSV UPLOAD TO MYSQL  ANSLEY 08/08/2018*/
+
+app.post('/upload', upload.single('file'), function (request, response,next) {
+  
+    //var stream = csv.fromPath(request.file.path);
+    var stream = fs.createReadStream(request.file.path);
+    var fileRows = [];
+
+    let csvStream = csv
+     .parse()
+     //.format({headers: true,ignoreEmpty:true, delimiter: ',',objectMode: true, includeEndRowDelimiter:true})
+    //.fromStream(stream, {headers: false,ignoreEmpty:true, delimiter: ',', includeEndRowDelimiter:true})
+     // .fromStream(stream, {headers: ["survey","intro_consent","ID","Xsect_ID","gender","age","agegrp","alone32","partner32","children32","parents32","other32","hhold32","relationc32","workc32","workpt32","workvol32","studypt32","ptcas32","ptsemret32","unempl32","empldec32","paidempstat32","volstatus32","studystat32","ftwork32","seekwork32","ftseekwk32","incomeb32","postcode","partic","lifesate32","s1mate32","s2heae32","s3proe32","s4inte32","s5safe32","s6come32","s7sece32","austlifee32","a1ecoe32","a2enve32","a3soce32","a4gove32","a5buse32","a6nate32","le01b32","le02c32","attack1a32","attack2c32","livingarr32","rentown32","rentamount32","rentdist32","mortgamount32","mortgdist32"]})
+      .on("data", function (data) {
+            fileRows.push(data); // push each row
+      })
+      .on("end", function () {
+        
+        console.log('Array: '+ fileRows);
+        //fileRows.shift();
+
+        connection.connect((error) => {
+            if (error) {
+                console.error('MySQL connection error'+ error);
+            } else {
+        try {
+                let deletequery= 'delete from survey32'; //Not sure if we want to delete and upload from scratch 
+               connection.query(deletequery, (error, result) => {
+                    console.log('Delete Error log: ' + error)
+                    console.log('Delete Result log ' + result);
+                    });
+        
+        }
+        catch(err) {
+        }   
+        
+        try {       
+                let query = 'INSERT INTO survey32 (survey,intro_consent,ID,Xsect_ID,gender,age,agegrp,alone32,partner32,children32,parents32,other32,hhold32,relationc32,workc32,workpt32,workvol32,studypt32,ptcas32,ptsemret32,unempl32,empldec32,paidempstat32,volstatus32,studystat32,ftwork32,seekwork32,ftseekwk32,incomeb32,postcode,partic,lifesate32,s1mate32,s2heae32,s3proe32,s4inte32,s5safe32,s6come32,s7sece32,austlifee32,a1ecoe32,a2enve32,a3soce32,a4gove32,a5buse32,a6nate32,le01b32,le02c32,attack1a32,attack2c32,livingarr32,rentown32,rentamount32,rentdist32,mortgamount32,mortgdist32) values ?' ;
+                connection.query(query,[fileRows], (error, result) => {
+                    console.log(error || result);
+                    if (error != null) {
+                        response.send('Failed to upload data, please ensure the columns and rows are correct');
+                        response.end();
+                    }
+                    else if (error == null){
+                        response.send('CSV has been uploaded successfully with ' + result.affectedRows + ' affected rows');
+                        response.end();
+                    }
+                }); 
+            }
+        catch(err) {
+        }
+        connection.end();
+            }
+        });
+}); 
+      stream.pipe(csvStream);
+      fs.unlinkSync(request.file.path);   // remove temp file
+     });
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 app.get('/api/favorites/attach', function(request, response) {
     var doc = request.query.id;
