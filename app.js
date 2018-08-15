@@ -16,13 +16,14 @@ var express = require('express'),
 /* ADD MYSQL DB CONNECTION  WEI 07/08/2018*/
 /*Edited var con to connection and added use acqol DB ANSLEY 08/08/2018*/
 var mysql = require('mysql');
-var connection = mysql.createConnection({
+var con = mysql.createConnection({
     host: "sl-us-south-1-portal.31.dblayer.com",
     port: "52296",
     user: "admin",
     password: "EKTWRTIPDMTCEDLI",
     database: 'acqol'
 });
+con.connect();
 
 //con.connect(function(err) {
    // if (err) throw err;
@@ -34,7 +35,9 @@ var connection = mysql.createConnection({
 var app = express();
 
 var db;
-
+app.set('view engine', 'html');
+app.engine('html', ejs.renderFile);
+app.set('views', 'public');
 var cloudant;
 
 var fileToUpload;
@@ -111,6 +114,140 @@ function initDBConnection() {
 }
 
 initDBConnection();
+
+//Encryption
+
+var encrypt = require('./library/encryption');
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+ * @Routes
+ */
+/*
+*  Login Part
+*  Note: The default backend should check session status, if fail (unlogin), then should go to here.
+* */
+app.get("/login", function (request, response) {
+    response.sendFile(__dirname + '/public/backend/login.html');
+});
+
+app.post('/loginsubmit', function (req, res) {
+    //Check the db if login confirmed
+    //1. Get rid of BS submit
+    //2. Return
+    //console.log(req.body.username);
+    if (req.body.constructor === Object && Object.keys(req.body).length === 0) {
+        res.sendFile(__dirname + '/public/backend/login.html');
+    }
+    var username = req.body.username;
+    var password = encrypt.sha1hash(req.body.password);
+
+        con.query('SELECT * from user WHERE username = \"' + username + '\" AND password = \"' + password + '\"', function (err, rows, fields) {
+            if (!err) {
+                console.log(rows[0]);
+                if (rows.length > 0 && rows[0].username === username) {
+                    //Login fine
+                    var username = username;
+                    var dateofbirth = rows[0].dateofbirth;
+                    var phoneno = rows[0].phoneno;
+                    var email = rows[0].email;
+
+                    res.render(__dirname + '/public/backend/dashboard.html', {
+                        username: username,
+                        dateofbirth: dateofbirth,
+                        phoneno: phoneno,
+                        email: email
+                    });
+                }
+                else {
+                    //Fail
+                    res.render(__dirname + '/public/backend/login.html');
+                }
+            }
+            else {
+                //ERROR
+                res.render(__dirname + '/public/backend/login.html');
+            }
+        });
+
+});
+
+/*
+*  Register Part
+*  Note: The default backend should check session status, if fail (unlogin), then should go to here.
+* */
+
+app.get("/register", function (request, response) {
+    response.sendFile(__dirname + '/public/backend/register.html');
+});
+
+app.post('/registersubmit', function (req, res) {
+    //Check the db if register confirmed
+    //1. Get rid of BS submit
+    //2. Get check existed
+    //3. Register
+    if (req.body.constructor === Object && Object.keys(req.body).length === 0) {
+        res.sendFile(__dirname + '/public/backend/register.html');
+    }
+    //Register type: 0 means patient and 1 means doctor
+
+
+    //General Information
+    var firstname = req.body.firstname;
+    var lastname = req.body.lastname;
+
+    var dateofbirth = req.body.dateofbirth;
+    var phoneno = req.body.phoneno;
+    //For later login
+    var username = req.body.username;
+    var password = encrypt.sha1hash(req.body.password);
+    var email = req.body.email;
+
+        con.query('SELECT * from patients WHERE username = \"' + username + '\" OR email = \"' + email + '\"', function (err, rows, fields) {
+            if (!err) {
+                console.log(rows);
+                if (rows.length > 0) {
+                    //duplicate username
+                    res.sendFile(__dirname + '/public/backend/login.html');
+                }
+                else {
+                    //INSERT INTO patients (phoneno, email, username, password)
+                    // VALUES (value1, value2, value3,...)
+                    con.query("INSERT INTO users (username,password,firstname,lastname," +
+                        "dateofbirth,phoneno,email) VALUES ('" + username + "','" + password + "','" + firstname + "','" +
+                        lastname + "','"  + dateofbirth + "','" + phoneno + "','" + email + "')",
+                        function (err, rows, fields) {
+                            if (!err) {
+                                console.log(rows[0]);
+                                if (rows.length > 0 && rows[0].username === username) {
+                                    //Login fine
+                                    res.sendFile(__dirname + '/public/backend/dashboard.html');
+                                }
+                                else {
+                                    //Fail
+                                    res.sendFile(__dirname + '/public/backend/register.html');
+                                }
+                            }
+                            else {
+                                //ERROR
+                                res.sendFile(__dirname + '/public/backend/register.html');
+                            }
+                        });
+                }
+            }
+            else {
+                //ERROR
+                console.log(err);
+                res.sendFile(__dirname + '/public/backend/register.html');
+            }
+        });
+
+});
+
+app.get("/dashboard", function (request, response) {
+    response.sendFile(__dirname + '/public/backend/dashboard.html');
+});
+
 
 app.get('/', routes.index);
 
