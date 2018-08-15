@@ -1,7 +1,15 @@
 /**
+ * @file app.js
+ * #ACQOL-DEUX project core service
+ *
+ */
+//////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+ * @dependencies
+ */
+/**
  * Module dependencies.
  */
-
 var express = require('express'),
     routes = require('./routes'),
     user = require('./routes/user'),
@@ -11,8 +19,14 @@ var express = require('express'),
     csv = require('fast-csv'), //Required for CSV Upload
     multer = require('multer'), //Required for CSV Upload
     upload = multer({dest: 'tmp/csv/'}); //Required for CSV Upload
+//HTML Render engine
+var ejs = require('ejs');
 
 /////////////////////////////DATEBASE//////////////////////////////////////
+/**
+ * @DATEBASE
+ *
+ */
 /* ADD MYSQL DB CONNECTION  WEI 07/08/2018*/
 /*Edited var con to connection and added use acqol DB ANSLEY 08/08/2018*/
 var mysql = require('mysql');
@@ -25,34 +39,32 @@ var con = mysql.createConnection({
 });
 con.connect();
 
-//con.connect(function(err) {
-   // if (err) throw err;
-   // console.log("Connected!");
-//});
-
+var db;
+var cloudant;
+var fileToUpload;
 ///////////////////////////////////////////////////////////////////////////
 
+
+/**
+ * @Expressvalues
+ *
+ */
 var app = express();
-
-var db;
-app.set('view engine', 'html');
-app.engine('html', ejs.renderFile);
-app.set('views', 'public');
-var cloudant;
-
-var fileToUpload;
+var bodyParser = require('body-parser');
+var methodOverride = require('method-override');
+var logger = require('morgan');
+var errorHandler = require('errorhandler');
+var multipart = require('connect-multiparty');
+var multipartMiddleware = multipart();
 
 var dbCredentials = {
     dbName: 'my_sample_db'
 };
 
-var bodyParser = require('body-parser');
-var methodOverride = require('method-override');
-var logger = require('morgan');
-var errorHandler = require('errorhandler');
-var multipart = require('connect-multiparty')
-var multipartMiddleware = multipart();
-
+/**
+ * @Configuration
+ *
+ */
 // all environments
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/public');
@@ -72,6 +84,11 @@ if ('development' == app.get('env')) {
     app.use(errorHandler());
 }
 
+
+/**
+ * @CloudAntDB
+ *
+ */
 function getDBCredentialsUrl(jsonData) {
     var vcapServices = JSON.parse(jsonData);
     // Pattern match to find the first instance of a Cloudant service in
@@ -104,7 +121,7 @@ function initDBConnection() {
     cloudant = require('cloudant')(dbCredentials.url);
 
     // check if DB exists if not create
-    cloudant.db.create(dbCredentials.dbName, function(err, res) {
+    cloudant.db.create(dbCredentials.dbName, function (err, res) {
         if (err) {
             console.log('Could not create new db: ' + dbCredentials.dbName + ', it might already exist.');
         }
@@ -115,8 +132,10 @@ function initDBConnection() {
 
 initDBConnection();
 
-//Encryption
-
+/**
+ * @Encryption
+ *
+ */
 var encrypt = require('./library/encryption');
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -142,33 +161,33 @@ app.post('/loginsubmit', function (req, res) {
     var username = req.body.username;
     var password = encrypt.sha1hash(req.body.password);
 
-        con.query('SELECT * from user WHERE username = \"' + username + '\" AND password = \"' + password + '\"', function (err, rows, fields) {
-            if (!err) {
-                console.log(rows[0]);
-                if (rows.length > 0 && rows[0].username === username) {
-                    //Login fine
-                    var username = username;
-                    var dateofbirth = rows[0].dateofbirth;
-                    var phoneno = rows[0].phoneno;
-                    var email = rows[0].email;
+    con.query('SELECT * from user WHERE username = \"' + username + '\" AND password = \"' + password + '\"', function (err, rows, fields) {
+        if (!err) {
+            console.log(rows[0]);
+            if (rows.length > 0 && rows[0].username === username) {
+                //Login fine
+                //var username = username;
+                var dateofbirth = rows[0].dateofbirth;
+                var phoneno = rows[0].phoneno;
+                var email = rows[0].email;
 
-                    res.render(__dirname + '/public/backend/dashboard.html', {
-                        username: username,
-                        dateofbirth: dateofbirth,
-                        phoneno: phoneno,
-                        email: email
-                    });
-                }
-                else {
-                    //Fail
-                    res.render(__dirname + '/public/backend/login.html');
-                }
+                res.render(__dirname + '/public/backend/dashboard.html', {
+                    username: username,
+                    dateofbirth: dateofbirth,
+                    phoneno: phoneno,
+                    email: email
+                });
             }
             else {
-                //ERROR
+                //Fail
                 res.render(__dirname + '/public/backend/login.html');
             }
-        });
+        }
+        else {
+            //ERROR
+            res.render(__dirname + '/public/backend/login.html');
+        }
+    });
 
 });
 
@@ -189,9 +208,6 @@ app.post('/registersubmit', function (req, res) {
     if (req.body.constructor === Object && Object.keys(req.body).length === 0) {
         res.sendFile(__dirname + '/public/backend/register.html');
     }
-    //Register type: 0 means patient and 1 means doctor
-
-
     //General Information
     var firstname = req.body.firstname;
     var lastname = req.body.lastname;
@@ -203,44 +219,44 @@ app.post('/registersubmit', function (req, res) {
     var password = encrypt.sha1hash(req.body.password);
     var email = req.body.email;
 
-        con.query('SELECT * from patients WHERE username = \"' + username + '\" OR email = \"' + email + '\"', function (err, rows, fields) {
-            if (!err) {
-                console.log(rows);
-                if (rows.length > 0) {
-                    //duplicate username
-                    res.sendFile(__dirname + '/public/backend/login.html');
-                }
-                else {
-                    //INSERT INTO patients (phoneno, email, username, password)
-                    // VALUES (value1, value2, value3,...)
-                    con.query("INSERT INTO users (username,password,firstname,lastname," +
-                        "dateofbirth,phoneno,email) VALUES ('" + username + "','" + password + "','" + firstname + "','" +
-                        lastname + "','"  + dateofbirth + "','" + phoneno + "','" + email + "')",
-                        function (err, rows, fields) {
-                            if (!err) {
-                                console.log(rows[0]);
-                                if (rows.length > 0 && rows[0].username === username) {
-                                    //Login fine
-                                    res.sendFile(__dirname + '/public/backend/dashboard.html');
-                                }
-                                else {
-                                    //Fail
-                                    res.sendFile(__dirname + '/public/backend/register.html');
-                                }
-                            }
-                            else {
-                                //ERROR
-                                res.sendFile(__dirname + '/public/backend/register.html');
-                            }
-                        });
-                }
+    con.query('SELECT * from users WHERE username = \"' + username + '\" OR email = \"' + email + '\"', function (err, rows, fields) {
+        if (!err) {
+            console.log(rows);
+            if (rows.length > 0) {
+                //duplicate username
+                res.sendFile(__dirname + '/public/backend/login.html');
             }
             else {
-                //ERROR
-                console.log(err);
-                res.sendFile(__dirname + '/public/backend/register.html');
+                //INSERT INTO patients (phoneno, email, username, password)
+                // VALUES (value1, value2, value3,...)
+                con.query("INSERT INTO users (username,password,firstname,lastname," +
+                    "dateofbirth,phoneno,email) VALUES ('" + username + "','" + password + "','" + firstname + "','" +
+                    lastname + "','" + dateofbirth + "','" + phoneno + "','" + email + "')",
+                    function (err, rows, fields) {
+                        if (!err) {
+                            console.log(rows[0]);
+                            if (rows.length > 0 && rows[0].username === username) {
+                                //Login fine
+                                res.sendFile(__dirname + '/public/backend/dashboard.html');
+                            }
+                            else {
+                                //Fail
+                                res.sendFile(__dirname + '/public/backend/register.html');
+                            }
+                        }
+                        else {
+                            //ERROR
+                            res.sendFile(__dirname + '/public/backend/register.html');
+                        }
+                    });
             }
-        });
+        }
+        else {
+            //ERROR
+            console.log(err);
+            res.sendFile(__dirname + '/public/backend/register.html');
+        }
+    });
 
 });
 
@@ -261,7 +277,7 @@ function createResponseData(id, name, value, attachments) {
     };
 
 
-    attachments.forEach(function(item, index) {
+    attachments.forEach(function (item, index) {
         var attachmentData = {
             content_type: item.type,
             key: item.key,
@@ -277,7 +293,7 @@ function sanitizeInput(str) {
     return String(str).replace(/&(?!amp;|lt;|gt;)/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
-var saveDocument = function(id, name, value, response) {
+var saveDocument = function (id, name, value, response) {
 
     if (id === undefined) {
         // Generated random id
@@ -287,7 +303,7 @@ var saveDocument = function(id, name, value, response) {
     db.insert({
         name: name,
         value: value
-    }, id, function(err, doc) {
+    }, id, function (err, doc) {
         if (err) {
             console.log(err);
             response.sendStatus(500);
@@ -296,76 +312,80 @@ var saveDocument = function(id, name, value, response) {
         response.end();
     });
 
-}
+};
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /* ADD CSV UPLOAD TO MYSQL  ANSLEY 08/08/2018*/
+/**
+ * @CSV
+ */
+app.post('/upload', upload.single('file'), function (request, response, next) {
 
-app.post('/upload', upload.single('file'), function (request, response,next) {
-  
     //var stream = csv.fromPath(request.file.path);
     var stream = fs.createReadStream(request.file.path);
     var fileRows = [];
 
     let csvStream = csv
-     .parse()
-     //.format({headers: true,ignoreEmpty:true, delimiter: ',',objectMode: true, includeEndRowDelimiter:true})
-    //.fromStream(stream, {headers: false,ignoreEmpty:true, delimiter: ',', includeEndRowDelimiter:true})
-     // .fromStream(stream, {headers: ["survey","intro_consent","ID","Xsect_ID","gender","age","agegrp","alone32","partner32","children32","parents32","other32","hhold32","relationc32","workc32","workpt32","workvol32","studypt32","ptcas32","ptsemret32","unempl32","empldec32","paidempstat32","volstatus32","studystat32","ftwork32","seekwork32","ftseekwk32","incomeb32","postcode","partic","lifesate32","s1mate32","s2heae32","s3proe32","s4inte32","s5safe32","s6come32","s7sece32","austlifee32","a1ecoe32","a2enve32","a3soce32","a4gove32","a5buse32","a6nate32","le01b32","le02c32","attack1a32","attack2c32","livingarr32","rentown32","rentamount32","rentdist32","mortgamount32","mortgdist32"]})
-      .on("data", function (data) {
+        .parse()
+        //.format({headers: true,ignoreEmpty:true, delimiter: ',',objectMode: true, includeEndRowDelimiter:true})
+        //.fromStream(stream, {headers: false,ignoreEmpty:true, delimiter: ',', includeEndRowDelimiter:true})
+        // .fromStream(stream, {headers: ["survey","intro_consent","ID","Xsect_ID","gender","age","agegrp","alone32","partner32","children32","parents32","other32","hhold32","relationc32","workc32","workpt32","workvol32","studypt32","ptcas32","ptsemret32","unempl32","empldec32","paidempstat32","volstatus32","studystat32","ftwork32","seekwork32","ftseekwk32","incomeb32","postcode","partic","lifesate32","s1mate32","s2heae32","s3proe32","s4inte32","s5safe32","s6come32","s7sece32","austlifee32","a1ecoe32","a2enve32","a3soce32","a4gove32","a5buse32","a6nate32","le01b32","le02c32","attack1a32","attack2c32","livingarr32","rentown32","rentamount32","rentdist32","mortgamount32","mortgdist32"]})
+        .on("data", function (data) {
             fileRows.push(data); // push each row
-      })
-      .on("end", function () {
-        
-        console.log('Array: '+ fileRows);
-        //fileRows.shift();
+        })
+        .on("end", function () {
 
-        connection.connect((error) => {
-            if (error) {
-                console.error('MySQL connection error'+ error);
-            } else {
-        try {
-                let deletequery= 'delete from survey32'; //Not sure if we want to delete and upload from scratch 
-               connection.query(deletequery, (error, result) => {
-                    console.log('Delete Error log: ' + error)
-                    console.log('Delete Result log ' + result);
-                    });
-        
-        }
-        catch(err) {
-        }   
-        
-        try {       
-                let query = 'INSERT INTO survey32 (survey,intro_consent,ID,Xsect_ID,gender,age,agegrp,alone32,partner32,children32,parents32,other32,hhold32,relationc32,workc32,workpt32,workvol32,studypt32,ptcas32,ptsemret32,unempl32,empldec32,paidempstat32,volstatus32,studystat32,ftwork32,seekwork32,ftseekwk32,incomeb32,postcode,partic,lifesate32,s1mate32,s2heae32,s3proe32,s4inte32,s5safe32,s6come32,s7sece32,austlifee32,a1ecoe32,a2enve32,a3soce32,a4gove32,a5buse32,a6nate32,le01b32,le02c32,attack1a32,attack2c32,livingarr32,rentown32,rentamount32,rentdist32,mortgamount32,mortgdist32) values ?' ;
-                connection.query(query,[fileRows], (error, result) => {
-                    console.log(error || result);
-                    if (error != null) {
-                        response.send('Failed to upload data, please ensure the columns and rows are correct');
-                        response.end();
+            console.log('Array: ' + fileRows);
+            //fileRows.shift();
+
+            connection.connect((error) => {
+                if (error) {
+                    console.error('MySQL connection error' + error);
+                } else {
+                    try {
+                        let deletequery = 'delete from survey32'; //Not sure if we want to delete and upload from scratch
+                        connection.query(deletequery, (error, result) => {
+                            console.log('Delete Error log: ' + error)
+                            console.log('Delete Result log ' + result);
+                        });
+
                     }
-                    else if (error == null){
-                        response.send('CSV has been uploaded successfully with ' + result.affectedRows + ' affected rows');
-                        response.end();
+                    catch (err) {
                     }
-                }); 
-            }
-        catch(err) {
-        }
-        connection.end();
-            }
+
+                    try {
+                        let query = 'INSERT INTO survey32 (survey,intro_consent,ID,Xsect_ID,gender,age,agegrp,alone32,partner32,children32,parents32,other32,hhold32,relationc32,workc32,workpt32,workvol32,studypt32,ptcas32,ptsemret32,unempl32,empldec32,paidempstat32,volstatus32,studystat32,ftwork32,seekwork32,ftseekwk32,incomeb32,postcode,partic,lifesate32,s1mate32,s2heae32,s3proe32,s4inte32,s5safe32,s6come32,s7sece32,austlifee32,a1ecoe32,a2enve32,a3soce32,a4gove32,a5buse32,a6nate32,le01b32,le02c32,attack1a32,attack2c32,livingarr32,rentown32,rentamount32,rentdist32,mortgamount32,mortgdist32) values ?';
+                        connection.query(query, [fileRows], (error, result) => {
+                            console.log(error || result);
+                            if (error != null) {
+                                response.send('Failed to upload data, please ensure the columns and rows are correct');
+                                response.end();
+                            }
+                            else if (error == null) {
+                                response.send('CSV has been uploaded successfully with ' + result.affectedRows + ' affected rows');
+                                response.end();
+                            }
+                        });
+                    }
+                    catch (err) {
+                    }
+                    connection.end();
+                }
+            });
         });
-}); 
-      stream.pipe(csvStream);
-      fs.unlinkSync(request.file.path);   // remove temp file
-     });
+    stream.pipe(csvStream);
+    fs.unlinkSync(request.file.path);   // remove temp file
+});
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-app.get('/api/favorites/attach', function(request, response) {
+/**
+ * @favorites
+ */
+app.get('/api/favorites/attach', function (request, response) {
     var doc = request.query.id;
     var key = request.query.key;
 
-    db.attachment.get(doc, key, function(err, body) {
+    db.attachment.get(doc, key, function (err, body) {
         if (err) {
             response.status(500);
             response.setHeader('Content-Type', 'text/plain');
@@ -382,14 +402,14 @@ app.get('/api/favorites/attach', function(request, response) {
     });
 });
 
-app.post('/api/favorites/attach', multipartMiddleware, function(request, response) {
+app.post('/api/favorites/attach', multipartMiddleware, function (request, response) {
 
     console.log("Upload File Invoked..");
     console.log('Request: ' + JSON.stringify(request.headers));
 
     var id;
 
-    db.get(request.query.id, function(err, existingdoc) {
+    db.get(request.query.id, function (err, existingdoc) {
 
         var isExistingDoc = false;
         if (!existingdoc) {
@@ -405,20 +425,20 @@ app.post('/api/favorites/attach', multipartMiddleware, function(request, respons
         var file = request.files.file;
         var newPath = './public/uploads/' + file.name;
 
-        var insertAttachment = function(file, id, rev, name, value, response) {
+        var insertAttachment = function (file, id, rev, name, value, response) {
 
-            fs.readFile(file.path, function(err, data) {
+            fs.readFile(file.path, function (err, data) {
                 if (!err) {
 
                     if (file) {
 
                         db.attachment.insert(id, file.name, data, file.type, {
                             rev: rev
-                        }, function(err, document) {
+                        }, function (err, document) {
                             if (!err) {
                                 console.log('Attachment saved successfully.. ');
 
-                                db.get(document.id, function(err, doc) {
+                                db.get(document.id, function (err, doc) {
                                     console.log('Attachements from server --> ' + JSON.stringify(doc._attachments));
 
                                     var attachements = [];
@@ -467,7 +487,7 @@ app.post('/api/favorites/attach', multipartMiddleware, function(request, respons
             db.insert({
                 name: name,
                 value: value
-            }, '', function(err, doc) {
+            }, '', function (err, doc) {
                 if (err) {
                     console.log(err);
                 } else {
@@ -490,7 +510,7 @@ app.post('/api/favorites/attach', multipartMiddleware, function(request, respons
 
 });
 
-app.post('/api/favorites', function(request, response) {
+app.post('/api/favorites', function (request, response) {
 
     console.log("Create Invoked..");
     console.log("Name: " + request.body.name);
@@ -504,7 +524,7 @@ app.post('/api/favorites', function(request, response) {
 
 });
 
-app.delete('/api/favorites', function(request, response) {
+app.delete('/api/favorites', function (request, response) {
 
     console.log("Delete Invoked..");
     var id = request.query.id;
@@ -515,9 +535,9 @@ app.delete('/api/favorites', function(request, response) {
 
     db.get(id, {
         revs_info: true
-    }, function(err, doc) {
+    }, function (err, doc) {
         if (!err) {
-            db.destroy(doc._id, doc._rev, function(err, res) {
+            db.destroy(doc._id, doc._rev, function (err, res) {
                 // Handle response
                 if (err) {
                     console.log(err);
@@ -531,7 +551,7 @@ app.delete('/api/favorites', function(request, response) {
 
 });
 
-app.put('/api/favorites', function(request, response) {
+app.put('/api/favorites', function (request, response) {
 
     console.log("Update Invoked..");
 
@@ -543,12 +563,12 @@ app.put('/api/favorites', function(request, response) {
 
     db.get(id, {
         revs_info: true
-    }, function(err, doc) {
+    }, function (err, doc) {
         if (!err) {
             console.log(doc);
             doc.name = name;
             doc.value = value;
-            db.insert(doc, doc.id, function(err, doc) {
+            db.insert(doc, doc.id, function (err, doc) {
                 if (err) {
                     console.log('Error inserting data\n' + err);
                     return 500;
@@ -559,14 +579,14 @@ app.put('/api/favorites', function(request, response) {
     });
 });
 
-app.get('/api/favorites', function(request, response) {
+app.get('/api/favorites', function (request, response) {
 
     console.log("Get method invoked.. ")
 
     db = cloudant.use(dbCredentials.dbName);
     var docList = [];
     var i = 0;
-    db.list(function(err, body) {
+    db.list(function (err, body) {
         if (!err) {
             var len = body.rows.length;
             console.log('total # of docs -> ' + len);
@@ -578,7 +598,7 @@ app.get('/api/favorites', function(request, response) {
                 db.insert({
                     name: docName,
                     value: 'A sample Document'
-                }, '', function(err, doc) {
+                }, '', function (err, doc) {
                     if (err) {
                         console.log(err);
                     } else {
@@ -597,11 +617,11 @@ app.get('/api/favorites', function(request, response) {
                 });
             } else {
 
-                body.rows.forEach(function(document) {
+                body.rows.forEach(function (document) {
 
                     db.get(document.id, {
                         revs_info: true
-                    }, function(err, doc) {
+                    }, function (err, doc) {
                         if (!err) {
                             if (doc['_attachments']) {
 
@@ -651,7 +671,9 @@ app.get('/api/favorites', function(request, response) {
 
 });
 
-
-http.createServer(app).listen(app.get('port'), '0.0.0.0', function() {
+/**
+ * @start
+ */
+http.createServer(app).listen(app.get('port'), '0.0.0.0', function () {
     console.log('Express server listening on port ' + app.get('port'));
 });
