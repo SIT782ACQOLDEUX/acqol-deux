@@ -157,7 +157,7 @@
 					<input type="file" class='btn btn-default' name = "file" id="file" accept=".csv" onchange="loadFile(event)" required />
 						<script>
 							var loadFile = function(event) {
-    						//var output = document.getElementById('output');
+    							var output = document.getElementById('output');
 							//output.src = URL.createObjectURL(event.target.files[0]);
 							$("#result").html('');
 							$("body").css("cursor", "default");
