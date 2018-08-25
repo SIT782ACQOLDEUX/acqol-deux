@@ -37,7 +37,7 @@ var con = mysql.createConnection({
     password: "EKTWRTIPDMTCEDLI",
     database: 'acqol'
 });
-//con.connect();
+con.connect();
 
 var db;
 var cloudant;
@@ -338,10 +338,10 @@ app.post('/upload', upload.single('file'), function (request, response, next) {
             console.log('Array: ' + fileRows);
             //fileRows.shift();
 
-            con.connect((error) => {
-                if (error) {
+          //  con.connect((error) => {
+               // if (error) {
                     console.error('MySQL connection error' + error);
-                } else {
+              //  } else {
                   //  try {
                       //  let deletequery = 'delete from survey32'; //Not sure if we want to delete and upload from scratch
                      //   con.query(deletequery, (error, result) => {
@@ -378,8 +378,8 @@ app.post('/upload', upload.single('file'), function (request, response, next) {
                     catch (err) {
                     }
                 //    con.end();
-                }
-            });
+              //  }
+         //   });
         });
     stream.pipe(csvStream);
     fs.unlinkSync(request.file.path);   // remove temp file
