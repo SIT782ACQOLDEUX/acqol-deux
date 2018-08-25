@@ -338,13 +338,13 @@ app.post('/upload', upload.single('file'), function (request, response, next) {
             console.log('Array: ' + fileRows);
             //fileRows.shift();
 
-            connection.connect((error) => {
+            con.connect((error) => {
                 if (error) {
                     console.error('MySQL connection error' + error);
                 } else {
                     try {
                         let deletequery = 'delete from survey32'; //Not sure if we want to delete and upload from scratch
-                        connection.query(deletequery, (error, result) => {
+                        con.query(deletequery, (error, result) => {
                             console.log('Delete Error log: ' + error)
                             console.log('Delete Result log ' + result);
                         });
@@ -355,7 +355,7 @@ app.post('/upload', upload.single('file'), function (request, response, next) {
 
                     try {
                         let query = 'INSERT INTO survey32 (survey,intro_consent,ID,Xsect_ID,gender,age,agegrp,alone32,partner32,children32,parents32,other32,hhold32,relationc32,workc32,workpt32,workvol32,studypt32,ptcas32,ptsemret32,unempl32,empldec32,paidempstat32,volstatus32,studystat32,ftwork32,seekwork32,ftseekwk32,incomeb32,postcode,partic,lifesate32,s1mate32,s2heae32,s3proe32,s4inte32,s5safe32,s6come32,s7sece32,austlifee32,a1ecoe32,a2enve32,a3soce32,a4gove32,a5buse32,a6nate32,le01b32,le02c32,attack1a32,attack2c32,livingarr32,rentown32,rentamount32,rentdist32,mortgamount32,mortgdist32) values ?';
-                        connection.query(query, [fileRows], (error, result) => {
+                        con.query(query, [fileRows], (error, result) => {
                             console.log(error || result);
                             if (error != null) {
                                 response.send('Failed to upload data, please ensure the columns and rows are correct');
@@ -369,7 +369,7 @@ app.post('/upload', upload.single('file'), function (request, response, next) {
                     }
                     catch (err) {
                     }
-                    connection.end();
+                    con.end();
                 }
             });
         });
