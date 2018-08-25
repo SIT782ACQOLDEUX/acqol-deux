@@ -340,7 +340,7 @@ app.post('/upload', upload.single('file'), function (request, response, next) {
 
           //  con.connect((error) => {
                // if (error) {
-                    console.error('MySQL connection error' + error);
+                  //  console.error('MySQL connection error' + error);
               //  } else {
                   //  try {
                       //  let deletequery = 'delete from survey32'; //Not sure if we want to delete and upload from scratch
