@@ -377,7 +377,7 @@ app.post('/upload', upload.single('file'), function (request, response, next) {
                     }
                     catch (err) {
                     }
-                    con.end();
+                //    con.end();
                 }
             });
         });
