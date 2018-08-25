@@ -37,7 +37,7 @@ var con = mysql.createConnection({
     password: "EKTWRTIPDMTCEDLI",
     database: 'acqol'
 });
-con.connect();
+//con.connect();
 
 var db;
 var cloudant;
