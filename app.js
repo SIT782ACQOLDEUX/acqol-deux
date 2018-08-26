@@ -329,30 +329,31 @@ app.post('/upload', upload.single('file'), function (request, response, next) {
         .parse()
         //.format({headers: true,ignoreEmpty:true, delimiter: ',',objectMode: true, includeEndRowDelimiter:true})
         //.fromStream(stream, {headers: false,ignoreEmpty:true, delimiter: ',', includeEndRowDelimiter:true})
-        // .fromStream(stream, {headers: ["survey","intro_consent","ID","Xsect_ID","gender","age","agegrp","alone32","partner32","children32","parents32","other32","hhold32","relationc32","workc32","workpt32","workvol32","studypt32","ptcas32","ptsemret32","unempl32","empldec32","paidempstat32","volstatus32","studystat32","ftwork32","seekwork32","ftseekwk32","incomeb32","postcode","partic","lifesate32","s1mate32","s2heae32","s3proe32","s4inte32","s5safe32","s6come32","s7sece32","austlifee32","a1ecoe32","a2enve32","a3soce32","a4gove32","a5buse32","a6nate32","le01b32","le02c32","attack1a32","attack2c32","livingarr32","rentown32","rentamount32","rentdist32","mortgamount32","mortgdist32"]})
+        //.fromStream(stream, {headers: ["survey","intro_consent","ID","Xsect_ID","gender","age","agegrp","alone32","partner32","children32","parents32","other32","hhold32","relationc32","workc32","workpt32","workvol32","studypt32","ptcas32","ptsemret32","unempl32","empldec32","paidempstat32","volstatus32","studystat32","ftwork32","seekwork32","ftseekwk32","incomeb32","postcode","partic","lifesate32","s1mate32","s2heae32","s3proe32","s4inte32","s5safe32","s6come32","s7sece32","austlifee32","a1ecoe32","a2enve32","a3soce32","a4gove32","a5buse32","a6nate32","le01b32","le02c32","attack1a32","attack2c32","livingarr32","rentown32","rentamount32","rentdist32","mortgamount32","mortgdist32"]})
         .on("data", function (data) {
             fileRows.push(data); // push each row
         })
         .on("end", function () {
 
             console.log('Array: ' + fileRows);
-            //fileRows.shift();
+/*********** 
+ fileRows.shift();
 
-          //  con.connect((error) => {
-               // if (error) {
-                  //  console.error('MySQL connection error' + error);
-              //  } else {
-                  //  try {
-                      //  let deletequery = 'delete from survey32'; //Not sure if we want to delete and upload from scratch
-                     //   con.query(deletequery, (error, result) => {
-                       //     console.log('Delete Error log: ' + error)
-                     //       console.log('Delete Result log ' + result);
-                   //     });
+              con.connect((error) => {
+                if (error) {
+                    console.error('MySQL connection error' + error);
+                  } else {
+                      try {
+                            let deletequery = 'delete from survey32'; //Not sure if we want to delete and upload from scratch
+                            con.query(deletequery, (error, result) => {
+                            console.log('Delete Error log: ' + error)
+                            console.log('Delete Result log ' + result);
+                        });
 
-               //     }
-                //    catch (err) {
-                //    }
-
+                }
+                    catch (err) {
+                    }
+**********/
                     try {
                         let query = 'INSERT INTO survey32 (survey,intro_consent,ID,Xsect_ID,gender,age,agegrp,alone32,partner32,children32,parents32,other32,hhold32,relationc32,workc32,workpt32,workvol32,studypt32,ptcas32,ptsemret32,unempl32,empldec32,paidempstat32,volstatus32,studystat32,ftwork32,seekwork32,ftseekwk32,incomeb32,postcode,partic,lifesate32,s1mate32,s2heae32,s3proe32,s4inte32,s5safe32,s6come32,s7sece32,austlifee32,a1ecoe32,a2enve32,a3soce32,a4gove32,a5buse32,a6nate32,le01b32,le02c32,attack1a32,attack2c32,livingarr32,rentown32,rentamount32,rentdist32,mortgamount32,mortgdist32) values ?';
                         con.query(query, [fileRows], (error, result) => {
@@ -377,12 +378,63 @@ app.post('/upload', upload.single('file'), function (request, response, next) {
                     }
                     catch (err) {
                     }
-                //    con.end();
-              //  }
-         //   });
+         /********
+                    con.end();
+                }
+            });
+         *********/
         });
     stream.pipe(csvStream);
     fs.unlinkSync(request.file.path);   // remove temp file
+});
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/* DELETE MYSQL DATA  ANSLEY 26/08/2018 */
+
+app.post('/delete', function (request, response) {
+  
+                    try {
+                        let deletequery = 'delete from survey32'; 
+                        con.query(deletequery, (error, result) => {
+                        console.log(error || result);
+                        if (error == null){
+                            response.send('Data has been deleted successfully');
+                            response.end();
+                        }
+                        else{
+                            response.send('Unexpected error, please contact System Administrator');
+                            response.end();
+                           }
+                        });
+                    }
+                   catch (err) {
+                    }
+
+});
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/* SELECT MYSQL DATA  ANSLEY 26/08/2018 */
+
+app.get('/select', function (request, response) {
+  
+    try {
+        let selectquery = 'select *'; 
+        con.query(selectquery, (error, result) => {
+        console.log(error || result);
+        if (error == null){
+            //console.log(result);
+            response.send(result);
+            response.end();
+        }
+        else{
+            response.send('Unexpected error, please contact System Administrator');
+            response.end();
+           }
+        });
+    }
+   catch (err) {
+    }
+
 });
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
