@@ -147,7 +147,7 @@ var encrypt = require('./library/encryption');
 *  Note: The default backend should check session status, if fail (unlogin), then should go to here.
 * */
 app.get("/login", function (request, response) {
-    response.sendFile(__dirname + '/public/backend/login.html');
+    response.sendFile(__dirname + '/public/login.html');
 });
 
 app.post('/loginsubmit', function (req, res) {
@@ -156,7 +156,7 @@ app.post('/loginsubmit', function (req, res) {
     //2. Return
     //console.log(req.body.username);
     if (req.body.constructor === Object && Object.keys(req.body).length === 0) {
-        res.sendFile(__dirname + '/public/backend/login.html');
+        res.sendFile(__dirname + '/public/login.html');
     }
     var username = req.body.username;
     var password = encrypt.sha1hash(req.body.password);
@@ -171,7 +171,7 @@ app.post('/loginsubmit', function (req, res) {
                 var phoneno = rows[0].phoneno;
                 var email = rows[0].email;
 
-                res.render(__dirname + '/public/backend/dashboard.html', {
+                res.render(__dirname + '/public/dashboard.html', {
                     username: username,
                     dateofbirth: dateofbirth,
                     phoneno: phoneno,
@@ -180,12 +180,12 @@ app.post('/loginsubmit', function (req, res) {
             }
             else {
                 //Fail
-                res.render(__dirname + '/public/backend/login.html');
+                res.render(__dirname + '/public/login.html');
             }
         }
         else {
             //ERROR
-            res.render(__dirname + '/public/backend/login.html');
+            res.render(__dirname + '/public/login.html');
         }
     });
 
@@ -197,7 +197,7 @@ app.post('/loginsubmit', function (req, res) {
 * */
 
 app.get("/register", function (request, response) {
-    response.sendFile(__dirname + '/public/backend/register.html');
+    response.sendFile(__dirname + '/public/register.html');
 });
 
 app.post('/registersubmit', function (req, res) {
@@ -206,7 +206,7 @@ app.post('/registersubmit', function (req, res) {
     //2. Get check existed
     //3. Register
     if (req.body.constructor === Object && Object.keys(req.body).length === 0) {
-        res.sendFile(__dirname + '/public/backend/register.html');
+        res.sendFile(__dirname + '/public/register.html');
     }
     //General Information
     var firstname = req.body.firstname;
@@ -224,7 +224,7 @@ app.post('/registersubmit', function (req, res) {
             console.log(rows);
             if (rows.length > 0) {
                 //duplicate username
-                res.sendFile(__dirname + '/public/backend/login.html');
+                res.sendFile(__dirname + '/public/login.html');
             }
             else {
                 //INSERT INTO patients (phoneno, email, username, password)
@@ -237,16 +237,16 @@ app.post('/registersubmit', function (req, res) {
                             console.log(rows[0]);
                             if (rows.length > 0 && rows[0].username === username) {
                                 //Login fine
-                                res.sendFile(__dirname + '/public/backend/dashboard.html');
+                                res.sendFile(__dirname + '/public/dashboard.html');
                             }
                             else {
                                 //Fail
-                                res.sendFile(__dirname + '/public/backend/register.html');
+                                res.sendFile(__dirname + '/public/register.html');
                             }
                         }
                         else {
                             //ERROR
-                            res.sendFile(__dirname + '/public/backend/register.html');
+                            res.sendFile(__dirname + '/public/register.html');
                         }
                     });
             }
@@ -254,14 +254,14 @@ app.post('/registersubmit', function (req, res) {
         else {
             //ERROR
             console.log(err);
-            res.sendFile(__dirname + '/public/backend/register.html');
+            res.sendFile(__dirname + '/public/register.html');
         }
     });
 
 });
 
 app.get("/dashboard", function (request, response) {
-    response.sendFile(__dirname + '/public/backend/dashboard.html');
+    response.sendFile(__dirname + '/public/dashboard.html');
 });
 
 
