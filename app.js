@@ -414,11 +414,12 @@ app.post('/delete', function (request, response) {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /* SELECT MYSQL DATA  ANSLEY 26/08/2018 */
+/* Will need to add filters */
 
 app.get('/select', function (request, response) {
   
     try {
-        let selectquery = 'select *'; 
+        let selectquery = 'select * from survey32'; 
         con.query(selectquery, (error, result) => {
         console.log(error || result);
         if (error == null){
