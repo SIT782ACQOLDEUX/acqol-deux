@@ -418,12 +418,18 @@ app.post('/delete', function (request, response) {
 
 app.get('/select', function (request, response) {
   
-    try {
-        let selectquery = 'select * from survey32'; 
+    var filter = request.query.filter;
+    var age = request.query.age;
+    var gender =  request.query.gender;
+    var income =  request.query.income;
+    var filterinfo = ''
+    
+        if (filter == 'YES'){
+        let filterinfo = 'where age like ' + mysql.escape(age) + ' and gender like ' + mysql.escape(gender) + ' and incomeb32 like ' + mysql.escape(income);
+        let selectquery = 'select * from survey32' + filterinfo;
         con.query(selectquery, (error, result) => {
         console.log(error || result);
         if (error == null){
-            //console.log(result);
             response.send(result);
             response.end();
         }
@@ -433,7 +439,19 @@ app.get('/select', function (request, response) {
            }
         });
     }
-   catch (err) {
+        else if (filter == 'NO') {
+        let selectquery = 'select * from survey32';
+        con.query(selectquery, (error, result) => {
+        console.log(error || result);
+        if (error == null){
+            response.send(result);
+            response.end();
+        }
+        else{
+            response.send('Unexpected error, please contact System Administrator');
+            response.end();
+           }
+        });
     }
 
 });
