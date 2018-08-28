@@ -418,10 +418,10 @@ app.post('/delete', function (request, response) {
 
 app.get('/select', function (request, response) {
   
-    var filter = request.body.filter;
-    var age = request.body.age; 
-    var gender =  request.body.gender;
-    var income =  request.body.income;
+    var filter = request.query.filter;
+    var age = request.query.age; 
+    var gender =  request.query.gender;
+    var income =  request.query.income;
     var filterinfo = ''
     
         if (filter == 'YES') {
