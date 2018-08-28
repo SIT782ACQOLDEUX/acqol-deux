@@ -416,13 +416,13 @@ app.post('/delete', function (request, response) {
 /* SELECT MYSQL DATA  ANSLEY 26/08/2018 */
 /* Will need to add filters */
 
-app.get('/select', function (request, response) {
+app.post('/select', function (request, response) {
   
-    var filter = request.query.filter;
-    var age = request.query.age; 
-    var opage = request.query.opage;
-    var gender =  request.query.gender;
-    var income = request.query.income;
+    var filter = request.body.filter;
+    var age = request.body.age; 
+    var opage = request.body.opage; 
+    var gender =  request.body.gender;
+    var income = request.body.income;
     var filterinfo = '';
     
         if (filter == 'YES') {
