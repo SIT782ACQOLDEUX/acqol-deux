@@ -418,15 +418,15 @@ app.post('/delete', function (request, response) {
 
 app.get('/select', function (request, response) {
   
-    var filter = request.query.filter;
-    var age = request.query.age;
-    var gender =  request.query.gender;
-    var income =  request.query.income;
+    var filter = request.body.filter;
+    var age = request.body.age; 
+    var gender =  request.body.gender;
+    var income =  request.body.income;
     var filterinfo = ''
     
-        if (filter == 'YES'){
+        if (filter == 'YES') {
         let filterinfo = 'where age like ' + mysql.escape(age) + ' and gender like ' + mysql.escape(gender) + ' and incomeb32 like ' + mysql.escape(income);
-        let selectquery = 'select * from survey32' + filterinfo;
+        let selectquery = 'select * from survey32 ' + filterinfo;
         con.query(selectquery, (error, result) => {
         console.log(error || result);
         if (error == null){
