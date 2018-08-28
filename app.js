@@ -435,7 +435,7 @@ app.post('/select', function (request, response) {
             response.end();
         }
         else{
-            response.send('Unexpected error, please contact System Administrator ' + selectquery);
+            response.send('Unexpected error, please contact System Administrator ' + selectquery + ' ' + error);
             response.end();
            }
         });
