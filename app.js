@@ -426,7 +426,7 @@ app.post('/select', function (request, response) {
     var filterinfo = '';
     
         if (filter == 'YES') {
-        let filterinfo = 'where age ' + mysql.escape(opage) + ' ' +  mysql.escape(age) + ' and gender like ' + mysql.escape(gender) + ' and incomeb32 like' + mysql.escape(income);
+        let filterinfo = 'where age ' + mysql.escape(opage) + ' ' +  mysql.escape(age) + ' and gender like ' + mysql.escape(gender) + ' and incomeb32 like ' + mysql.escape(income);
         let selectquery = 'select * from survey32 ' + filterinfo;
         con.query(selectquery, (error, result) => {
         console.log(error || result);
