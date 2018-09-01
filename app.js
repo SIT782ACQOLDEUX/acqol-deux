@@ -335,26 +335,10 @@ app.post('/upload', upload.single('file'), function (request, response, next) {
         })
         .on("end", function () {
 
-            console.log('Array: ' + fileRows);
-/*********** 
- fileRows.shift();
-
-              con.connect((error) => {
-                if (error) {
-                    console.error('MySQL connection error' + error);
-                  } else {
-                      try {
-                            let deletequery = 'delete from survey32'; //Not sure if we want to delete and upload from scratch
-                            con.query(deletequery, (error, result) => {
-                            console.log('Delete Error log: ' + error)
-                            console.log('Delete Result log ' + result);
-                        });
-
-                }
-                    catch (err) {
-                    }
-**********/
-                    try {
+        console.log('This the array '+ fileRows);
+if (fileRows.toString().includes("survey") == true) {
+    fileRows.shift();
+   try {
                         let query = 'INSERT INTO survey32 (survey,intro_consent,ID,Xsect_ID,gender,age,agegrp,alone32,partner32,children32,parents32,other32,hhold32,relationc32,workc32,workpt32,workvol32,studypt32,ptcas32,ptsemret32,unempl32,empldec32,paidempstat32,volstatus32,studystat32,ftwork32,seekwork32,ftseekwk32,incomeb32,postcode,partic,lifesate32,s1mate32,s2heae32,s3proe32,s4inte32,s5safe32,s6come32,s7sece32,austlifee32,a1ecoe32,a2enve32,a3soce32,a4gove32,a5buse32,a6nate32,le01b32,le02c32,attack1a32,attack2c32,livingarr32,rentown32,rentamount32,rentdist32,mortgamount32,mortgdist32) values ?';
                         con.query(query, [fileRows], (error, result) => {
                             console.log(error || result);
@@ -363,7 +347,7 @@ app.post('/upload', upload.single('file'), function (request, response, next) {
                                 response.end();
                             }
                             else if ((error.sqlMessage.includes('Column count doesn')) == true) {
-                                response.send('Failed to upload data, please ensure the columns and rows are correct');
+                                response.send('Failed to upload data, please ensure the columns and rows are correct - ' + error.sqlMessage + '<br>' +'*Please note, the first line for the header was skipped*');
                                 response.end();
                             }
                             else if ((error.sqlMessage.includes('Duplicate entry')) == true){
@@ -378,15 +362,40 @@ app.post('/upload', upload.single('file'), function (request, response, next) {
                     }
                     catch (err) {
                     }
-         /********
-                    con.end();
+    
+}
+else {
+                    try {
+                        let query = 'INSERT INTO survey32 (survey,intro_consent,ID,Xsect_ID,gender,age,agegrp,alone32,partner32,children32,parents32,other32,hhold32,relationc32,workc32,workpt32,workvol32,studypt32,ptcas32,ptsemret32,unempl32,empldec32,paidempstat32,volstatus32,studystat32,ftwork32,seekwork32,ftseekwk32,incomeb32,postcode,partic,lifesate32,s1mate32,s2heae32,s3proe32,s4inte32,s5safe32,s6come32,s7sece32,austlifee32,a1ecoe32,a2enve32,a3soce32,a4gove32,a5buse32,a6nate32,le01b32,le02c32,attack1a32,attack2c32,livingarr32,rentown32,rentamount32,rentdist32,mortgamount32,mortgdist32) values ?';
+                        con.query(query, [fileRows], (error, result) => {
+                            console.log(error || result);
+                            if (error == null){
+                                response.send('CSV has been uploaded successfully with ' + result.affectedRows + ' affected rows');
+                                response.end();
+                            }
+                            else if ((error.sqlMessage.includes('Column count doesn')) == true) {
+                                response.send('Failed to upload data, please ensure the columns and rows are correct - ' + error.sqlMessage);
+                                response.end();
+                            }
+                            else if ((error.sqlMessage.includes('Duplicate entry')) == true){
+                                response.send('Duplicate data in csv file - ' + error.sqlMessage);
+                                response.end();
+                            }
+                           else{
+                            response.send('Unexpected error, please contact System Administrator');
+                            response.end();
+                           }
+                        });
+                    }
+                    catch (err) {
+                    }
                 }
-            });
-         *********/
         });
+
     stream.pipe(csvStream);
     fs.unlinkSync(request.file.path);   // remove temp file
 });
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /* DELETE MYSQL DATA  ANSLEY 26/08/2018 */
