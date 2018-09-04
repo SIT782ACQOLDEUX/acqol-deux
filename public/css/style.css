@@ -3055,7 +3055,7 @@ label.error {
 }
 input, textarea, select, .login-select, .controled{
   border:none;
-	border-bottom: 1px solid #a6a7a9; 
+	border-bottom: 1px solid #710507;
 	border-radius: 0px;
   background:transparent;
 	color: #4b4e53;
@@ -3065,7 +3065,7 @@ input, textarea, select, .login-select, .controled{
 	padding: 8px 20px 8px 0;
 }
 .input-border {
-  border: 1px solid #dedede; 
+  border: 1px solid #de0002;
   padding:9px 15px  ;
 }
 select.input-border {
@@ -5412,8 +5412,8 @@ button {
   transition: all .3s ease 0s;
 }
 .button {
-	background-color:#ffea00;
-	color:#4b4e53;
+	background-color: #de0002;
+	color: #e7f4ff;
 	border:none;
 	border-radius:2px;
 	transition: all .3s ease 0s;
