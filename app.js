@@ -115,12 +115,13 @@ function initDBConnection() {
         // Alternately you could point to a local database here instead of a
         // Bluemix service.
         // url will be in this format: https://username:password@xxxxxxxxx-bluemix.cloudant.com
-        dbCredentials.url = getDBCredentialsUrl(fs.readFileSync("vcap-local.json", "utf-8"));
+       // dbCredentials.url = getDBCredentialsUrl(fs.readFileSync("vcap-local.json", "utf-8"));
     }
 
-    cloudant = require('cloudant')(dbCredentials.url);
+    //cloudant = require('cloudant')(dbCredentials.url);
 
     // check if DB exists if not create
+    /*
     cloudant.db.create(dbCredentials.dbName, function (err, res) {
         if (err) {
             console.log('Could not create new db: ' + dbCredentials.dbName + ', it might already exist.');
@@ -128,6 +129,7 @@ function initDBConnection() {
     });
 
     db = cloudant.use(dbCredentials.dbName);
+    */
 }
 
 initDBConnection();
@@ -160,18 +162,18 @@ app.post('/loginsubmit', function (req, res) {
     }
     var username = req.body.username;
     var password = encrypt.sha1hash(req.body.password);
-
-    con.query('SELECT * from user WHERE username = \"' + username + '\" AND password = \"' + password + '\"', function (err, rows, fields) {
+    console.log(password);
+    con.query('SELECT * from users WHERE username = \"' + username + '\" AND password = \"' + password + '\"', function (err, rows, fields) {
         if (!err) {
             console.log(rows[0]);
-            if (rows.length > 0 && rows[0].username === username) {
+            if (rows.length > 0) {
                 //Login fine
                 //var username = username;
                 var dateofbirth = rows[0].dateofbirth;
                 var phoneno = rows[0].phoneno;
                 var email = rows[0].email;
 
-                res.render(__dirname + '/public/dashboard.html', {
+                res.render(__dirname + '/public/data.html', {
                     username: username,
                     dateofbirth: dateofbirth,
                     phoneno: phoneno,
@@ -180,11 +182,13 @@ app.post('/loginsubmit', function (req, res) {
             }
             else {
                 //Fail
+                //console.log(err.message);
                 res.render(__dirname + '/public/login.html');
             }
         }
         else {
             //ERROR
+            console.log(err.message);
             res.render(__dirname + '/public/login.html');
         }
     });
@@ -227,6 +231,7 @@ app.post('/registersubmit', function (req, res) {
                 res.sendFile(__dirname + '/public/login.html');
             }
             else {
+                console.log("Insert user");
                 //INSERT INTO patients (phoneno, email, username, password)
                 // VALUES (value1, value2, value3,...)
                 con.query("INSERT INTO users (username,password,firstname,lastname," +
@@ -234,18 +239,11 @@ app.post('/registersubmit', function (req, res) {
                     lastname + "','" + dateofbirth + "','" + phoneno + "','" + email + "')",
                     function (err, rows, fields) {
                         if (!err) {
-                            console.log(rows[0]);
-                            if (rows.length > 0 && rows[0].username === username) {
-                                //Login fine
-                                res.sendFile(__dirname + '/public/dashboard.html');
-                            }
-                            else {
-                                //Fail
-                                res.sendFile(__dirname + '/public/register.html');
-                            }
+                            res.sendFile(__dirname + '/public/login.html');
                         }
                         else {
                             //ERROR
+                            console.log(err.message);
                             res.sendFile(__dirname + '/public/register.html');
                         }
                     });
