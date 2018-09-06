@@ -18,8 +18,6 @@
     <link rel="apple-touch-icon" sizes="114x114" href="images/favicon/apple-touch-icon-114x114.png">
 
     <!-- CSS -->
-    <!-- REVOSLIDER CSS SETTINGS -->
-    <link rel="stylesheet" type="text/css" href="rs-plugin/css/settings.min.css" media="screen" />
 
     <!--  BOOTSTRAP -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -132,57 +130,110 @@
                 <div class="row">
 
                     <div class="col-md-8">
-                        <h1 class="page-title">UPLOAD THE DATA</h1>
+                        <h1 class="page-title">DATA DASHBOARD</h1>
                     </div>
 
                     <div class="col-md-4">
                         <div class="breadcrumbs">
-                            <a href="index.html">HOME</a><span class="slash-divider">/</span><span class="bread-current">UPLOAD THE DATA</span>
+                            <a href="index.html">HOME</a><span class="slash-divider">/</span><span class="bread-current">DATA DASHBOARD</span>
                         </div>
                     </div>
 
                 </div>
             </div>
         </div>
-        <div class="container bs-docs-container p-140-cont">
+        <div class="container bs-docs-container p-80-cont col-lg-10 col-lg-offset-1">
             <div class="row">
                 <div class="grey-light-bg leave-comment-cont">
                     <!-- TITLE -->
-                    <h4 class="blog-page-title mt-50 mb-25">UPLOAD DATA</h4>
-                    <div class="contact-form-container">
-                       
-					   			<form id="uploadcsv" enctype="multipart/form-data">
-					<br>
-					<label>Browse:</label><br>
-					<input type="file" class='btn btn-default' name = "file" id="file" accept=".csv" onchange="loadFile(event)" required />
-						<script>
-							var loadFile = function(event) {
-    							var output = document.getElementById('output');
-							//output.src = URL.createObjectURL(event.target.files[0]);
-							$("#result").html('');
-							$("body").css("cursor", "default");
-  						};
-                        </script>
-                        <br>
-						<button type='submit' class='btn btn-default' name='submitButton' id="submitButton">Upload CSV File</button>
-				<br>
-				<br>
-				<p id=result></p>
-			</form>
-					   
-					
-                        <div class="alert alert-success hidden animated fadeIn" id="contactSuccess">
-                            <strong>Success!</strong> Your message has been sent to us.
-                        </div>
+                    <h4 class="blog-page-title mt-50 mb-25">DATA SHOWCASES</h4>
+                    <div class="contact-form-container row">
 
-                        <div class="alert alert-danger hidden animated shake" id="contactError">
-                            <strong>Error!</strong> There was an error sending your message.
+                        <div class="card col-lg-3">
+
+                            <div class="card-body">
+                                <h5 class="card-title">DataSet 1</h5>
+                                <p class="card-text">Annual Income for Age 65+</p>
+                                <a href="#" class="button button-full-center medium btn-block">Download</a>
+                            </div>
+                        </div>
+                        <div class="card col-lg-3">
+
+                            <div class="card-body">
+                                <h5 class="card-title">DataSet 2</h5>
+                                <p class="card-text">Annual Income for Single Age 60 - 65</p>
+                                <a href="#" class="button button-full-center medium btn-block">Download</a>
+                            </div>
+                        </div>
+                        <div class="card col-lg-3">
+
+                            <div class="card-body">
+                                <h5 class="card-title">DataSet 3</h5>
+                                <p class="card-text">Annual Income for Male, Single</p>
+                                <a href="#" class="button button-full-center medium btn-block">Download</a>
+                            </div>
+                        </div>
+                        <div class="card col-lg-3">
+
+                            <div class="card-body">
+                                <h5 class="card-title">DataSet 4</h5>
+                                <p class="card-text">Annual Income for Female, Single</p>
+                                <a href="#" class="button button-full-center medium btn-block">Download</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="container bs-docs-container p-10 col-lg-10 col-lg-offset-1">
+            <div class="row">
+                <div class="grey-light-bg leave-comment-cont">
+                    <!-- TITLE -->
+                    <h4 class="blog-page-title mt-50 mb-25">CREATE YOUR DATASET</h4>
+                    <div class="row">
+                        <form method="post" action="/select" class="form">
+                            <div class="form-group form-check-inline col-lg-12">
+                                <input class="form-check-input" type="radio" name="filter" id="filterYes" value="YES" checked="checked">
+                                <label class="form-check-label" for="filterYes">Use Filter</label>
+                                <input class="form-check-input" type="radio" name="filter" id="filterNo" value="NO">
+                                <label class="form-check-label" for="filterNo">Do Not Use Filter</label>
+                            </div>
+                            <div class="form-group form-check-inline col-lg-12">
+                                <input class="form-check-input" type="radio" name="gender" id="genderMale" value="0" checked="checked">
+                                <label class="form-check-label" for="filterYes">Male</label>
+                                <input class="form-check-input" type="radio" name="gender" id="genderFemale" value="1">
+                                <label class="form-check-label" for="filterNo">Female</label>
+                            </div>
+                            <div class="form-group col-lg-12">
+                                <label for="opage">Age range</label>
+                                <select id="opage" class="form-control">
+                                    <option selected> Greater Than</option>
+                                    <option> Less Than </option>
+                                    <option> Equals To </option>
+                                </select>
+                                <input type="text" class="w-100" name="age" id="age" placeholder="Age">
 
+                            </div>
+                            <div class="form-group col-lg-12">
+                                <label for="income">Income range</label>
+                                <select id="income" class="form-control">
+                                    <option selected> 1</option>
+                                    <option> 0 </option>
+                                </select>
+
+                            </div>
+                            <div class="form-group col-lg-12">
+                                <hr class="mt-30 mb-0">
+                            </div>
+
+                            <div class="form-group col-lg-12">
+                                <button class="button button-full-center medium btn-block" type="submit">Download</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- FOOTER 2 BLACK -->
         <footer id="footer3" class="page-section pt-80 pb-50 footer2-black">
             <div class="container">
