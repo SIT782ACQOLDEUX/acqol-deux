@@ -430,11 +430,9 @@ app.post('/select', function (request, response) {
     var opage = request.body.opage; 
     var gender =  request.body.gender;
     var income = request.body.income;
-    var filterinfo = '';
     
-        if (filter == 'YES') {
-        let filterinfo = 'where age ' + opage + ' ' +  mysql.escape(age) + ' and gender like ' + mysql.escape(gender) + ' and incomeb32 like ' + mysql.escape(income);
-        let selectquery = 'select * from survey32 ' + filterinfo;
+        if (filter == 'YES') { 
+        let selectquery = 'select * from survey32 where age ' + opage + ' ' + age + ' and ' + 'gender = \"' + gender + '\" and incomeb32 = \"' + income + '\"'
         con.query(selectquery, (error, result) => {
         console.log(error || result);
         if (error == null){
