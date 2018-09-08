@@ -463,6 +463,89 @@ app.post('/select', function (request, response) {
 });
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/* PREDEFINED DATASET 1 MYSQL DATA  ANSLEY 09/09/2018 */
+/* ANNUAL INCOME FOR AGE 65+  */
+
+app.post('/dataset1', function (request, response) {
+    
+        let selectquery = "select incomeb32, age from survey32 where age <= '65'"
+        con.query(selectquery, (error, result) => {
+        console.log(error || result);
+        if (error == null){
+            response.send(result);
+            response.end();
+        }
+        else{
+            response.send('Unexpected error, please contact System Administrator');
+            response.end();
+           }
+        });
+    
+});
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/* PREDEFINED DATASET 2 MYSQL DATA  ANSLEY 09/09/2018 */
+/* Annual Income for Single Age 60 - 65 */
+
+app.post('/dataset2', function (request, response) {
+    
+    let selectquery = "select incomeb32, age, relationc32 from survey32 where age between '60' and '65' and relationc32 = '2'"
+    con.query(selectquery, (error, result) => {
+    console.log(error || result);
+    if (error == null){
+        response.send(result);
+        response.end();
+    }
+    else{
+        response.send('Unexpected error, please contact System Administrator');
+        response.end();
+       }
+    });
+
+});
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/* PREDEFINED DATASET 3 MYSQL DATA  ANSLEY 09/09/2018 */
+/* Annual Income for Male, Single */
+
+app.post('/dataset3', function (request, response) {
+    
+    let selectquery = "select incomeb32, gender, relationc32 from survey32 where gender = '0' and relationc32 = '2'"
+    con.query(selectquery, (error, result) => {
+    console.log(error || result);
+    if (error == null){
+        response.send(result);
+        response.end();
+    }
+    else{
+        response.send('Unexpected error, please contact System Administrator');
+        response.end();
+       }
+    });
+
+});
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/* PREDEFINED DATASET 4 MYSQL DATA  ANSLEY 09/09/2018 */
+/* Annual Income for Female, Single */
+
+app.post('/dataset4', function (request, response) {
+    
+    let selectquery = "select incomeb32, gender, relationc32 from survey32 where gender = '1' and relationc32 = '2'"
+    con.query(selectquery, (error, result) => {
+    console.log(error || result);
+    if (error == null){
+        response.send(result);
+        response.end();
+    }
+    else{
+        response.send('Unexpected error, please contact System Administrator');
+        response.end();
+       }
+    });
+
+});
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
  * @favorites
  */
