@@ -463,6 +463,40 @@ app.post('/select', function (request, response) {
 });
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//THINK THIS
+
+app.get("/preset", function (request, response) {
+
+    var selectquery;
+    switch(request.body.key)
+    {
+        case 0:
+            selectquery = "select incomeb32, age from survey32 where age <= '65'";
+            break;
+        case 1:
+            selectquery = "select incomeb32, age from survey32 where age <= '65'";
+            break;
+        default:
+            selectquery = "select incomeb32, age from survey32 where age <= '65'";
+            break;
+    }
+    con.query(selectquery, (error, result) => {
+        console.log(error || result);
+        if (error === null){
+            response.attachment('dataset.csv');
+            response.type('csv');
+            response.send(result);
+            response.end();
+        }
+        else{
+            //thats basic error handle, use a HTML with value in it
+            response.send('Unexpected error, please contact System Administrator');
+            response.end();
+        }
+    });
+});
+
+
 /* PREDEFINED DATASET 1 MYSQL DATA  ANSLEY 09/09/2018 */
 /* ANNUAL INCOME FOR AGE 65+  */
 app.get("/dataset1", function (request, response) {
@@ -470,7 +504,9 @@ app.get("/dataset1", function (request, response) {
     con.query(selectquery, (error, result) => {
         console.log(error || result);
         if (error === null){
-            response.sendFile(result);
+            response.attachment('dataset1.csv');
+            response.type('csv');
+            response.send(result);
             response.end();
         }
         else{
@@ -504,7 +540,9 @@ app.get("/dataset2", function (request, response) {
     con.query(selectquery, (error, result) => {
         console.log(error || result);
         if (error === null){
-            response.sendFile(result);
+            response.attachment('dataset2.csv');
+            response.type('csv');
+            response.send(result);
             response.end();
         }
         else{
@@ -538,7 +576,9 @@ app.get("/dataset3", function (request, response) {
     con.query(selectquery, (error, result) => {
         console.log(error || result);
         if (error === null){
-            response.sendFile(result);
+            response.attachment('dataset3.csv');
+            response.type('csv');
+            response.send(result);
             response.end();
         }
         else{
@@ -567,12 +607,14 @@ app.post('/dataset3', function (request, response) {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /* PREDEFINED DATASET 4 MYSQL DATA  ANSLEY 09/09/2018 */
 /* Annual Income for Female, Single */
-app.get("/dataset3", function (request, response) {
+app.get("/dataset4", function (request, response) {
     let selectquery = "select incomeb32, gender, relationc32 from survey32 where gender = '1' and relationc32 = '2'";
     con.query(selectquery, (error, result) => {
         console.log(error || result);
         if (error === null){
-            response.sendFile(result);
+            response.attachment('dataset4.csv');
+            response.type('csv');
+            response.send(result);
             response.end();
         }
         else{
