@@ -18,9 +18,12 @@ var express = require('express'),
     fs = require('fs'),
     csv = require('fast-csv'), //Required for CSV Upload
     multer = require('multer'), //Required for CSV Upload
-    upload = multer({dest: 'tmp/csv/'}); //Required for CSV Upload
+    upload = multer({dest: 'tmp/csv/'}), //Required for CSV Upload
+    Json2csvParser = require('json2csv').Parser; //Required to convert Json to csv
 //HTML Render engine
 var ejs = require('ejs');
+
+var date = new Date();
 
 /////////////////////////////DATEBASE//////////////////////////////////////
 /**
@@ -436,8 +439,14 @@ app.post('/select', function (request, response) {
         con.query(selectquery, (error, result) => {
         console.log(error || result);
         if (error == null){
-            response.send(result);
+            const fields = ['survey','intro_consent','ID','Xsect_ID','gender','age','agegrp','alone32','partner32','children32','parents32','other32','hhold32','relationc32','workc32','workpt32','workvol32','studypt32','ptcas32','ptsemret32','unempl32','empldec32','paidempstat32','volstatus32','studystat32','ftwork32','seekwork32','ftseekwk32','incomeb32','postcode','partic','lifesate32','s1mate32','s2heae32','s3proe32','s4inte32','s5safe32','s6come32','s7sece32','austlifee32','a1ecoe32','a2enve32','a3soce32','a4gove32','a5buse32','a6nate32','le01b32','le02c32','attack1a32','attack2c32','livingarr32','rentown32','rentamount32','rentdist32','mortgamount32','mortgdist32'];
+            const json2csvParser = new Json2csvParser({ fields });
+            const csv = json2csvParser.parse(result);
+            response.attachment(date.getFullYear() + '_' + date.getMonth() + '_' + date.getDate() +'_acqoldata.csv');
+            response.type('csv');
+            response.send(csv);
             response.end();
+        
         }
         else{
             response.send('Unexpected error, please contact System Administrator');
@@ -450,7 +459,12 @@ app.post('/select', function (request, response) {
         con.query(selectquery, (error, result) => {
         console.log(error || result);
         if (error == null){
-            response.send(result);
+            const fields = ['survey','intro_consent','ID','Xsect_ID','gender','age','agegrp','alone32','partner32','children32','parents32','other32','hhold32','relationc32','workc32','workpt32','workvol32','studypt32','ptcas32','ptsemret32','unempl32','empldec32','paidempstat32','volstatus32','studystat32','ftwork32','seekwork32','ftseekwk32','incomeb32','postcode','partic','lifesate32','s1mate32','s2heae32','s3proe32','s4inte32','s5safe32','s6come32','s7sece32','austlifee32','a1ecoe32','a2enve32','a3soce32','a4gove32','a5buse32','a6nate32','le01b32','le02c32','attack1a32','attack2c32','livingarr32','rentown32','rentamount32','rentdist32','mortgamount32','mortgdist32'];
+            const json2csvParser = new Json2csvParser({ fields });
+            const csv = json2csvParser.parse(result);
+            response.attachment(date.getFullYear() + '_' + date.getMonth() + '_' + date.getDate() +'_acqoldata.csv');
+            response.type('csv');
+            response.send(csv);
             response.end();
         }
         else{
@@ -496,7 +510,7 @@ app.get("/preset", function (request, response) {
     });
 });
 
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /* PREDEFINED DATASET 1 MYSQL DATA  ANSLEY 09/09/2018 */
 /* ANNUAL INCOME FOR AGE 65+  */
 app.get("/dataset1", function (request, response) {
@@ -504,9 +518,12 @@ app.get("/dataset1", function (request, response) {
     con.query(selectquery, (error, result) => {
         console.log(error || result);
         if (error === null){
+            const fields = ['incomeb32', 'age'];
+            const json2csvParser = new Json2csvParser({ fields });
+            const csv = json2csvParser.parse(result);
             response.attachment('dataset1.csv');
             response.type('csv');
-            response.send(result);
+            response.send(csv);
             response.end();
         }
         else{
@@ -515,7 +532,8 @@ app.get("/dataset1", function (request, response) {
         }
     });
 });
-app.get('/dataset1', function (request, response) {
+
+app.post('/dataset1', function (request, response) {
     
         let selectquery = "select incomeb32, age from survey32 where age <= '65'"
         con.query(selectquery, (error, result) => {
@@ -540,9 +558,12 @@ app.get("/dataset2", function (request, response) {
     con.query(selectquery, (error, result) => {
         console.log(error || result);
         if (error === null){
+            const fields = ['incomeb32', 'age', 'relationc32'];
+            const json2csvParser = new Json2csvParser({ fields });
+            const csv = json2csvParser.parse(result);
             response.attachment('dataset2.csv');
             response.type('csv');
-            response.send(result);
+            response.send(csv);
             response.end();
         }
         else{
@@ -551,6 +572,7 @@ app.get("/dataset2", function (request, response) {
         }
     });
 });
+
 app.post('/dataset2', function (request, response) {
     
     let selectquery = "select incomeb32, age, relationc32 from survey32 where age between '60' and '65' and relationc32 = '2'"
@@ -576,9 +598,12 @@ app.get("/dataset3", function (request, response) {
     con.query(selectquery, (error, result) => {
         console.log(error || result);
         if (error === null){
+            const fields = ['incomeb32', 'gender', 'relationc32'];
+            const json2csvParser = new Json2csvParser({ fields });
+            const csv = json2csvParser.parse(result);
             response.attachment('dataset3.csv');
             response.type('csv');
-            response.send(result);
+            response.send(csv);
             response.end();
         }
         else{
@@ -612,9 +637,12 @@ app.get("/dataset4", function (request, response) {
     con.query(selectquery, (error, result) => {
         console.log(error || result);
         if (error === null){
+            const fields = ['incomeb32', 'age', 'relationc32'];
+            const json2csvParser = new Json2csvParser({ fields });
+            const csv = json2csvParser.parse(result);
             response.attachment('dataset4.csv');
             response.type('csv');
-            response.send(result);
+            response.send(csv);
             response.end();
         }
         else{
