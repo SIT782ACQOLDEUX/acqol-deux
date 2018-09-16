@@ -429,13 +429,42 @@ app.post('/delete', function (request, response) {
 app.post('/select', function (request, response) {
   
     var filter = request.body.filter;
+
     var age = request.body.age; 
     var opage = request.body.opage; 
+
     var gender =  request.body.gender;
     var income = request.body.income;
-    
+    var maritalstatus = request.body.maritalstatus;
+    var mortgageamount = request.body.mortgageamount;
+    var rentamount = request.body.rentamount;
+    var mortgagedist = request.body.mortgagedist;
+    var rentdist = request.body.rentdist; 
+    var workstatus = request.body.workstatus; 
+    var livingarrangement = request.body.livingarrangement; 
+    var household = request.body.household; 
+
+    var personalsafetyrating = request.body.personalsafetyrating;
+    var oppsr = request.body.oppsr; 
+
+    var communityrating = request.body.communityrating;
+    var opcr = request.body.opcr; 
+
+    var futuresecurityrating = request.body.futuresecurityrating;
+    var opfsr = request.body.opfsr; 
+
+    var postcode = request.body.postcode;
+
         if (filter == 'YES') { 
-        let selectquery = 'select * from survey32 where age ' + opage + ' ' + age + ' and ' + 'gender = \"' + gender + '\" and incomeb32 = \"' + income + '\"'
+       // let selectquery = 'select * from survey32 where age ' + opage + ' ' + age + ' and ' + 'gender = \"' + gender + '\" and incomeb32 = \"' + income + '\"'
+        let selectquery = 'select * from survey32 where age ' + opage + ' ' + age + ' and gender = \"' + gender + '\" and incomeb32 = \"' + income + 
+        '\" and relationc32 = \"' + maritalstatus +  '\" and mortgamount32 = \"' + mortgageamount + '\" and rentamount32 = \"' + rentamount + 
+        '\" and mortgdist32 = \"' + mortgagedist + '\" and rentdist32 = \"' + rentdist + '\" and workc32 = \"' + workstatus + '\" and livingarr32 = \"' + livingarrangement +    
+        '\" and hhold32 = \"' + household + '\" and s5safe32 ' + oppsr + ' ' + personalsafetyrating + ' and s6come32 ' + opcr + ' ' + communityrating + 
+       ' and s7sece32 ' + opfsr + '\"' + futuresecurityrating +  '\" and postcode in ( \"' + postcode + '\")'
+        
+       console.log(selectquery)
+
         con.query(selectquery, (error, result) => {
         console.log(error || result);
         if (error == null){

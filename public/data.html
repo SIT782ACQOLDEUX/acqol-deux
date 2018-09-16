@@ -211,9 +211,9 @@
                                     <option value="<"> Less Than </option>
                                     <option value="="> Equals To </option>
                                 </select>
-                                <input type="text" class="w-100" name="age" id="age" placeholder="Age">
-
+                                <input type="text" class="w-100" name="age" id="age" placeholder="Age" value = "0">
                             </div>
+
                             <div class="form-group col-lg-12">
                                 <label for="income">Income range</label>
                                 <select name="income" id="income" class="form-control">
@@ -225,9 +225,179 @@
                                     <option value="5"> Between $151,000 and $250,000 </option>
                                     <option value="6"> Between $251,000 and $500,000 </option>
                                     <option value="7"> Greater than $500,000 </option>
+                                    <option value=".a"> Declined </option>
                                 </select>
 
                             </div>
+                            <div class="form-group col-lg-12">
+                                <label for="maritalstatus">Marital Status</label>
+                                <select name="maritalstatus" id="maritalstatus" class="form-control">
+                                    <option value="0" selected> Married </option>
+                                    <option value="1"> Defacto/ living together </option>
+                                    <option value="2"> Never married </option>
+                                    <option value="3"> Separated but not divorced </option>
+                                    <option value="4"> Divorced </option>
+                                    <option value="5"> Widowed </option>
+                                    <option value=".a"> Declined </option>
+                                </select>
+
+                            </div>
+                            <div class="form-group col-lg-12">
+                                <label for="mortgageamount">Mortgage Amount per week</label>
+                                <select name="mortgageamount" id="mortgageamount" class="form-control">
+                                    <option value="0" selected> Less than $150 </option>
+                                    <option value="1"> Between $150 and $300 </option>
+                                    <option value="2"> Between $301 and $500 </option>
+                                    <option value="3"> Between $501 and $1,000 </option>
+                                    <option value="4"> Between $1,001 and $1,500 </option>
+                                    <option value="5"> Between $1,501 and $2,000 </option>
+                                    <option value="6"> Greater than $2,000 </option>
+                                    <option value=".a"> Declined </option>
+                                </select>
+                                </div>
+                                <div class="form-group col-lg-12">
+                                    <label for="rentamount">Rent Amount per week</label>
+                                    <select name="rentamount" id="rentamount" class="form-control">
+                                        <option value="0" selected> Less than $150 </option>
+                                        <option value="1"> Between $150 and $300 </option>
+                                        <option value="2"> Between $301 and $500 </option>
+                                        <option value="3"> Between $501 and $1,000 </option>
+                                        <option value="4"> Between $1,001 and $1,500 </option>
+                                        <option value="5"> Between $1,501 and $2,000 </option>
+                                        <option value="6"> Greater than $2,000 </option>
+                                        <option value=".a"> Declined </option>
+                                    </select>
+                            </div>
+                            <div class="form-group col-lg-12">
+                                <label for="mortgagedist">Deferred bill for Mortgage Payment within last 12 months</label>
+                                <input class="form-check-input" type="radio" name="mortgagedist" id="no" value="0" checked="checked">
+                                <label class="form-check-label" for="no">No</label>
+                                <input class="form-check-input" type="radio" name="mortgagedist" id="yes" value="1">
+                                <label class="form-check-label" for="yes">Yes</label>
+                                <input class="form-check-input" type="radio" name="mortgagedist" id="declined" value=".a">
+                                <label class="form-check-label" for="declined">Declined</label>
+                        </div>
+                        <div class="form-group col-lg-12">
+                            <label for="rentdist">Deferred bill for Rent Payment within last 12 months</label>
+                            <input class="form-check-input" type="radio" name="rentdist" id="no" value="0" checked="checked">
+                            <label class="form-check-label" for="no">No</label>
+                            <input class="form-check-input" type="radio" name="rentdist" id="yes" value="1">
+                            <label class="form-check-label" for="yes">Yes</label>
+                            <input class="form-check-input" type="radio" name="rentdist" id="declined" value=".a">
+                            <label class="form-check-label" for="declined">Declined</label>
+                    </div>
+                    <div class="form-group col-lg-12">
+                        <label for="workstatus">Full-time Work Status</label>
+                        <select name="workstatus" id="workstatus" class="form-control">
+                            <option value="0" selected> Full-time Paid Employment </option>
+                            <option value="1"> Full-time Retired </option>
+                            <option value="3"> Full-time Volunteer </option>
+                            <option value="4"> Full-time home/family care </option>
+                            <option value="5"> Full-time Study </option>
+                            <option value="7"> None of these </option>
+                        </select>
+                </div>
+                <div class="form-group col-lg-12">
+                    <label for="livingarrangement">Living Arrangements</label>
+                    <select name="livingarrangement" id="livingarrangement" class="form-control">
+                        <option value="0" selected> Renting </option>
+                        <option value="1"> Renting and own mortgage-free home </option>
+                        <option value="2"> Renting and pay a mortgage </option>
+                        <option value="3"> Living iin own home and mortgage free </option>
+                        <option value="4"> Living in parents' home </option>
+                        <option value="5"> Other </option>
+                        <option value=".a"> Declined </option>
+                    </select>
+            </div>
+                <div class="form-group col-lg-12">
+                    <label for="household">Household</label>
+                    <select name="household" id="household" class="form-control">
+                        <option value="0" selected> Alone </option>
+                        <option value="1"> Partner </option>
+                        <option value="2"> Children </option>
+                        <option value="3"> Parents </option>
+                        <option value="4"> Other adults </option>
+                        <option value="5"> Partner and children </option>
+                        <option value="6"> Partner and parents </option>
+                        <option value="7"> Partner and others </option>
+                        <option value="8"> Children and parents </option>
+                        <option value="9"> Children and others </option>
+                        <option value="10"> Parents and others </option>
+                        <option value="11"> Partner, children and parents </option>
+                        <option value="12"> Partner, Parents and others </option>
+                        <option value="13"> Partner, children and others </option>
+                        <option value="14"> Children, parents and others </option>
+                        <option value="15"> Partner, children, parents and others </option>
+                        <option value=".a"> Declined </option>
+                    </select>
+            </div>
+            <div class="form-group col-lg-12">
+                <label for="personalsafetyrating">Individual Safety Satisfaction</label>
+                <select name="oppsr" id="oppsr" class="form-control">
+                    <option value=">" selected> Greater Than</option>
+                    <option value="<"> Less Than </option>
+                    <option value="="> Equals To </option>
+                </select>
+                <select name="personalsafetyrating" id="personalsafetyrating" class="form-control">
+                    <option value="0" selected> 0 - No satisfaction at all</option>
+                    <option value="1"> 1 </option>
+                    <option value="2"> 2 </option>
+                    <option value="3"> 3 </option>
+                    <option value="4"> 4 </option>
+                    <option value="5"> 5 </option>
+                    <option value="6"> 6 </option>
+                    <option value="7"> 7 </option>
+                    <option value="8"> 8 </option>
+                    <option value="9"> 9 </option>
+                    <option value="10"> 10 - Completely satisfied </option>
+                </select>
+            </div>
+            <div class="form-group col-lg-12">
+                <label for="communityrating">Community Satisfaction</label>
+                <select name="opcr" id="opcr" class="form-control">
+                    <option value=">" selected> Greater Than</option>
+                    <option value="<"> Less Than </option>
+                    <option value="="> Equals To </option>
+                </select>
+                <select name="communityrating" id="communityrating" class="form-control">
+                    <option value="0" selected> 0 - No satisfaction at all</option>
+                    <option value="1"> 1 </option>
+                    <option value="2"> 2 </option>
+                    <option value="3"> 3 </option>
+                    <option value="4"> 4 </option>
+                    <option value="5"> 5 </option>
+                    <option value="6"> 6 </option>
+                    <option value="7"> 7 </option>
+                    <option value="8"> 8 </option>
+                    <option value="9"> 9 </option>
+                    <option value="10"> 10 - Completely satisfied </option>
+                </select>
+            </div>
+            <div class="form-group col-lg-12">
+                <label for="futuresecurityrating">Future Security Satisfaction</label>
+                <select name="opfsr" id="opfsr" class="form-control">
+                    <option value=">" selected> Greater Than</option>
+                    <option value="<"> Less Than </option>
+                    <option value="="> Equals To </option>
+                </select>
+                <select name="futuresecurityrating" id="futuresecurityrating" class="form-control">
+                    <option value="0" selected> 0 - No satisfaction at all</option>
+                    <option value="1"> 1 </option>
+                    <option value="2"> 2 </option>
+                    <option value="3"> 3 </option>
+                    <option value="4"> 4 </option>
+                    <option value="5"> 5 </option>
+                    <option value="6"> 6 </option>
+                    <option value="7"> 7 </option>
+                    <option value="8"> 8 </option>
+                    <option value="9"> 9 </option>
+                    <option value="10"> 10 - Completely satisfied </option>
+                </select>
+            </div>
+            <div class="form-group col-lg-12">
+                <label for="opage">Postcode</label>
+                <input type="text" class="w-100" name="postcode" id="postcode" placeholder="postcode" value = "3000">
+            </div>
                             <div class="form-group col-lg-12">
                                 <hr class="mt-30 mb-0">
                             </div>
