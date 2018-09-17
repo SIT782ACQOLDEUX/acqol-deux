@@ -58,7 +58,10 @@
  	<script src="js/jquery.min.js"></script>
 				       
 	<!-- Upload CSV script-->
-	<script src="js/env.js"></script>
+    <script src="js/env.js"></script>
+    
+    <!-- Enabling & Disabling filter options script-->
+	<script src="js/filtertoggle.js"></script>
 	
 </head>
 <body>
@@ -193,9 +196,9 @@
                     <div class="row">
                         <form method="post" action="/select" class="form">
                             <div class="form-group form-check-inline col-lg-12">
-                                <input class="form-check-input" type="radio" name="filter" id="filterYes" value="YES" checked="checked">
+                                <input class="form-check-input" type="radio" name="filter" id="filterYes" value="YES" checked="checked" onclick="Yesfilter()" /> 
                                 <label class="form-check-label" for="filterYes">Use Filter</label>
-                                <input class="form-check-input" type="radio" name="filter" id="filterNo" value="NO">
+                                <input class="form-check-input" type="radio" name="filter" id="filterNo" value="NO" onclick="Nofilter()" />
                                 <label class="form-check-label" for="filterNo">Do Not Use Filter</label>
                             </div>
                             <div class="form-group form-check-inline col-lg-12">
@@ -211,7 +214,7 @@
                                     <option value="<"> Less Than </option>
                                     <option value="="> Equals To </option>
                                 </select>
-                                <input type="text" class="w-100" name="age" id="age" placeholder="Age" value = "0">
+                                <input type="number" class="w-100" name="age" id="age" placeholder="Age" value = "0">
                             </div>
 
                             <div class="form-group col-lg-12">
@@ -270,20 +273,20 @@
                             </div>
                             <div class="form-group col-lg-12">
                                 <label for="mortgagedist">Deferred bill for Mortgage Payment within last 12 months</label>
-                                <input class="form-check-input" type="radio" name="mortgagedist" id="no" value="0" checked="checked">
+                                <input class="form-check-input" type="radio" name="mortgagedist" id="mdistno" value="0" checked="checked">
                                 <label class="form-check-label" for="no">No</label>
-                                <input class="form-check-input" type="radio" name="mortgagedist" id="yes" value="1">
+                                <input class="form-check-input" type="radio" name="mortgagedist" id="mdistyes" value="1">
                                 <label class="form-check-label" for="yes">Yes</label>
-                                <input class="form-check-input" type="radio" name="mortgagedist" id="declined" value=".a">
+                                <input class="form-check-input" type="radio" name="mortgagedist" id="mdistdeclined" value=".a">
                                 <label class="form-check-label" for="declined">Declined</label>
                         </div>
                         <div class="form-group col-lg-12">
                             <label for="rentdist">Deferred bill for Rent Payment within last 12 months</label>
-                            <input class="form-check-input" type="radio" name="rentdist" id="no" value="0" checked="checked">
+                            <input class="form-check-input" type="radio" name="rentdist" id="rdistno" value="0" checked="checked">
                             <label class="form-check-label" for="no">No</label>
-                            <input class="form-check-input" type="radio" name="rentdist" id="yes" value="1">
+                            <input class="form-check-input" type="radio" name="rentdist" id="rdistyes" value="1">
                             <label class="form-check-label" for="yes">Yes</label>
-                            <input class="form-check-input" type="radio" name="rentdist" id="declined" value=".a">
+                            <input class="form-check-input" type="radio" name="rentdist" id="rdistdeclined" value=".a">
                             <label class="form-check-label" for="declined">Declined</label>
                     </div>
                     <div class="form-group col-lg-12">
