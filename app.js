@@ -336,8 +336,10 @@ app.post('/upload', upload.single('file'), function (request, response, next) {
         })
         .on("end", function () {
 
-        console.log('This the array '+ fileRows);
-if (fileRows.toString().includes("survey") == true) {
+        //console.log('This the array '+ fileRows);
+       // console.log('ROW 1 '+ fileRows.slice(0,1));
+//if (fileRows.slice(0,1).toString().includes("survey") == true ) {
+    if (fileRows[0].toString().includes('survey') == true ) {
     fileRows.shift();
    try {
                         let query = 'INSERT INTO survey32 (survey,intro_consent,ID,Xsect_ID,gender,age,agegrp,alone32,partner32,children32,parents32,other32,hhold32,relationc32,workc32,workpt32,workvol32,studypt32,ptcas32,ptsemret32,unempl32,empldec32,paidempstat32,volstatus32,studystat32,ftwork32,seekwork32,ftseekwk32,incomeb32,postcode,partic,lifesate32,s1mate32,s2heae32,s3proe32,s4inte32,s5safe32,s6come32,s7sece32,austlifee32,a1ecoe32,a2enve32,a3soce32,a4gove32,a5buse32,a6nate32,le01b32,le02c32,attack1a32,attack2c32,livingarr32,rentown32,rentamount32,rentdist32,mortgamount32,mortgdist32) values ?';
