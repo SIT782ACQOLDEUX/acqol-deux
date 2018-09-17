@@ -467,7 +467,8 @@ app.post('/select', function (request, response) {
 
         con.query(selectquery, (error, result) => {
         console.log(error || result);
-        if (error == null){
+        if (error === null && result != ''){
+            console.log('this is the result - ' + result);
             const fields = ['survey','intro_consent','ID','Xsect_ID','gender','age','agegrp','alone32','partner32','children32','parents32','other32','hhold32','relationc32','workc32','workpt32','workvol32','studypt32','ptcas32','ptsemret32','unempl32','empldec32','paidempstat32','volstatus32','studystat32','ftwork32','seekwork32','ftseekwk32','incomeb32','postcode','partic','lifesate32','s1mate32','s2heae32','s3proe32','s4inte32','s5safe32','s6come32','s7sece32','austlifee32','a1ecoe32','a2enve32','a3soce32','a4gove32','a5buse32','a6nate32','le01b32','le02c32','attack1a32','attack2c32','livingarr32','rentown32','rentamount32','rentdist32','mortgamount32','mortgdist32'];
             const json2csvParser = new Json2csvParser({ fields });
             const csv = json2csvParser.parse(result);
@@ -477,8 +478,14 @@ app.post('/select', function (request, response) {
             response.end();
         
         }
+        else if (result == ''){
+            //response.send('No data found');
+            response.render('error.html', {message: 'NO DATA FOUND - PLEASE TRY AGAIN'});
+            response.end();   
+        }
         else{
-            response.send('Unexpected error, please contact System Administrator');
+           // response.send('Unexpected error, please contact System Administrator');
+            response.render('error.html', {message: 'UNEXPECTED ERROR, PLEASE CONTACT THE SYSTEM ADMINISTRATOR'});
             response.end();
            }
         });
@@ -487,7 +494,8 @@ app.post('/select', function (request, response) {
         let selectquery = 'select * from survey32';
         con.query(selectquery, (error, result) => {
         console.log(error || result);
-        if (error == null){
+        if (error === null && result != ''){
+            console.log('this is the result - ' + result);
             const fields = ['survey','intro_consent','ID','Xsect_ID','gender','age','agegrp','alone32','partner32','children32','parents32','other32','hhold32','relationc32','workc32','workpt32','workvol32','studypt32','ptcas32','ptsemret32','unempl32','empldec32','paidempstat32','volstatus32','studystat32','ftwork32','seekwork32','ftseekwk32','incomeb32','postcode','partic','lifesate32','s1mate32','s2heae32','s3proe32','s4inte32','s5safe32','s6come32','s7sece32','austlifee32','a1ecoe32','a2enve32','a3soce32','a4gove32','a5buse32','a6nate32','le01b32','le02c32','attack1a32','attack2c32','livingarr32','rentown32','rentamount32','rentdist32','mortgamount32','mortgdist32'];
             const json2csvParser = new Json2csvParser({ fields });
             const csv = json2csvParser.parse(result);
@@ -496,8 +504,12 @@ app.post('/select', function (request, response) {
             response.send(csv);
             response.end();
         }
+        else if (result == ''){
+            response.render('error.html', {message: 'NO DATA FOUND - PLEASE TRY AGAIN'});
+            response.end();   
+        }
         else{
-            response.send('Unexpected error, please contact System Administrator');
+            response.render('error.html', {message: 'UNEXPECTED ERROR, PLEASE CONTACT THE SYSTEM ADMINISTRATOR'});
             response.end();
            }
         });
@@ -533,7 +545,7 @@ app.get("/preset", function (request, response) {
         }
         else{
             //thats basic error handle, use a HTML with value in it
-            response.send('Unexpected error, please contact System Administrator');
+            response.render('error.html', {message: 'UNEXPECTED ERROR, PLEASE CONTACT THE SYSTEM ADMINISTRATOR'})
             response.end();
         }
     });
@@ -546,7 +558,7 @@ app.get("/dataset1", function (request, response) {
     let selectquery = "select incomeb32, age from survey32 where age <= '65'";
     con.query(selectquery, (error, result) => {
         console.log(error || result);
-        if (error === null){
+        if (error === null && result != ''){
             const fields = ['incomeb32', 'age'];
             const json2csvParser = new Json2csvParser({ fields });
             const csv = json2csvParser.parse(result);
@@ -555,8 +567,12 @@ app.get("/dataset1", function (request, response) {
             response.send(csv);
             response.end();
         }
+        else if (result == ''){
+            response.render('error.html', {message: 'NO DATA FOUND - PLEASE TRY AGAIN'});
+            response.end();   
+        }
         else{
-            response.send('Unexpected error, please contact System Administrator');
+            response.render('error.html', {message: 'UNEXPECTED ERROR, PLEASE CONTACT THE SYSTEM ADMINISTRATOR'});
             response.end();
         }
     });
@@ -567,12 +583,16 @@ app.post('/dataset1', function (request, response) {
         let selectquery = "select incomeb32, age from survey32 where age <= '65'"
         con.query(selectquery, (error, result) => {
         console.log(error || result);
-        if (error == null){
+        if (error === null && result != ''){
             response.send(result);
             response.end();
         }
+        else if (result == ''){
+            response.render('error.html', {message: 'NO DATA FOUND - PLEASE TRY AGAIN'});
+            response.end();   
+        }
         else{
-            response.send('Unexpected error, please contact System Administrator');
+            response.render('error.html', {message: 'UNEXPECTED ERROR, PLEASE CONTACT THE SYSTEM ADMINISTRATOR'});
             response.end();
            }
         });
@@ -586,7 +606,7 @@ app.get("/dataset2", function (request, response) {
     let selectquery = "select incomeb32, age, relationc32 from survey32 where age between '60' and '65' and relationc32 = '2'";
     con.query(selectquery, (error, result) => {
         console.log(error || result);
-        if (error === null){
+        if (error === null && result != ''){
             const fields = ['incomeb32', 'age', 'relationc32'];
             const json2csvParser = new Json2csvParser({ fields });
             const csv = json2csvParser.parse(result);
@@ -595,8 +615,12 @@ app.get("/dataset2", function (request, response) {
             response.send(csv);
             response.end();
         }
+        else if (result == ''){
+            response.render('error.html', {message: 'NO DATA FOUND - PLEASE TRY AGAIN'});
+            response.end();   
+        }
         else{
-            response.send('Unexpected error, please contact System Administrator');
+            response.render('error.html', {message: 'UNEXPECTED ERROR, PLEASE CONTACT THE SYSTEM ADMINISTRATOR'});
             response.end();
         }
     });
@@ -607,12 +631,16 @@ app.post('/dataset2', function (request, response) {
     let selectquery = "select incomeb32, age, relationc32 from survey32 where age between '60' and '65' and relationc32 = '2'"
     con.query(selectquery, (error, result) => {
     console.log(error || result);
-    if (error == null){
+    if (error === null && result != ''){
         response.send(result);
         response.end();
     }
+    else if (result == ''){
+        response.render('error.html', {message: 'NO DATA FOUND - PLEASE TRY AGAIN'});
+        response.end();   
+    }
     else{
-        response.send('Unexpected error, please contact System Administrator');
+        response.render('error.html', {message: 'UNEXPECTED ERROR, PLEASE CONTACT THE SYSTEM ADMINISTRATOR'});
         response.end();
        }
     });
@@ -626,7 +654,7 @@ app.get("/dataset3", function (request, response) {
     let selectquery = "select incomeb32, gender, relationc32 from survey32 where gender = '0' and relationc32 = '2'";
     con.query(selectquery, (error, result) => {
         console.log(error || result);
-        if (error === null){
+        if (error === null && result != ''){
             const fields = ['incomeb32', 'gender', 'relationc32'];
             const json2csvParser = new Json2csvParser({ fields });
             const csv = json2csvParser.parse(result);
@@ -635,8 +663,12 @@ app.get("/dataset3", function (request, response) {
             response.send(csv);
             response.end();
         }
+        else if (result == ''){
+            response.render('error.html', {message: 'NO DATA FOUND - PLEASE TRY AGAIN'});
+            response.end();   
+        }
         else{
-            response.send('Unexpected error, please contact System Administrator');
+            response.render('error.html', {message: 'UNEXPECTED ERROR, PLEASE CONTACT THE SYSTEM ADMINISTRATOR'});
             response.end();
         }
     });
@@ -646,12 +678,16 @@ app.post('/dataset3', function (request, response) {
     let selectquery = "select incomeb32, gender, relationc32 from survey32 where gender = '0' and relationc32 = '2'"
     con.query(selectquery, (error, result) => {
     console.log(error || result);
-    if (error == null){
+    if (error === null && result != ''){
         response.send(result);
         response.end();
     }
+    else if (result == ''){
+        response.render('error.html', {message: 'NO DATA FOUND - PLEASE TRY AGAIN'});
+        response.end();   
+    }
     else{
-        response.send('Unexpected error, please contact System Administrator');
+        response.render('error.html', {message: 'UNEXPECTED ERROR, PLEASE CONTACT THE SYSTEM ADMINISTRATOR'});
         response.end();
        }
     });
@@ -665,7 +701,7 @@ app.get("/dataset4", function (request, response) {
     let selectquery = "select incomeb32, gender, relationc32 from survey32 where gender = '1' and relationc32 = '2'";
     con.query(selectquery, (error, result) => {
         console.log(error || result);
-        if (error === null){
+        if (error === null && result != ''){
             const fields = ['incomeb32', 'age', 'relationc32'];
             const json2csvParser = new Json2csvParser({ fields });
             const csv = json2csvParser.parse(result);
@@ -674,8 +710,12 @@ app.get("/dataset4", function (request, response) {
             response.send(csv);
             response.end();
         }
+        else if (result == ''){
+            response.render('error.html', {message: 'NO DATA FOUND - PLEASE TRY AGAIN'});
+            response.end();   
+        }
         else{
-            response.send('Unexpected error, please contact System Administrator');
+            response.render('error.html', {message: 'UNEXPECTED ERROR, PLEASE CONTACT THE SYSTEM ADMINISTRATOR'});
             response.end();
         }
     });
@@ -685,12 +725,16 @@ app.post('/dataset4', function (request, response) {
     let selectquery = "select incomeb32, gender, relationc32 from survey32 where gender = '1' and relationc32 = '2'"
     con.query(selectquery, (error, result) => {
     console.log(error || result);
-    if (error == null){
+    if (error === null && result != ''){
         response.send(result);
         response.end();
     }
+    else if (result == ''){
+        response.render('error.html', {message: 'NO DATA FOUND - PLEASE TRY AGAIN'});
+        response.end();   
+    }
     else{
-        response.send('Unexpected error, please contact System Administrator');
+        response.render('error.html', {message: 'UNEXPECTED ERROR, PLEASE CONTACT THE SYSTEM ADMINISTRATOR'});
         response.end();
        }
     });
