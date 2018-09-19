@@ -203,9 +203,9 @@
                                 </div> -->
                             <div class="form-group form-check-inline col-lg-12">
                                 <label for="opage">Gender</label>
-                                <br>
                                 <input class="form-check-input" type="radio" name="gender" id="genderMale" value="" checked="checked">
                                 <label class="form-check-label" for="filterNone"> Filter not required </label>
+                                <br>
                                 <input class="form-check-input" type="radio" name="gender" id="genderMale" value="0" checked="checked">
                                 <label class="form-check-label" for="filterYes">Male</label>
                                 <input class="form-check-input" type="radio" name="gender" id="genderFemale" value="1">
@@ -284,6 +284,7 @@
                                 <label for="mortgagedist">Deferred bill for Mortgage Payment within last 12 months</label>
                                 <input class="form-check-input" type="radio" name="mortgagedist" id="mdistnone" value="" checked="checked">
                                 <label class="form-check-label" for="None"> Filter not required </label>
+                                <br>
                                 <input class="form-check-input" type="radio" name="mortgagedist" id="mdistno" value="0">
                                 <label class="form-check-label" for="no">No</label>
                                 <input class="form-check-input" type="radio" name="mortgagedist" id="mdistyes" value="1">
@@ -295,6 +296,7 @@
                             <label for="rentdist">Deferred bill for Rent Payment within last 12 months</label>
                             <input class="form-check-input" type="radio" name="rentdist" id="rdistnone" value="" checked="checked">
                             <label class="form-check-label" for="none"> Filter not required </label>
+                            <br>
                             <input class="form-check-input" type="radio" name="rentdist" id="rdistno" value="0">
                             <label class="form-check-label" for="no">No</label>
                             <input class="form-check-input" type="radio" name="rentdist" id="rdistyes" value="1">
@@ -352,7 +354,7 @@
             </div>
             <div class="form-group col-lg-12">
                 <label for="personalsafetyrating">Individual Safety Satisfaction</label>
-                <select name="oppsr" id="oppsr" class="form-control">
+                <select name="oppsr" id="oppsr" class="form-control" onchange="ToggleOnOff()">
                     <option value="" selected> Filter not required </option>
                     <option value=">"> Greater Than</option>
                     <option value="<"> Less Than </option>
@@ -374,7 +376,7 @@
             </div>
             <div class="form-group col-lg-12">
                 <label for="communityrating">Community Satisfaction</label>
-                <select name="opcr" id="opcr" class="form-control">
+                <select name="opcr" id="opcr" class="form-control" onchange="ToggleOnOff()">
                     <option value="" selected> Filter not required </option>
                     <option value=">"> Greater Than</option>
                     <option value="<"> Less Than </option>
@@ -396,7 +398,7 @@
             </div>
             <div class="form-group col-lg-12">
                 <label for="futuresecurityrating">Future Security Satisfaction</label>
-                <select name="opfsr" id="opfsr" class="form-control">
+                <select name="opfsr" id="opfsr" class="form-control" onchange="ToggleOnOff()">
                     <option value="" selected> Filter not required </option>
                     <option value=">"> Greater Than</option>
                     <option value="<"> Less Than </option>
@@ -424,7 +426,7 @@
                                     <input class="form-check-input" type="radio" name="postcodeRequired" id="postcodeRequired" value="" onclick="Nofilter()" />
                                     <label class="form-check-label" for="postcodeRequired">Do Not Use Filter</label>
 
-                <input type="text" class="w-100" name="postcode" id="postcode" placeholder="postcode" value = "" required="required">
+                <input type="text" class="w-100" name="postcode" id="postcode" placeholder="postcode" value = "3000,3001,3002,2000" required="required">
             </div>
                             <div class="form-group col-lg-12">
                                 <hr class="mt-30 mb-0">
