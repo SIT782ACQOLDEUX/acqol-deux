@@ -2,7 +2,7 @@
   Ansley Lam
 18/09/2018
 --------------------------------------------- */
-
+/*
 function Yesfilter(){
 
 document.getElementById("filterYes");
@@ -31,7 +31,8 @@ document.getElementById('opfsr').disabled=false;
 document.getElementById('futuresecurityrating').disabled=false;
 document.getElementById('postcode').disabled=false;
 }
-
+*/
+/*
 function Nofilter(){
 
 document.getElementById("filterNo");
@@ -60,3 +61,41 @@ document.getElementById('opfsr').disabled=true;
 document.getElementById('futuresecurityrating').disabled=true;
 document.getElementById('postcode').disabled=true;
 }
+*/
+
+function Yesfilter(){
+document.getElementById('postcode').disabled=false;
+}
+function Nofilter(){
+document.getElementById('postcode').disabled=true;
+}
+
+function ToggleOnOff(){
+  if ($("#opage").val() == ''){
+    document.getElementById('age').disabled=true;
+  }
+  else if ($("#opage").val() != ''){
+    document.getElementById('age').disabled=false;
+  }
+  if ($("#oppsr").val() == ''){
+    document.getElementById('personalsafetyrating').disabled=true;
+  }
+  else if ($("#oppsr").val() != ''){
+    document.getElementById('personalsafetyrating').disabled=false;
+  }
+  if ($("#opfsr").val() == ''){
+    document.getElementById('futuresecurityrating').disabled=true;
+  }
+  else if ($("#opfsr").val() != ''){
+    document.getElementById('futuresecurityrating').disabled=false;
+  }
+  if ($("#opcr").val() == ''){
+    document.getElementById('communityrating').disabled=true;
+  }
+  else if ($("#opcr").val() != ''){
+    document.getElementById('communityrating').disabled=false;
+  }
+}
+
+
+    

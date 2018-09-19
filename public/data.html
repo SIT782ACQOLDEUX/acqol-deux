@@ -64,7 +64,7 @@
 	<script src="js/filtertoggle.js"></script>
 	
 </head>
-<body>
+<body onload="ToggleOnOff()">
 
 <!-- LOADER -->
 <div id="loader-overflow">
@@ -194,14 +194,18 @@
                     <!-- TITLE -->
                     <h4 class="blog-page-title mt-50 mb-25">CREATE YOUR DATASET</h4>
                     <div class="row">
-                        <form method="post" action="/select" class="form">
+                        <form method="post" action="/select2" class="form">
+                          <!--  <div class="form-group form-check-inline col-lg-12">
+                                    <input class="form-check-input" type="radio" name="filter" id="filterYes" value="YES" checked="checked" onclick="Yesfilter()" /> 
+                                    <label class="form-check-label" for="filterYes">Use Filter</label>
+                                    <input class="form-check-input" type="radio" name="filter" id="filterNo" value="NO" onclick="Nofilter()" />
+                                    <label class="form-check-label" for="filterNo">Do Not Use Filter</label>
+                                </div> -->
                             <div class="form-group form-check-inline col-lg-12">
-                                <input class="form-check-input" type="radio" name="filter" id="filterYes" value="YES" checked="checked" onclick="Yesfilter()" /> 
-                                <label class="form-check-label" for="filterYes">Use Filter</label>
-                                <input class="form-check-input" type="radio" name="filter" id="filterNo" value="NO" onclick="Nofilter()" />
-                                <label class="form-check-label" for="filterNo">Do Not Use Filter</label>
-                            </div>
-                            <div class="form-group form-check-inline col-lg-12">
+                                <label for="opage">Gender</label>
+                                <br>
+                                <input class="form-check-input" type="radio" name="gender" id="genderMale" value="" checked="checked">
+                                <label class="form-check-label" for="filterNone"> Filter not required </label>
                                 <input class="form-check-input" type="radio" name="gender" id="genderMale" value="0" checked="checked">
                                 <label class="form-check-label" for="filterYes">Male</label>
                                 <input class="form-check-input" type="radio" name="gender" id="genderFemale" value="1">
@@ -209,18 +213,20 @@
                             </div>
                             <div class="form-group col-lg-12">
                                 <label for="opage">Age range</label>
-                                <select name="opage" id="opage" class="form-control">
-                                    <option value=">" selected> Greater Than</option>
+                                <select name="opage" id="opage" class="form-control" onchange="ToggleOnOff()">
+                                    <option value="" selected> Filter not required </option>
+                                    <option value=">" > Greater Than</option>
                                     <option value="<"> Less Than </option>
                                     <option value="="> Equals To </option>
                                 </select>
-                                <input type="number" class="w-100" name="age" id="age" placeholder="Age" value = "0">
+                                <input type="number" class="w-100" name="age" id="age" placeholder="Age" value = "0" required="required">
                             </div>
 
                             <div class="form-group col-lg-12">
                                 <label for="income">Income range</label>
                                 <select name="income" id="income" class="form-control">
-                                    <option value="0" selected> Less than $15,000 </option>
+                                    <option value="" selected> Filter not required </option>
+                                    <option value="0"> Less than $15,000 </option>
                                     <option value="1"> Between $15,000 and $30,000 </option>
                                     <option value="2"> Between $31,000 and $60,000 </option>
                                     <option value="3"> Between $61,000 and $100,000 </option>
@@ -235,7 +241,8 @@
                             <div class="form-group col-lg-12">
                                 <label for="maritalstatus">Marital Status</label>
                                 <select name="maritalstatus" id="maritalstatus" class="form-control">
-                                    <option value="0" selected> Married </option>
+                                    <option value="" selected> Filter not required </option>
+                                    <option value="0"> Married </option>
                                     <option value="1"> Defacto/ living together </option>
                                     <option value="2"> Never married </option>
                                     <option value="3"> Separated but not divorced </option>
@@ -248,7 +255,8 @@
                             <div class="form-group col-lg-12">
                                 <label for="mortgageamount">Mortgage Amount per week</label>
                                 <select name="mortgageamount" id="mortgageamount" class="form-control">
-                                    <option value="0" selected> Less than $150 </option>
+                                    <option value="" selected> Filter not required </option>
+                                    <option value="0"> Less than $150 </option>
                                     <option value="1"> Between $150 and $300 </option>
                                     <option value="2"> Between $301 and $500 </option>
                                     <option value="3"> Between $501 and $1,000 </option>
@@ -261,7 +269,8 @@
                                 <div class="form-group col-lg-12">
                                     <label for="rentamount">Rent Amount per week</label>
                                     <select name="rentamount" id="rentamount" class="form-control">
-                                        <option value="0" selected> Less than $150 </option>
+                                        <option value="" selected> Filter not required </option>
+                                        <option value="0"> Less than $150 </option>
                                         <option value="1"> Between $150 and $300 </option>
                                         <option value="2"> Between $301 and $500 </option>
                                         <option value="3"> Between $501 and $1,000 </option>
@@ -273,7 +282,9 @@
                             </div>
                             <div class="form-group col-lg-12">
                                 <label for="mortgagedist">Deferred bill for Mortgage Payment within last 12 months</label>
-                                <input class="form-check-input" type="radio" name="mortgagedist" id="mdistno" value="0" checked="checked">
+                                <input class="form-check-input" type="radio" name="mortgagedist" id="mdistnone" value="" checked="checked">
+                                <label class="form-check-label" for="None"> Filter not required </label>
+                                <input class="form-check-input" type="radio" name="mortgagedist" id="mdistno" value="0">
                                 <label class="form-check-label" for="no">No</label>
                                 <input class="form-check-input" type="radio" name="mortgagedist" id="mdistyes" value="1">
                                 <label class="form-check-label" for="yes">Yes</label>
@@ -282,7 +293,9 @@
                         </div>
                         <div class="form-group col-lg-12">
                             <label for="rentdist">Deferred bill for Rent Payment within last 12 months</label>
-                            <input class="form-check-input" type="radio" name="rentdist" id="rdistno" value="0" checked="checked">
+                            <input class="form-check-input" type="radio" name="rentdist" id="rdistnone" value="" checked="checked">
+                            <label class="form-check-label" for="none"> Filter not required </label>
+                            <input class="form-check-input" type="radio" name="rentdist" id="rdistno" value="0">
                             <label class="form-check-label" for="no">No</label>
                             <input class="form-check-input" type="radio" name="rentdist" id="rdistyes" value="1">
                             <label class="form-check-label" for="yes">Yes</label>
@@ -292,7 +305,8 @@
                     <div class="form-group col-lg-12">
                         <label for="workstatus">Full-time Work Status</label>
                         <select name="workstatus" id="workstatus" class="form-control">
-                            <option value="0" selected> Full-time Paid Employment </option>
+                            <option value="" selected> Filter not required </option>
+                            <option value="0"> Full-time Paid Employment </option>
                             <option value="1"> Full-time Retired </option>
                             <option value="3"> Full-time Volunteer </option>
                             <option value="4"> Full-time home/family care </option>
@@ -303,7 +317,8 @@
                 <div class="form-group col-lg-12">
                     <label for="livingarrangement">Living Arrangements</label>
                     <select name="livingarrangement" id="livingarrangement" class="form-control">
-                        <option value="0" selected> Renting </option>
+                        <option value="" selected> Filter not required </option>
+                        <option value="0"> Renting </option>
                         <option value="1"> Renting and own mortgage-free home </option>
                         <option value="2"> Renting and pay a mortgage </option>
                         <option value="3"> Living iin own home and mortgage free </option>
@@ -315,7 +330,8 @@
                 <div class="form-group col-lg-12">
                     <label for="household">Household</label>
                     <select name="household" id="household" class="form-control">
-                        <option value="0" selected> Alone </option>
+                        <option value="" selected> Filter not required  </option>
+                        <option value="0" > Alone </option>
                         <option value="1"> Partner </option>
                         <option value="2"> Children </option>
                         <option value="3"> Parents </option>
@@ -337,7 +353,8 @@
             <div class="form-group col-lg-12">
                 <label for="personalsafetyrating">Individual Safety Satisfaction</label>
                 <select name="oppsr" id="oppsr" class="form-control">
-                    <option value=">" selected> Greater Than</option>
+                    <option value="" selected> Filter not required </option>
+                    <option value=">"> Greater Than</option>
                     <option value="<"> Less Than </option>
                     <option value="="> Equals To </option>
                 </select>
@@ -358,7 +375,8 @@
             <div class="form-group col-lg-12">
                 <label for="communityrating">Community Satisfaction</label>
                 <select name="opcr" id="opcr" class="form-control">
-                    <option value=">" selected> Greater Than</option>
+                    <option value="" selected> Filter not required </option>
+                    <option value=">"> Greater Than</option>
                     <option value="<"> Less Than </option>
                     <option value="="> Equals To </option>
                 </select>
@@ -379,7 +397,8 @@
             <div class="form-group col-lg-12">
                 <label for="futuresecurityrating">Future Security Satisfaction</label>
                 <select name="opfsr" id="opfsr" class="form-control">
-                    <option value=">" selected> Greater Than</option>
+                    <option value="" selected> Filter not required </option>
+                    <option value=">"> Greater Than</option>
                     <option value="<"> Less Than </option>
                     <option value="="> Equals To </option>
                 </select>
@@ -398,8 +417,14 @@
                 </select>
             </div>
             <div class="form-group col-lg-12">
-                <label for="opage">Postcode</label>
-                <input type="text" class="w-100" name="postcode" id="postcode" placeholder="postcode" value = "3000">
+                    <label for="postcode">Postcode</label>
+                    <br>
+                                    <input class="form-check-input" type="radio" name="postcodeRequired" id="postcodeRequired" value="Yes" checked="checked" onclick="Yesfilter()" /> 
+                                    <label class="form-check-label" for="postcodeRequired">Use Filter</label>
+                                    <input class="form-check-input" type="radio" name="postcodeRequired" id="postcodeRequired" value="" onclick="Nofilter()" />
+                                    <label class="form-check-label" for="postcodeRequired">Do Not Use Filter</label>
+
+                <input type="text" class="w-100" name="postcode" id="postcode" placeholder="postcode" value = "" required="required">
             </div>
                             <div class="form-group col-lg-12">
                                 <hr class="mt-30 mb-0">

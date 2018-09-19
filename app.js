@@ -448,6 +448,7 @@ app.post('/select2', function (request, response) {
     var futuresecurityrating = request.body.futuresecurityrating;
     var opfsr = request.body.opfsr; 
     var postcode = request.body.postcode;
+    var postcodeRequired = request.body.postcodeRequired;
 
     var sqlage = '';
     var sqlgender = '';
@@ -461,11 +462,12 @@ app.post('/select2', function (request, response) {
     var sqllivingarrangement = '';
     var sqlhousehold = '';
     var sqlpersonalsafetyrating = '';
+    var sqlcommunityrating = '';
     var sqlfuturesecurityrating = '';
     var sqlpostcode = '';
 
 
-if (age != ''){
+if (opage != ''){
     var sqlage = "age " + opage + " " + age;
 }
 if (gender != ''){
@@ -498,22 +500,22 @@ if (livingarrangement != ''){
 if (household != ''){
     var sqlhousehold = " AND hhold32 = " + household;
 }
-if (personalsafetyrating != ''){
+if (oppsr != ''){
     var sqlpersonalsafetyrating = " AND s5safe32 " + oppsr + " " + personalsafetyrating;
 }
-if (communityrating != ''){
+if (opcr != ''){
     var sqlcommunityrating = " AND s6come32 " + opcr + " " + communityrating;
 }
-if (futuresecurityrating != ''){
+if (opfsr != ''){
     var sqlfuturesecurityrating = " AND s7sece32 " + opfsr + " " + futuresecurityrating;
 }
-if (postcode != ''){
+if (postcodeRequired != ''){
     var sqlpostcode = " AND postcode in ( " + postcode + " )";
 }
 
 
     var condition = sqlage + sqlgender + sqlincome + sqlmaritalstatus + sqlmortgageamount + sqlrentdist + sqlworkstatus + sqllivingarrangement + 
-    sqlhousehold + sqlpersonalsafetyrating + futuresecurityrating + postcode;
+    sqlhousehold + sqlpersonalsafetyrating + sqlcommunityrating + sqlfuturesecurityrating + sqlpostcode;
 
     //console.log(condition.slice(1,4));
 
@@ -531,7 +533,7 @@ if (postcode != ''){
     console.log('This is the SQL query ==' + selectquery);
 
         con.query(selectquery, (error, result) => {
-        console.log(error || result);
+      //  console.log(error || result);
         if (error === null && result != ''){
            
             const fields = ['survey','intro_consent','ID','Xsect_ID','gender','age','agegrp','alone32','partner32','children32','parents32','other32','hhold32','relationc32','workc32','workpt32','workvol32','studypt32','ptcas32','ptsemret32','unempl32','empldec32','paidempstat32','volstatus32','studystat32','ftwork32','seekwork32','ftseekwk32','incomeb32','postcode','partic','lifesate32','s1mate32','s2heae32','s3proe32','s4inte32','s5safe32','s6come32','s7sece32','austlifee32','a1ecoe32','a2enve32','a3soce32','a4gove32','a5buse32','a6nate32','le01b32','le02c32','attack1a32','attack2c32','livingarr32','rentown32','rentamount32','rentdist32','mortgamount32','mortgdist32'];
