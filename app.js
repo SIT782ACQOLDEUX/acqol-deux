@@ -423,10 +423,142 @@ app.post('/delete', function (request, response) {
                     }
 
 });
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/* SELECT (DISABLE & ENABLE FILTERS) MYSQL DATA  ANSLEY 19/09/2018 */
+
+app.post('/select2', function (request, response) {
+  
+    var filter = request.body.filter;
+    var age = request.body.age; 
+    var opage = request.body.opage; 
+    var gender =  request.body.gender;
+    var income = request.body.income;
+    var maritalstatus = request.body.maritalstatus;
+    var mortgageamount = request.body.mortgageamount;
+    var rentamount = request.body.rentamount;
+    var mortgagedist = request.body.mortgagedist;
+    var rentdist = request.body.rentdist; 
+    var workstatus = request.body.workstatus; 
+    var livingarrangement = request.body.livingarrangement; 
+    var household = request.body.household; 
+    var personalsafetyrating = request.body.personalsafetyrating;
+    var oppsr = request.body.oppsr; 
+    var communityrating = request.body.communityrating;
+    var opcr = request.body.opcr; 
+    var futuresecurityrating = request.body.futuresecurityrating;
+    var opfsr = request.body.opfsr; 
+    var postcode = request.body.postcode;
+
+    var sqlage = '';
+    var sqlgender = '';
+    var sqlincome = '';
+    var sqlmaritalstatus = '';
+    var sqlmortgageamount = '';
+    var sqlrentamount = '';
+    var sqlmortgagedist = '';
+    var sqlrentdist = '';
+    var sqlworkstatus = '';
+    var sqllivingarrangement = '';
+    var sqlhousehold = '';
+    var sqlpersonalsafetyrating = '';
+    var sqlfuturesecurityrating = '';
+    var sqlpostcode = '';
+
+
+if (age != ''){
+    var sqlage = "age " + opage + " " + age;
+}
+if (gender != ''){
+    var sqlgender = " AND gender = " + gender;
+}
+if (income != ''){
+    var sqlincome = " AND incomeb32 = " + income;
+}
+if (maritalstatus != ''){
+    var sqlmaritalstatus = " AND relationc32 = " + maritalstatus;
+}
+if (mortgageamount != ''){
+    var sqlmortgageamount = " AND mortgamount32 = " + mortgageamount;
+}
+if (rentamount != ''){
+    var sqlrentamount = " AND rentamount32 = " + rentamount;
+}
+if (mortgagedist != ''){
+    var sqlmortgagedist = " AND mortgdist32 = " + mortgagedist;
+}
+if (rentdist != ''){
+    var sqlrentdist = " AND rentdist32 = " + rentdist;
+}
+if (workstatus != ''){
+    var sqlworkstatus = " AND workc32 = " +  workstatus;
+}
+if (livingarrangement != ''){
+    var sqllivingarrangement = " AND livingarr32 = " + livingarrangement;
+}
+if (household != ''){
+    var sqlhousehold = " AND hhold32 = " + household;
+}
+if (personalsafetyrating != ''){
+    var sqlpersonalsafetyrating = " AND s5safe32 " + oppsr + " " + personalsafetyrating;
+}
+if (communityrating != ''){
+    var sqlcommunityrating = " AND s6come32 " + opcr + " " + communityrating;
+}
+if (futuresecurityrating != ''){
+    var sqlfuturesecurityrating = " AND s7sece32 " + opfsr + " " + futuresecurityrating;
+}
+if (postcode != ''){
+    var sqlpostcode = " AND postcode in ( " + postcode + " )";
+}
+
+
+    var condition = sqlage + sqlgender + sqlincome + sqlmaritalstatus + sqlmortgageamount + sqlrentdist + sqlworkstatus + sqllivingarrangement + 
+    sqlhousehold + sqlpersonalsafetyrating + futuresecurityrating + postcode;
+
+    //console.log(condition.slice(1,4));
+
+    if ((condition.slice(1,4)) == 'AND'){
+        var condition = condition.slice(4,condition.length);
+        }
+
+    var selectquery = 'SELECT * FROM survey32 WHERE ' + condition; 
+
+    if (condition == ''){
+    var selectquery = 'SELECT * FROM survey32'
+    }
+
+    console.log('This is the conditions ==' + condition);
+    console.log('This is the SQL query ==' + selectquery);
+
+        con.query(selectquery, (error, result) => {
+        console.log(error || result);
+        if (error === null && result != ''){
+           
+            const fields = ['survey','intro_consent','ID','Xsect_ID','gender','age','agegrp','alone32','partner32','children32','parents32','other32','hhold32','relationc32','workc32','workpt32','workvol32','studypt32','ptcas32','ptsemret32','unempl32','empldec32','paidempstat32','volstatus32','studystat32','ftwork32','seekwork32','ftseekwk32','incomeb32','postcode','partic','lifesate32','s1mate32','s2heae32','s3proe32','s4inte32','s5safe32','s6come32','s7sece32','austlifee32','a1ecoe32','a2enve32','a3soce32','a4gove32','a5buse32','a6nate32','le01b32','le02c32','attack1a32','attack2c32','livingarr32','rentown32','rentamount32','rentdist32','mortgamount32','mortgdist32'];
+            const json2csvParser = new Json2csvParser({ fields });
+            const csv = json2csvParser.parse(result);
+            response.attachment(date.getFullYear() + '_' + date.getMonth() + '_' + date.getDate() +'_acqoldata.csv');
+            response.type('csv');
+            response.send(csv);
+            response.end();
+        
+        }
+        else if (result == ''){
+            //response.send('No data found');
+            response.render('error.html', {message: 'NO DATA FOUND - PLEASE TRY AGAIN'});
+            response.end();   
+        }
+        else{
+           // response.send('Unexpected error, please contact System Administrator');
+            response.render('error.html', {message: 'UNEXPECTED ERROR, PLEASE CONTACT THE SYSTEM ADMINISTRATOR'});
+            response.end();
+           }
+        });
+
+});
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /* SELECT MYSQL DATA  ANSLEY 26/08/2018 */
-/* Will need to add filters */
 
 app.post('/select', function (request, response) {
   
