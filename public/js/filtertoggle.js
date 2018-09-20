@@ -95,6 +95,12 @@ function ToggleOnOff(){
   else if ($("#opcr").val() != ''){
     document.getElementById('communityrating').disabled=false;
   }
+  if ($("#postcodeRequired").val() == ''){
+    document.getElementById('postcode').disabled=true;
+  }
+  else if ($("#postcodeRequired").val() != ''){
+    document.getElementById('postcode').disabled=false;
+  }
 }
 
 
