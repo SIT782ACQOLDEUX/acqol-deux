@@ -468,7 +468,7 @@ app.post('/select2', function (request, response) {
 
 
 if (opage != ''){
-    var sqlage = "age " + opage + " " + age;
+    var sqlage = ' age ' + opage + ' ' + '\"' + age + '\"';
 }
 if (gender != ''){
     var sqlgender = " AND gender = " + gender;
@@ -486,10 +486,12 @@ if (rentamount != ''){
     var sqlrentamount = " AND rentamount32 = " + rentamount;
 }
 if (mortgagedist != ''){
-    var sqlmortgagedist = " AND mortgdist32 = " + mortgagedist;
+   // var sqlmortgagedist = " AND mortgdist32 = " + mortgagedist;
+   var sqlmortgagedist = ' AND mortgdist32 = \"' + mortgagedist + '\"'
 }
 if (rentdist != ''){
-    var sqlrentdist = " AND rentdist32 = " + rentdist;
+   // var sqlrentdist = " AND rentdist32 = " + rentdist;
+   var sqlrentdist = ' AND rentdist32 = \"' + rentdist + '\"'
 }
 if (workstatus != ''){
     var sqlworkstatus = " AND workc32 = " +  workstatus;
@@ -510,14 +512,14 @@ if (opfsr != ''){
     var sqlfuturesecurityrating = " AND s7sece32 " + opfsr + " " + futuresecurityrating;
 }
 if (postcodeRequired != ''){
-    var sqlpostcode = " AND postcode in ( " + postcode + " )";
+    var sqlpostcode = ' AND postcode in (' + '\"' + postcode + '\"' + ' )'
 }
 
 
-    var condition = sqlage + sqlgender + sqlincome + sqlmaritalstatus + sqlmortgageamount + sqlrentdist + sqlworkstatus + sqllivingarrangement + 
+    var condition = sqlage + sqlgender + sqlincome + sqlmaritalstatus + sqlmortgageamount + sqlmortgagedist + sqlrentdist + sqlworkstatus + sqllivingarrangement + 
     sqlhousehold + sqlpersonalsafetyrating + sqlcommunityrating + sqlfuturesecurityrating + sqlpostcode;
 
-    //console.log(condition.slice(1,4));
+    console.log('='+condition.slice(1,4)+'=');
 
     if ((condition.slice(1,4)) == 'AND'){
         var condition = condition.slice(4,condition.length);

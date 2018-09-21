@@ -419,15 +419,12 @@
                 </select>
             </div>
             <div class="form-group col-lg-12">
-                    <label for="postcode">Postcode</label>
-                    <br>
-                                    <input class="form-check-input" type="radio" name="postcodeRequired" id="postcodeRequired" value="" checked="checked" onclick="Nofilter()" /> 
-                                    <label class="form-check-label" for="postcodeRequired">Filter not required</label>
-                                    <input class="form-check-input" type="radio" name="postcodeRequired" id="postcodeRequired" value="Yes" onclick="Yesfilter()" />
-                                    <label class="form-check-label" for="postcodeRequired">Postcode required</label>
-
-                <input type="text" class="w-100" name="postcode" id="postcode" placeholder="postcode" value = "3000,3001,3002,2000" required="required">
-            </div>
+                <label for="postcode">Postcode</label>
+                <select name="postcodeRequired" id="postcodeRequired" class="form-control" onchange="ToggleOnOff()">
+                    <option value="" selected> Filter not required </option>
+                    <option value="Yes"> Filter required</option>
+                    <input type="text" class="w-100" name="postcode" id="postcode" placeholder="postcode" value = "3000,3001,3002,2000" required="required">
+                </div>
                             <div class="form-group col-lg-12">
                                 <hr class="mt-30 mb-0">
                             </div>

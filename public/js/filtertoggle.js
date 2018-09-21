@@ -63,12 +63,6 @@ document.getElementById('postcode').disabled=true;
 }
 */
 
-function Yesfilter(){
-document.getElementById('postcode').disabled=false;
-}
-function Nofilter(){
-document.getElementById('postcode').disabled=true;
-}
 
 function ToggleOnOff(){
   if ($("#opage").val() == ''){
