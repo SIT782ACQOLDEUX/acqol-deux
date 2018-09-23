@@ -22,7 +22,6 @@ var express = require('express'),
     Json2csvParser = require('json2csv').Parser; //Required to convert Json to csv
 //HTML Render engine
 var ejs = require('ejs');
-
 var date = new Date();
 
 /////////////////////////////DATEBASE//////////////////////////////////////
