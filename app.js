@@ -398,6 +398,126 @@ else {
     fs.unlinkSync(request.file.path);   // remove temp file
 });
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/* SELECT  MYSQL DATA FOR PREVIEW ANSLEY 24/09/2018 */
+
+app.post('/preview', function (request, response) {
+  
+    var filter = request.body.filter;
+    var age = request.body.age; 
+    var opage = request.body.opage; 
+    var gender =  request.body.gender;
+    var income = request.body.income;
+    var maritalstatus = request.body.maritalstatus;
+    var mortgageamount = request.body.mortgageamount;
+    var rentamount = request.body.rentamount;
+    var mortgagedist = request.body.mortgagedist;
+    var rentdist = request.body.rentdist; 
+    var workstatus = request.body.workstatus; 
+    var livingarrangement = request.body.livingarrangement; 
+    var household = request.body.household; 
+    var personalsafetyrating = request.body.personalsafetyrating;
+    var oppsr = request.body.oppsr; 
+    var communityrating = request.body.communityrating;
+    var opcr = request.body.opcr; 
+    var futuresecurityrating = request.body.futuresecurityrating;
+    var opfsr = request.body.opfsr; 
+    var postcode = request.body.postcode;
+    var postcodeRequired = request.body.postcodeRequired;
+
+    var sqlage = '';
+    var sqlgender = '';
+    var sqlincome = '';
+    var sqlmaritalstatus = '';
+    var sqlmortgageamount = '';
+    var sqlrentamount = '';
+    var sqlmortgagedist = '';
+    var sqlrentdist = '';
+    var sqlworkstatus = '';
+    var sqllivingarrangement = '';
+    var sqlhousehold = '';
+    var sqlpersonalsafetyrating = '';
+    var sqlcommunityrating = '';
+    var sqlfuturesecurityrating = '';
+    var sqlpostcode = '';
+
+
+if (opage != ''){
+    var sqlage = ' age ' + opage + ' ' + '\"' + age + '\"';
+}
+if (gender != ''){
+    var sqlgender = " AND gender = " + gender;
+}
+if (income != ''){
+    var sqlincome = " AND incomeb32 = " + income;
+}
+if (maritalstatus != ''){
+    var sqlmaritalstatus = " AND relationc32 = " + maritalstatus;
+}
+if (mortgageamount != ''){
+    var sqlmortgageamount = " AND mortgamount32 = " + mortgageamount;
+}
+if (rentamount != ''){
+    var sqlrentamount = " AND rentamount32 = " + rentamount;
+}
+if (mortgagedist != ''){
+   var sqlmortgagedist = ' AND mortgdist32 = \"' + mortgagedist + '\"'
+}
+if (rentdist != ''){
+   var sqlrentdist = ' AND rentdist32 = \"' + rentdist + '\"'
+}
+if (workstatus != ''){
+    var sqlworkstatus = " AND workc32 = " +  workstatus;
+}
+if (livingarrangement != ''){
+    var sqllivingarrangement = " AND livingarr32 = " + livingarrangement;
+}
+if (household != ''){
+    var sqlhousehold = " AND hhold32 = " + household;
+}
+if (oppsr != ''){
+    var sqlpersonalsafetyrating = " AND s5safe32 " + oppsr + " " + personalsafetyrating;
+}
+if (opcr != ''){
+    var sqlcommunityrating = " AND s6come32 " + opcr + " " + communityrating;
+}
+if (opfsr != ''){
+    var sqlfuturesecurityrating = " AND s7sece32 " + opfsr + " " + futuresecurityrating;
+}
+if (postcodeRequired != ''){
+    var sqlpostcode = ' AND postcode in (' + '\"' + postcode + '\"' + ' )'
+}
+
+
+    var condition = sqlage + sqlgender + sqlincome + sqlmaritalstatus + sqlmortgageamount + sqlmortgagedist + sqlrentdist + sqlworkstatus + sqllivingarrangement + 
+    sqlhousehold + sqlpersonalsafetyrating + sqlcommunityrating + sqlfuturesecurityrating + sqlpostcode;
+
+    console.log('='+condition.slice(1,4)+'=');
+
+    if ((condition.slice(1,4)) == 'AND'){
+        var condition = condition.slice(4,condition.length);
+        }
+
+    var selectquery = 'SELECT survey, intro_consent, ID FROM survey32 WHERE ' + condition + 'limit 10'; 
+
+    if (condition == ''){
+    var selectquery = 'SELECT survey, intro_consent, ID FROM survey32 limit 10'
+    }
+
+    console.log('This is the conditions ==' + condition);
+    console.log('This is the SQL query ==' + selectquery);
+
+        con.query(selectquery, (error, result) => {
+        console.log(error || result);
+      
+        console.log(JSON.stringify(result));
+        
+        response.send(JSON.stringify(result));
+       // response.send(result);
+            
+        });
+
+});
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /* DELETE MYSQL DATA  ANSLEY 26/08/2018 */

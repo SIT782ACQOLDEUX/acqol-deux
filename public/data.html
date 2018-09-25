@@ -63,6 +63,7 @@
     <!-- Enabling & Disabling filter options script-->
 	<script src="js/filtertoggle.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+    
 
 </head>
 <body onload="ToggleOnOff()">
@@ -438,23 +439,32 @@
                         </form>
                         </div>
                         <div class="col-lg-8">
+
                             <table id="table_value" class="display">
                                 <thead>
-                                <tr>
-                                    <th>Column 1</th>
-                                    <th>Column 2</th>
-                                </tr>
+                                    <tr>
+                                        <th>survey</th>
+                                        <th>intro_consent</th>
+                                        <th>ID</th>
+                                      <!--  <th>Xsect_ID</th>
+                                        <th>gender</th>
+                                        <th>age</th>
+                                        <th>agegrp</th>
+                                        <th>alone32</th>
+                                        <th>partner32</th>
+                                   <th>children32</th>
+                                        <th>parents32</th>
+                                        <th>other32</th>
+                                        <th>hhold32</th>
+                                        <th>relationc32</th>
+                                        <th>workc32</th>
+                                        <th>workpt32</th>
+                                        <th>workvol32</th>
+                                        <th>studypt32</th>
+                                        <th>ptcas32</th>
+                                        <th>ptsemret32</th>-->
+                                    </tr>
                                 </thead>
-                                <tbody>
-                                <tr>
-                                    <td>Row 1 Data 1</td>
-                                    <td>Row 1 Data 2</td>
-                                </tr>
-                                <tr>
-                                    <td>Row 2 Data 1</td>
-                                    <td>Row 2 Data 2</td>
-                                </tr>
-                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -563,10 +573,93 @@
 <script src="js/fs-menu.js"></script>
 
 <script>
-    $(document).ready( function () {
-        $('#table_value').DataTable();
-    } );
-</script>
+    //  $(document).ready( function () {
+      //   $('#table_value').DataTable();
+      //} );
+  
+    $(document).ready(function() {
+  
+        var age=$('#age').val();
+        var opage=$('#opage').val();
+        var gender=$("[name='gender']").val();
+        var income=$('#income').val();
+        var maritalstatus=$('#maritalstatus').val();
+        var mortgageamount=$('#mortgageamount').val();
+        var rentamount=$('#rentamount').val();
+        var mortgagedist=$("[name='mortgagedist']").val();
+        var rentdist=$("[name='rentdist']").val();
+        var workstatus=$('#workstatus').val();
+        var livingarrangement=$('#livingarrangement').val();
+        var household=$('#household').val();
+        var personalsafetyrating=$('#personalsafetyrating').val();
+        var oppsr=$('#oppsr').val();
+        var communityrating=$('#communityrating').val();
+        var opcr=$('#opcr').val();
+        var futuresecurityrating=$('#futuresecurityrating').val();
+        var opfsr=$('#opfsr').val();
+        var postcode=$('#postcode').val();
+        var postcodeRequired=$('#postcodeRequired').val();
+  
+          $.ajax({
+              url: "/preview",
+              method: "POST",
+            //  datatype:'json',
+              data: { 
+          'age' : age, 
+          'opage' : opage, 
+          'gender' :  gender,
+          'income' : income,
+          'maritalstatus' : maritalstatus,
+          'mortgageamount' : mortgageamount,
+          'rentamount' : rentamount,
+          'mortgagedist' : mortgagedist,
+          'rentdist' : rentdist, 
+          'workstatus' : workstatus, 
+          'livingarrangement' : livingarrangement, 
+          'household' : household, 
+          'personalsafetyrating' : personalsafetyrating,
+          'oppsr' : oppsr, 
+          'communityrating' : communityrating,
+          'opcr' : opcr, 
+          'futuresecurityrating' : futuresecurityrating,
+          'opfsr' : opfsr, 
+          'postcode' : postcode,
+          'postcodeRequired' : postcodeRequired
+        },
+              success: function (result) {
+                  $('#table_value').DataTable({
+                    "processing": true,
+                      "serverSide": true,
+                      "datatype":"json",
+                        'data':result,
+                     'column': [
+              { 'data' : 'survey' }, 
+              { 'data' : 'intro_consent' }, 
+              { 'data' : 'ID' }
+            /*{ "data": "Xsect_ID" },
+              { "data": "gender" },
+              { "data": "age" },
+              { "data": "agegrp" },
+              { "data": "alone32" },
+              { "data": "partner32" }, 
+              { "data": children32 }, 
+              { "data": parents32 }, 
+              { "data": other32 }, 
+              { "data": hhold32 },
+              { "data": relationc32 }, 
+              { "data": workc32 },
+              { "data": workpt32 }, 
+              { "data": workvol32 },
+              { "data": studypt32 }, 
+              { "data": ptcas32 },
+              { "data": ptsemret32 }*/
+          ]
+                  });
+              }
+          });
+      });
+          
+  </script>
 
 <!-- JS end -->
 
