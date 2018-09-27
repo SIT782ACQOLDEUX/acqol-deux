@@ -210,6 +210,8 @@
                     <div class="row">
                         <div class="col-lg-4">
                             Welcome <%= username %>
+                            <br>
+                            <br>
                             <form method="post" action="/select2" class="form">
                                 <!--  <div class="form-group form-check-inline col-lg-12">
                                           <input class="form-check-input" type="radio" name="filter" id="filterYes" value="YES" checked="checked" onclick="Yesfilter()" />
@@ -219,6 +221,7 @@
                                       </div> -->
                                 <div class="form-group form-check-inline col-lg-12">
                                     <label for="opage">Gender</label>
+                                    <br>
                                     <input class="form-check-input" type="radio" name="gender" id="genderMale" value=""
                                            checked="checked">
                                     <label class="form-check-label" for="filterNone"> Filter not required </label>
@@ -303,6 +306,7 @@
                                 <div class="form-group col-lg-12">
                                     <label for="mortgagedist">Deferred bill for Mortgage Payment within last 12
                                         months</label>
+                                        <br>
                                     <input class="form-check-input" type="radio" name="mortgagedist" id="mdistnone"
                                            value="" checked="checked">
                                     <label class="form-check-label" for="None"> Filter not required </label>
@@ -319,6 +323,7 @@
                                 </div>
                                 <div class="form-group col-lg-12">
                                     <label for="rentdist">Deferred bill for Rent Payment within last 12 months</label>
+                                    <br>
                                     <input class="form-check-input" type="radio" name="rentdist" id="rdistnone" value=""
                                            checked="checked">
                                     <label class="form-check-label" for="none"> Filter not required </label>
@@ -466,7 +471,7 @@
                                 </div>
                             </form>
                         </div>
-                        <div class="col-lg-8">
+                        <div class="col-lg-8" style="overflow-x:auto;">
                             <table id="table_value" class="display nowrap" >
 
                                 <%- table -%>

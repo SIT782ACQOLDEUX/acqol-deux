@@ -619,7 +619,7 @@ if (postcodeRequired != ''){
         var condition = condition.slice(4,condition.length);
         }
 
-    var selectquery = 'SELECT survey, intro_consent, ID FROM survey32 WHERE ' + condition + 'limit 10'; 
+    var selectquery = 'SELECT survey, intro_consent, ID FROM survey32 WHERE ' + condition + ' limit 10'; 
 
     if (condition == ''){
     var selectquery = 'SELECT survey, intro_consent, ID FROM survey32 limit 10'
