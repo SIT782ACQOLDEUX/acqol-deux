@@ -174,7 +174,7 @@ app.post('/loginsubmit', function (req, res) {
                 var dateofbirth = rows[0].dateofbirth;
                 var phoneno = rows[0].phoneno;
                 var email = rows[0].email;
-                con.query('SELECT * from survey32 LIMIT 50', function (err, rows, fields) {
+                con.query('SELECT * from survey32 limit 50', function (err, rows, fields) {
                     if (!err) {
                         //console.log(rows[0]);
                         var table = "";
@@ -345,6 +345,7 @@ app.post('/registersubmit', function (req, res) {
     var username = req.body.username;
     var password = encrypt.sha1hash(req.body.password);
     var email = req.body.email;
+
 
     con.query('SELECT * from users WHERE username = \"' + username + '\" OR email = \"' + email + '\"', function (err, rows, fields) {
         if (!err) {
@@ -524,7 +525,6 @@ else {
 
 app.post('/preview', function (request, response) {
   
-    var filter = request.body.filter;
     var age = request.body.age; 
     var opage = request.body.opage; 
     var gender =  request.body.gender;
@@ -619,26 +619,136 @@ if (postcodeRequired != ''){
         var condition = condition.slice(4,condition.length);
         }
 
-    var selectquery = 'SELECT survey, intro_consent, ID FROM survey32 WHERE ' + condition + ' limit 10'; 
+    var selectquery = 'SELECT * FROM survey32 WHERE ' + condition + ' limit 50'; 
 
     if (condition == ''){
-    var selectquery = 'SELECT survey, intro_consent, ID FROM survey32 limit 10'
+    var selectquery = 'SELECT * FROM survey32 limit 50'
     }
 
     console.log('This is the conditions ==' + condition);
     console.log('This is the SQL query ==' + selectquery);
 
-        con.query(selectquery, (error, result) => {
-        console.log(error || result);
-      
-        console.log(JSON.stringify(result));
-        
-        response.send(JSON.stringify(result));
-       // response.send(result);
-            
-        });
+    con.query(selectquery, function (err, rows, fields) {
+        if (!err && rows != '') {
+            //console.log(rows[0]);
+            var table = "";
+            table += "<thead><tr>";
+            table += "<th>ID</th>"  + "<th>gender</th>" + "<th>age</th>"  + "<th>alone32</th>" + "<th>partner32</th>" + //5
+                "<th>children32</th>" + "<th>parents32</th>" + "<th>other32</th>" + "<th>hhold32</th>" + "<th>relationc32</th>" + "<th>workc32</th>" + "<th>workpt32</th>" + "<th>workvol32</th>" + //8
+                "<th>studypt32</th>" + "<th>ptcas32</th>" + "<th>ptsemret32</th>" + "<th>unempl32</th>" + "<th>empldec32</th>" + "<th>paidempstat32</th>" + "<th>volstatus32</th>" + "<th>studystat32</th>" + //8
+                "<th>ftwork32</th>" + "<th>seekwork32</th>" + "<th>ftseekwk32</th>" + "<th>incomeb32</th>" + "<th>postcode</th>" + "<th>partic</th>" + "<th>lifesate32</th>" + "<th>s1mate32</th>" + "<th>s2heae32</th>" + //9
+                "<th>s3proe32</th>" + "<th>s4inte32</th>" + "<th>s5safe32</th>" + "<th>s6come32</th>" + "<th>s7sece32</th>" + "<th>austlifee32</th>" + "<th>a1ecoe32</th>" + "<th>a2enve32</th>" + "<th>a3soce32</th>" + //9
+                "<th>a4gove32</th>" + "<th>a5buse32</th>" + "<th>a6nate32</th>" + "<th>le01b32</th>" + "<th>le02c32</th>" + "<th>attack1a32</th>" + "<th>attack2c32</th>" + "<th>livingarr32</th>" + "<th>rentown32</th>" +//9
+                "<th>rentamount32</th>" + "<th>rentdist32</th>" + "<th>mortgamount32</th>" + "<th>mortgdist32<th>"; //4
+            //52 COLUMN
+            table+="</tr></thead>";
+            table+= "<tbody>";
+            if (rows.length > 0) {
+                for(var i =0; i<rows.length; i++)
+                {
+                    //'survey','intro_consent','ID','Xsect_ID','gender','age','agegrp','alone32','partner32',
 
-});
+                    table += '<tr>';
+                    //table += '<td>'+ rows[i].survey + '</td>';
+                    //table += '<td>'+ rows[i].intro_consent + '</td>';
+                    table += '<td>'+ rows[i].ID + '</td>';
+                    //table += '<td>'+ rows[i].Xsect_ID + '</td>';
+                    if(rows[i].gender === 0 )
+                    {
+                        table += '<td>Male</td>';
+                    }
+                    else
+                    {
+                        table += '<td>Female</td>';
+                    }
+
+                    table += '<td>'+ rows[i].age + '</td>';
+                    //table += '<td>'+ rows[i].agegrp + '</td>';
+                    if(rows[i].alone32 == 0 )
+                    {
+                        table += '<td>No</td>';
+                    }
+                    else
+                    {
+                        table += '<td>Yes</td>';
+                    }
+                    //table += '<td>'+ rows[i].alone32 + '</td>';
+                    table += '<td>'+ rows[i].partner32 + '</td>'; //5
+                    // 'children32','parents32','other32','hhold32','relationc32','workc32','workpt32','workvol32', 8
+
+                    table += '<td>'+ rows[i].children32 + '</td>';
+                    table += '<td>'+ rows[i].parents32 + '</td>';
+                    table += '<td>'+ rows[i].other32 + '</td>';
+                    table += '<td>'+ rows[i].hhold32 + '</td>';
+                    table += '<td>'+ rows[i].relationc32 + '</td>';
+                    table += '<td>'+ rows[i].workc32 + '</td>';
+                    table += '<td>'+ rows[i].workpt32 + '</td>';
+                    table += '<td>'+ rows[i].workvol32 + '</td>';
+                    // 'studypt32','ptcas32','ptsemret32','unempl32','empldec32','paidempstat32','volstatus32','studystat32', 8
+
+                    table += '<td>'+ rows[i].studypt32 + '</td>';
+                    table += '<td>'+ rows[i].ptcas32 + '</td>';
+                    table += '<td>'+ rows[i].ptsemret32 + '</td>';
+                    table += '<td>'+ rows[i].unempl32 + '</td>';
+                    table += '<td>'+ rows[i].empldec32 + '</td>';
+                    table += '<td>'+ rows[i].paidempstat32 + '</td>';
+                    table += '<td>'+ rows[i].volstatus32 + '</td>';
+                    table += '<td>'+ rows[i].studystat32 + '</td>';
+                    // 'ftwork32','seekwork32','ftseekwk32','incomeb32','postcode','partic','lifesate32','s1mate32','s2heae32',9
+
+                    table += '<td>'+ rows[i].ftwork32 + '</td>';
+                    table += '<td>'+ rows[i].seekwork32 + '</td>';
+                    table += '<td>'+ rows[i].ftseekwk32 + '</td>';
+                    table += '<td>'+ rows[i].incomeb32 + '</td>';
+                    table += '<td>'+ rows[i].postcode + '</td>';
+                    table += '<td>'+ rows[i].partic + '</td>';
+                    table += '<td>'+ rows[i].lifesate32 + '</td>';
+                    table += '<td>'+ rows[i].s1mate32 + '</td>';
+                    table += '<td>'+ rows[i].s2heae32 + '</td>';
+                    // 's3proe32','s4inte32','s5safe32','s6come32','s7sece32','austlifee32','a1ecoe32','a2enve32','a3soce32',9
+
+                    table += '<td>'+ rows[i].s3proe32 + '</td>';
+                    table += '<td>'+ rows[i].s4inte32 + '</td>';
+                    table += '<td>'+ rows[i].s5safe32 + '</td>';
+                    table += '<td>'+ rows[i].s6come32 + '</td>';
+                    table += '<td>'+ rows[i].s7sece32 + '</td>';
+                    table += '<td>'+ rows[i].austlifee32 + '</td>';
+                    table += '<td>'+ rows[i].a1ecoe32 + '</td>';
+                    table += '<td>'+ rows[i].a2enve32 + '</td>';
+                    table += '<td>'+ rows[i].a3soce32 + '</td>';
+                    // 'a4gove32','a5buse32','a6nate32','le01b32','le02c32','attack1a32','attack2c32','livingarr32','rentown32',9
+
+                    table += '<td>'+ rows[i].a4gove32 + '</td>';
+                    table += '<td>'+ rows[i].a5buse32 + '</td>';
+                    table += '<td>'+ rows[i].a6nate32 + '</td>';
+                    table += '<td>'+ rows[i].le01b32 + '</td>';
+                    table += '<td>'+ rows[i].le02c32 + '</td>';
+                    table += '<td>'+ rows[i].attack1a32 + '</td>';
+                    table += '<td>'+ rows[i].attack2c32 + '</td>';
+                    table += '<td>'+ rows[i].livingarr32 + '</td>';
+                    table += '<td>'+ rows[i].rentown32 + '</td>';
+                    // 'rentamount32','rentdist32','mortgamount32','mortgdist32'4
+                    table += '<td>'+ rows[i].rentamount32 + '</td>';
+                    table += '<td>'+ rows[i].rentdist32 + '</td>';
+                    table += '<td>'+ rows[i].mortgamount32 + '</td>';
+                    table += '<td>'+ rows[i].mortgdist32 + '</td>';
+                    table += '</tr>';
+                }
+                table += '</tbody>';
+                response.send(table);
+            }
+         
+        }
+        else if (rows == ''){
+            response.send('NO DATA FOUND');
+            response.end();   
+        }
+        else{
+            response.send('UNEXPECTED ERROR, PLEASE CONTACT THE SYSTEM ADMINISTRATOR');
+            response.end();
+        }
+        });
+    });
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /* DELETE MYSQL DATA  ANSLEY 26/08/2018 */

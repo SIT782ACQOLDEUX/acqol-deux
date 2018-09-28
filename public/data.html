@@ -69,6 +69,8 @@
     <script type="text/javascript" charset="utf8"
             src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
 
+    <!-- Datatable filter API & Jquery-->
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 
 </head>
 <body onload="ToggleOnOff()">
@@ -222,14 +224,14 @@
                                 <div class="form-group form-check-inline col-lg-12">
                                     <label for="opage">Gender</label>
                                     <br>
-                                    <input class="form-check-input" type="radio" name="gender" id="genderMale" value=""
+                                    <input class="form-check-input" type="radio" name="gender" id="gender" value=""
                                            checked="checked">
                                     <label class="form-check-label" for="filterNone"> Filter not required </label>
                                     <br>
-                                    <input class="form-check-input" type="radio" name="gender" id="genderMale"
+                                    <input class="form-check-input" type="radio" name="gender" id="gender"
                                            value="0">
                                     <label class="form-check-label" for="filterYes">Male</label>
-                                    <input class="form-check-input" type="radio" name="gender" id="genderFemale"
+                                    <input class="form-check-input" type="radio" name="gender" id="gender"
                                            value="1">
                                     <label class="form-check-label" for="filterNo">Female</label>
                                 </div>
@@ -241,8 +243,7 @@
                                         <option value="<"> Less Than</option>
                                         <option value="="> Equals To</option>
                                     </select>
-                                    <input type="number" class="w-100" name="age" id="age" placeholder="Age" value="0"
-                                           required="required">
+                                    <input type="number" class="w-100" name="age" id="age" placeholder="Age" value="0" required="required">
                                 </div>
 
                                 <div class="form-group col-lg-12">
@@ -307,33 +308,33 @@
                                     <label for="mortgagedist">Deferred bill for Mortgage Payment within last 12
                                         months</label>
                                         <br>
-                                    <input class="form-check-input" type="radio" name="mortgagedist" id="mdistnone"
+                                    <input class="form-check-input" type="radio" name="mortgagedist" id="mortgagedist"
                                            value="" checked="checked">
                                     <label class="form-check-label" for="None"> Filter not required </label>
                                     <br>
-                                    <input class="form-check-input" type="radio" name="mortgagedist" id="mdistno"
+                                    <input class="form-check-input" type="radio" name="mortgagedist" id="mortgagedist"
                                            value="0">
                                     <label class="form-check-label" for="no">No</label>
-                                    <input class="form-check-input" type="radio" name="mortgagedist" id="mdistyes"
+                                    <input class="form-check-input" type="radio" name="mortgagedist" id="mortgagedist"
                                            value="1">
                                     <label class="form-check-label" for="yes">Yes</label>
-                                    <input class="form-check-input" type="radio" name="mortgagedist" id="mdistdeclined"
+                                    <input class="form-check-input" type="radio" name="mortgagedist" id="mortgagedist"
                                            value=".a">
                                     <label class="form-check-label" for="declined">Declined</label>
                                 </div>
                                 <div class="form-group col-lg-12">
                                     <label for="rentdist">Deferred bill for Rent Payment within last 12 months</label>
                                     <br>
-                                    <input class="form-check-input" type="radio" name="rentdist" id="rdistnone" value=""
+                                    <input class="form-check-input" type="radio" name="rentdist" id="rentdist" value=""
                                            checked="checked">
                                     <label class="form-check-label" for="none"> Filter not required </label>
                                     <br>
-                                    <input class="form-check-input" type="radio" name="rentdist" id="rdistno" value="0">
+                                    <input class="form-check-input" type="radio" name="rentdist" id="rentdist" value="0">
                                     <label class="form-check-label" for="no">No</label>
-                                    <input class="form-check-input" type="radio" name="rentdist" id="rdistyes"
+                                    <input class="form-check-input" type="radio" name="rentdist" id="rentdist"
                                            value="1">
                                     <label class="form-check-label" for="yes">Yes</label>
-                                    <input class="form-check-input" type="radio" name="rentdist" id="rdistdeclined"
+                                    <input class="form-check-input" type="radio" name="rentdist" id="rentdist"
                                            value=".a">
                                     <label class="form-check-label" for="declined">Declined</label>
                                 </div>
@@ -465,13 +466,17 @@
                                 </div>
 
                                 <div class="form-group col-lg-12">
-
+                                    
+                                     
                                     <button class="button button-full-center medium btn-block" type="submit">Download
                                     </button>
                                 </div>
                             </form>
+                            <div class="form-group col-lg-12">
+                            <button class='button button-full-center medium btn-block' name='btnPreview' id="btnPreview">Preview</button>
                         </div>
-                        <div class="col-lg-8" style="overflow-x:auto;">
+                        </div>
+                        <div class="col-lg-8" style="overflow-x:auto;" >
                             <table id="table_value" class="display nowrap" >
 
                                 <%- table -%>
@@ -584,94 +589,72 @@
 <script src="js/fs-menu.js"></script>
 
 <script>
+   
      $(document).ready( function () {
       $('#table_value').DataTable( {
           "autoWidth": false,
           "scrollX": true
       } );
     } );
-    /*
-      $(document).ready(function() {
+    
+    var preview=function(){
 
-          var age=$('#age').val();
-          var opage=$('#opage').val();
-          var gender=$("[name='gender']").val();
-          var income=$('#income').val();
-          var maritalstatus=$('#maritalstatus').val();
-          var mortgageamount=$('#mortgageamount').val();
-          var rentamount=$('#rentamount').val();
-          var mortgagedist=$("[name='mortgagedist']").val();
-          var rentdist=$("[name='rentdist']").val();
-          var workstatus=$('#workstatus').val();
-          var livingarrangement=$('#livingarrangement').val();
-          var household=$('#household').val();
-          var personalsafetyrating=$('#personalsafetyrating').val();
-          var oppsr=$('#oppsr').val();
-          var communityrating=$('#communityrating').val();
-          var opcr=$('#opcr').val();
-          var futuresecurityrating=$('#futuresecurityrating').val();
-          var opfsr=$('#opfsr').val();
-          var postcode=$('#postcode').val();
-          var postcodeRequired=$('#postcodeRequired').val();
+var age=$('#age').val();
+var opage=$('#opage').val();
+var gender=$('#gender:checked').val();
+var income=$('#income').val();
+var maritalstatus=$('#maritalstatus').val();
+var mortgageamount=$('#mortgageamount').val();
+var rentamount=$('#rentamount').val();
+var mortgagedist=$('#mortgagedist:checked').val();
+var rentdist=$('#rentdist:checked').val();
+var workstatus=$('#workstatus').val();
+var livingarrangement=$('#livingarrangement').val();
+var household=$('#household').val();
+var personalsafetyrating=$('#personalsafetyrating').val();
+var oppsr=$('#oppsr').val();
+var communityrating=$('#communityrating').val();
+var opcr=$('#opcr').val();
+var futuresecurityrating=$('#futuresecurityrating').val();
+var opfsr=$('#opfsr').val();
+var postcode=$('#postcode').val();
+var postcodeRequired=$('#postcodeRequired').val();
 
-            $.ajax({
-                url: "/preview",
-                method: "POST",
-              //  datatype:'json',
-                data: {
-            'age' : age,
-            'opage' : opage,
-            'gender' :  gender,
-            'income' : income,
-            'maritalstatus' : maritalstatus,
-            'mortgageamount' : mortgageamount,
-            'rentamount' : rentamount,
-            'mortgagedist' : mortgagedist,
-            'rentdist' : rentdist,
-            'workstatus' : workstatus,
-            'livingarrangement' : livingarrangement,
-            'household' : household,
-            'personalsafetyrating' : personalsafetyrating,
-            'oppsr' : oppsr,
-            'communityrating' : communityrating,
-            'opcr' : opcr,
-            'futuresecurityrating' : futuresecurityrating,
-            'opfsr' : opfsr,
-            'postcode' : postcode,
-            'postcodeRequired' : postcodeRequired
-          },
-                success: function (result) {
-                    $('#table_value').DataTable({
-                      "processing": true,
-                        "serverSide": true,
-                        "datatype":"json",
-                          'data':result,
-                       'column': [
-                { 'data' : 'survey' },
-                { 'data' : 'intro_consent' },
-                { 'data' : 'ID' }
-              { "data": "Xsect_ID" },
-                { "data": "gender" },
-                { "data": "age" },
-                { "data": "agegrp" },
-                { "data": "alone32" },
-                { "data": "partner32" },
-                { "data": children32 },
-                { "data": parents32 },
-                { "data": other32 },
-                { "data": hhold32 },
-                { "data": relationc32 },
-                { "data": workc32 },
-                { "data": workpt32 },
-                { "data": workvol32 },
-                { "data": studypt32 },
-                { "data": ptcas32 },
-                { "data": ptsemret32 }
-            ]
-                    });
-                }
-            });
-        });
+var data={
+  age:age,
+  opage:opage,
+  gender:gender,
+  income:income,
+  maritalstatus:maritalstatus,
+  mortgageamount:mortgageamount,
+  rentamount:rentamount,
+  mortgagedist:mortgagedist,
+  rentdist:rentdist,
+  workstatus:workstatus,
+  livingarrangement:livingarrangement,
+  household:household,
+  personalsafetyrating:personalsafetyrating,
+  oppsr:oppsr,
+  communityrating:communityrating,
+  opcr:opcr,
+  futuresecurityrating:futuresecurityrating,
+  opfsr:opfsr,
+  postcode:postcode,
+  postcodeRequired:postcodeRequired
+}
+
+//   this is our ajax call
+$.post("/preview", data,function(result) {
+    $("#table_value").html(result);
+});
+
+}
+
+$(document).ready(function(){
+  console.log('The page has now loaded')
+  $('#btnPreview').bind('click touch',preview)
+});
+
   //**/
 </script>
 
