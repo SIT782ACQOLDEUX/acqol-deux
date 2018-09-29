@@ -243,7 +243,8 @@
                                         <option value="<"> Less Than</option>
                                         <option value="="> Equals To</option>
                                     </select>
-                                    <input type="number" class="w-100" name="age" id="age" placeholder="Age" value="0" required="required">
+                                    <input type="number" class="w-100" name="age" id="age" placeholder="Age" value="0"
+                                           required="required">
                                 </div>
 
                                 <div class="form-group col-lg-12">
@@ -307,7 +308,7 @@
                                 <div class="form-group col-lg-12">
                                     <label for="mortgagedist">Deferred bill for Mortgage Payment within last 12
                                         months</label>
-                                        <br>
+                                    <br>
                                     <input class="form-check-input" type="radio" name="mortgagedist" id="mortgagedist"
                                            value="" checked="checked">
                                     <label class="form-check-label" for="None"> Filter not required </label>
@@ -329,7 +330,8 @@
                                            checked="checked">
                                     <label class="form-check-label" for="none"> Filter not required </label>
                                     <br>
-                                    <input class="form-check-input" type="radio" name="rentdist" id="rentdist" value="0">
+                                    <input class="form-check-input" type="radio" name="rentdist" id="rentdist"
+                                           value="0">
                                     <label class="form-check-label" for="no">No</label>
                                     <input class="form-check-input" type="radio" name="rentdist" id="rentdist"
                                            value="1">
@@ -466,18 +468,20 @@
                                 </div>
 
                                 <div class="form-group col-lg-12">
-                                    
-                                     
+
+
                                     <button class="button button-full-center medium btn-block" type="submit">Download
                                     </button>
                                 </div>
                             </form>
                             <div class="form-group col-lg-12">
-                            <button class='button button-full-center medium btn-block' name='btnPreview' id="btnPreview">Preview</button>
+                                <button class='button button-full-center medium btn-block' name='btnPreview'
+                                        id="btnPreview">Preview
+                                </button>
+                            </div>
                         </div>
-                        </div>
-                        <div class="col-lg-8" style="overflow-x:auto;" >
-                            <table id="table_value" class="display nowrap" >
+                        <div class="col-lg-8" style="overflow-x:auto;">
+                            <table id="table_value" class="display nowrap">
 
                                 <%- table -%>
                             </table>
@@ -589,73 +593,73 @@
 <script src="js/fs-menu.js"></script>
 
 <script>
-   
-     $(document).ready( function () {
-      $('#table_value').DataTable( {
-          "autoWidth": false,
-          "scrollX": true
-      } );
-    } );
-    
-    var preview=function(){
 
-var age=$('#age').val();
-var opage=$('#opage').val();
-var gender=$('#gender:checked').val();
-var income=$('#income').val();
-var maritalstatus=$('#maritalstatus').val();
-var mortgageamount=$('#mortgageamount').val();
-var rentamount=$('#rentamount').val();
-var mortgagedist=$('#mortgagedist:checked').val();
-var rentdist=$('#rentdist:checked').val();
-var workstatus=$('#workstatus').val();
-var livingarrangement=$('#livingarrangement').val();
-var household=$('#household').val();
-var personalsafetyrating=$('#personalsafetyrating').val();
-var oppsr=$('#oppsr').val();
-var communityrating=$('#communityrating').val();
-var opcr=$('#opcr').val();
-var futuresecurityrating=$('#futuresecurityrating').val();
-var opfsr=$('#opfsr').val();
-var postcode=$('#postcode').val();
-var postcodeRequired=$('#postcodeRequired').val();
+    $(document).ready(function () {
+        $('#table_value').DataTable({
+            "autoWidth": false,
+            "scrollX": true
+        });
+    });
 
-var data={
-  age:age,
-  opage:opage,
-  gender:gender,
-  income:income,
-  maritalstatus:maritalstatus,
-  mortgageamount:mortgageamount,
-  rentamount:rentamount,
-  mortgagedist:mortgagedist,
-  rentdist:rentdist,
-  workstatus:workstatus,
-  livingarrangement:livingarrangement,
-  household:household,
-  personalsafetyrating:personalsafetyrating,
-  oppsr:oppsr,
-  communityrating:communityrating,
-  opcr:opcr,
-  futuresecurityrating:futuresecurityrating,
-  opfsr:opfsr,
-  postcode:postcode,
-  postcodeRequired:postcodeRequired
-}
+    var preview = function () {
+
+        var age = $('#age').val();
+        var opage = $('#opage').val();
+        var gender = $('#gender:checked').val();
+        var income = $('#income').val();
+        var maritalstatus = $('#maritalstatus').val();
+        var mortgageamount = $('#mortgageamount').val();
+        var rentamount = $('#rentamount').val();
+        var mortgagedist = $('#mortgagedist:checked').val();
+        var rentdist = $('#rentdist:checked').val();
+        var workstatus = $('#workstatus').val();
+        var livingarrangement = $('#livingarrangement').val();
+        var household = $('#household').val();
+        var personalsafetyrating = $('#personalsafetyrating').val();
+        var oppsr = $('#oppsr').val();
+        var communityrating = $('#communityrating').val();
+        var opcr = $('#opcr').val();
+        var futuresecurityrating = $('#futuresecurityrating').val();
+        var opfsr = $('#opfsr').val();
+        var postcode = $('#postcode').val();
+        var postcodeRequired = $('#postcodeRequired').val();
+
+        var data = {
+            age: age,
+            opage: opage,
+            gender: gender,
+            income: income,
+            maritalstatus: maritalstatus,
+            mortgageamount: mortgageamount,
+            rentamount: rentamount,
+            mortgagedist: mortgagedist,
+            rentdist: rentdist,
+            workstatus: workstatus,
+            livingarrangement: livingarrangement,
+            household: household,
+            personalsafetyrating: personalsafetyrating,
+            oppsr: oppsr,
+            communityrating: communityrating,
+            opcr: opcr,
+            futuresecurityrating: futuresecurityrating,
+            opfsr: opfsr,
+            postcode: postcode,
+            postcodeRequired: postcodeRequired
+        }
 
 //   this is our ajax call
-$.post("/preview", data,function(result) {
-    $("#table_value").html(result);
-});
+        $.post("/preview", data, function (result) {
+            $("#table_value").html(result);
+        });
 
-}
+    }
 
-$(document).ready(function(){
-  console.log('The page has now loaded')
-  $('#btnPreview').bind('click touch',preview)
-});
+    $(document).ready(function () {
+        console.log('The page has now loaded')
+        $('#btnPreview').bind('click touch', preview)
+    });
 
-  //**/
+    //**/
 </script>
 
 <!-- JS end -->

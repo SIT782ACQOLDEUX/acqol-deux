@@ -117,7 +117,7 @@ function initDBConnection() {
         // Alternately you could point to a local database here instead of a
         // Bluemix service.
         // url will be in this format: https://username:password@xxxxxxxxx-bluemix.cloudant.com
-       // dbCredentials.url = getDBCredentialsUrl(fs.readFileSync("vcap-local.json", "utf-8"));
+        // dbCredentials.url = getDBCredentialsUrl(fs.readFileSync("vcap-local.json", "utf-8"));
     }
 
     //cloudant = require('cloudant')(dbCredentials.url);
@@ -179,7 +179,7 @@ app.post('/loginsubmit', function (req, res) {
                         //console.log(rows[0]);
                         var table = "";
                         table += "<thead><tr>";
-                        table += "<th>ID</th>"  + "<th>gender</th>" + "<th>age</th>"  + "<th>alone32</th>" + "<th>partner32</th>" + //5
+                        table += "<th>ID</th>" + "<th>gender</th>" + "<th>age</th>" + "<th>alone32</th>" + "<th>partner32</th>" + //5
                             "<th>children32</th>" + "<th>parents32</th>" + "<th>other32</th>" + "<th>hhold32</th>" + "<th>relationc32</th>" + "<th>workc32</th>" + "<th>workpt32</th>" + "<th>workvol32</th>" + //8
                             "<th>studypt32</th>" + "<th>ptcas32</th>" + "<th>ptsemret32</th>" + "<th>unempl32</th>" + "<th>empldec32</th>" + "<th>paidempstat32</th>" + "<th>volstatus32</th>" + "<th>studystat32</th>" + //8
                             "<th>ftwork32</th>" + "<th>seekwork32</th>" + "<th>ftseekwk32</th>" + "<th>incomeb32</th>" + "<th>postcode</th>" + "<th>partic</th>" + "<th>lifesate32</th>" + "<th>s1mate32</th>" + "<th>s2heae32</th>" + //9
@@ -187,97 +187,92 @@ app.post('/loginsubmit', function (req, res) {
                             "<th>a4gove32</th>" + "<th>a5buse32</th>" + "<th>a6nate32</th>" + "<th>le01b32</th>" + "<th>le02c32</th>" + "<th>attack1a32</th>" + "<th>attack2c32</th>" + "<th>livingarr32</th>" + "<th>rentown32</th>" +//9
                             "<th>rentamount32</th>" + "<th>rentdist32</th>" + "<th>mortgamount32</th>" + "<th>mortgdist32<th>"; //4
                         //52 COLUMN
-                        table+="</tr></thead>";
-                        table+= "<tbody>";
+                        table += "</tr></thead>";
+                        table += "<tbody>";
                         if (rows.length > 0) {
-                            for(var i =0; i<rows.length; i++)
-                            {
+                            for (var i = 0; i < rows.length; i++) {
                                 //'survey','intro_consent','ID','Xsect_ID','gender','age','agegrp','alone32','partner32',
 
                                 table += '<tr>';
                                 //table += '<td>'+ rows[i].survey + '</td>';
                                 //table += '<td>'+ rows[i].intro_consent + '</td>';
-                                table += '<td>'+ rows[i].ID + '</td>';
+                                table += '<td>' + rows[i].ID + '</td>';
                                 //table += '<td>'+ rows[i].Xsect_ID + '</td>';
-                                if(rows[i].gender === 0 )
-                                {
+                                if (rows[i].gender === 0) {
                                     table += '<td>Male</td>';
                                 }
-                                else
-                                {
+                                else {
                                     table += '<td>Female</td>';
                                 }
 
-                                table += '<td>'+ rows[i].age + '</td>';
+                                table += '<td>' + rows[i].age + '</td>';
                                 //table += '<td>'+ rows[i].agegrp + '</td>';
-                                if(rows[i].alone32 == 0 )
-                                {
+                                if (rows[i].alone32 == 0) {
                                     table += '<td>No</td>';
                                 }
-                                else
-                                {
+                                else {
                                     table += '<td>Yes</td>';
                                 }
                                 //table += '<td>'+ rows[i].alone32 + '</td>';
-                                table += '<td>'+ rows[i].partner32 + '</td>'; //5
+                                table += '<td>' + rows[i].partner32 + '</td>'; //5
                                 // 'children32','parents32','other32','hhold32','relationc32','workc32','workpt32','workvol32', 8
 
-                                table += '<td>'+ rows[i].children32 + '</td>';
-                                table += '<td>'+ rows[i].parents32 + '</td>';
-                                table += '<td>'+ rows[i].other32 + '</td>';
-                                table += '<td>'+ rows[i].hhold32 + '</td>';
-                                table += '<td>'+ rows[i].relationc32 + '</td>';
-                                table += '<td>'+ rows[i].workc32 + '</td>';
-                                table += '<td>'+ rows[i].workpt32 + '</td>';
-                                table += '<td>'+ rows[i].workvol32 + '</td>';
+                                table += '<td>' + rows[i].children32 + '</td>';
+                                table += '<td>' + rows[i].parents32 + '</td>';
+                                table += '<td>' + rows[i].other32 + '</td>';
+                                table += '<td>' + rows[i].hhold32 + '</td>';
+                                table += '<td>' + rows[i].relationc32 + '</td>';
+                                table += '<td>' + rows[i].workc32 + '</td>';
+                                table += '<td>' + rows[i].workpt32 + '</td>';
+                                table += '<td>' + rows[i].workvol32 + '</td>';
                                 // 'studypt32','ptcas32','ptsemret32','unempl32','empldec32','paidempstat32','volstatus32','studystat32', 8
 
-                                table += '<td>'+ rows[i].studypt32 + '</td>';
-                                table += '<td>'+ rows[i].ptcas32 + '</td>';
-                                table += '<td>'+ rows[i].ptsemret32 + '</td>';
-                                table += '<td>'+ rows[i].unempl32 + '</td>';
-                                table += '<td>'+ rows[i].empldec32 + '</td>';
-                                table += '<td>'+ rows[i].paidempstat32 + '</td>';
-                                table += '<td>'+ rows[i].volstatus32 + '</td>';
-                                table += '<td>'+ rows[i].studystat32 + '</td>';
+                                table += '<td>' + rows[i].studypt32 + '</td>';
+                                table += '<td>' + rows[i].ptcas32 + '</td>';
+                                table += '<td>' + rows[i].ptsemret32 + '</td>';
+                                table += '<td>' + rows[i].unempl32 + '</td>';
+                                table += '<td>' + rows[i].empldec32 + '</td>';
+                                table += '<td>' + rows[i].paidempstat32 + '</td>';
+                                table += '<td>' + rows[i].volstatus32 + '</td>';
+                                table += '<td>' + rows[i].studystat32 + '</td>';
                                 // 'ftwork32','seekwork32','ftseekwk32','incomeb32','postcode','partic','lifesate32','s1mate32','s2heae32',9
 
-                                table += '<td>'+ rows[i].ftwork32 + '</td>';
-                                table += '<td>'+ rows[i].seekwork32 + '</td>';
-                                table += '<td>'+ rows[i].ftseekwk32 + '</td>';
-                                table += '<td>'+ rows[i].incomeb32 + '</td>';
-                                table += '<td>'+ rows[i].postcode + '</td>';
-                                table += '<td>'+ rows[i].partic + '</td>';
-                                table += '<td>'+ rows[i].lifesate32 + '</td>';
-                                table += '<td>'+ rows[i].s1mate32 + '</td>';
-                                table += '<td>'+ rows[i].s2heae32 + '</td>';
+                                table += '<td>' + rows[i].ftwork32 + '</td>';
+                                table += '<td>' + rows[i].seekwork32 + '</td>';
+                                table += '<td>' + rows[i].ftseekwk32 + '</td>';
+                                table += '<td>' + rows[i].incomeb32 + '</td>';
+                                table += '<td>' + rows[i].postcode + '</td>';
+                                table += '<td>' + rows[i].partic + '</td>';
+                                table += '<td>' + rows[i].lifesate32 + '</td>';
+                                table += '<td>' + rows[i].s1mate32 + '</td>';
+                                table += '<td>' + rows[i].s2heae32 + '</td>';
                                 // 's3proe32','s4inte32','s5safe32','s6come32','s7sece32','austlifee32','a1ecoe32','a2enve32','a3soce32',9
 
-                                table += '<td>'+ rows[i].s3proe32 + '</td>';
-                                table += '<td>'+ rows[i].s4inte32 + '</td>';
-                                table += '<td>'+ rows[i].s5safe32 + '</td>';
-                                table += '<td>'+ rows[i].s6come32 + '</td>';
-                                table += '<td>'+ rows[i].s7sece32 + '</td>';
-                                table += '<td>'+ rows[i].austlifee32 + '</td>';
-                                table += '<td>'+ rows[i].a1ecoe32 + '</td>';
-                                table += '<td>'+ rows[i].a2enve32 + '</td>';
-                                table += '<td>'+ rows[i].a3soce32 + '</td>';
+                                table += '<td>' + rows[i].s3proe32 + '</td>';
+                                table += '<td>' + rows[i].s4inte32 + '</td>';
+                                table += '<td>' + rows[i].s5safe32 + '</td>';
+                                table += '<td>' + rows[i].s6come32 + '</td>';
+                                table += '<td>' + rows[i].s7sece32 + '</td>';
+                                table += '<td>' + rows[i].austlifee32 + '</td>';
+                                table += '<td>' + rows[i].a1ecoe32 + '</td>';
+                                table += '<td>' + rows[i].a2enve32 + '</td>';
+                                table += '<td>' + rows[i].a3soce32 + '</td>';
                                 // 'a4gove32','a5buse32','a6nate32','le01b32','le02c32','attack1a32','attack2c32','livingarr32','rentown32',9
 
-                                table += '<td>'+ rows[i].a4gove32 + '</td>';
-                                table += '<td>'+ rows[i].a5buse32 + '</td>';
-                                table += '<td>'+ rows[i].a6nate32 + '</td>';
-                                table += '<td>'+ rows[i].le01b32 + '</td>';
-                                table += '<td>'+ rows[i].le02c32 + '</td>';
-                                table += '<td>'+ rows[i].attack1a32 + '</td>';
-                                table += '<td>'+ rows[i].attack2c32 + '</td>';
-                                table += '<td>'+ rows[i].livingarr32 + '</td>';
-                                table += '<td>'+ rows[i].rentown32 + '</td>';
+                                table += '<td>' + rows[i].a4gove32 + '</td>';
+                                table += '<td>' + rows[i].a5buse32 + '</td>';
+                                table += '<td>' + rows[i].a6nate32 + '</td>';
+                                table += '<td>' + rows[i].le01b32 + '</td>';
+                                table += '<td>' + rows[i].le02c32 + '</td>';
+                                table += '<td>' + rows[i].attack1a32 + '</td>';
+                                table += '<td>' + rows[i].attack2c32 + '</td>';
+                                table += '<td>' + rows[i].livingarr32 + '</td>';
+                                table += '<td>' + rows[i].rentown32 + '</td>';
                                 // 'rentamount32','rentdist32','mortgamount32','mortgdist32'4
-                                table += '<td>'+ rows[i].rentamount32 + '</td>';
-                                table += '<td>'+ rows[i].rentdist32 + '</td>';
-                                table += '<td>'+ rows[i].mortgamount32 + '</td>';
-                                table += '<td>'+ rows[i].mortgdist32 + '</td>';
+                                table += '<td>' + rows[i].rentamount32 + '</td>';
+                                table += '<td>' + rows[i].rentdist32 + '</td>';
+                                table += '<td>' + rows[i].mortgamount32 + '</td>';
+                                table += '<td>' + rows[i].mortgdist32 + '</td>';
                                 table += '</tr>';
                             }
                             console.log(table);
@@ -287,7 +282,7 @@ app.post('/loginsubmit', function (req, res) {
                                 dateofbirth: dateofbirth,
                                 phoneno: phoneno,
                                 email: email,
-                                table:table
+                                table: table
                             });
                         }
                         else {
@@ -457,63 +452,63 @@ app.post('/upload', upload.single('file'), function (request, response, next) {
         })
         .on("end", function () {
 
-        //console.log('This the array '+ fileRows);
-       // console.log('ROW 1 '+ fileRows.slice(0,1));
+            //console.log('This the array '+ fileRows);
+            // console.log('ROW 1 '+ fileRows.slice(0,1));
 //if (fileRows.slice(0,1).toString().includes("survey") == true ) {
-    if (fileRows[0].toString().includes('survey') == true ) {
-    fileRows.shift();
-   try {
-                        let query = 'INSERT INTO survey32 (survey,intro_consent,ID,Xsect_ID,gender,age,agegrp,alone32,partner32,children32,parents32,other32,hhold32,relationc32,workc32,workpt32,workvol32,studypt32,ptcas32,ptsemret32,unempl32,empldec32,paidempstat32,volstatus32,studystat32,ftwork32,seekwork32,ftseekwk32,incomeb32,postcode,partic,lifesate32,s1mate32,s2heae32,s3proe32,s4inte32,s5safe32,s6come32,s7sece32,austlifee32,a1ecoe32,a2enve32,a3soce32,a4gove32,a5buse32,a6nate32,le01b32,le02c32,attack1a32,attack2c32,livingarr32,rentown32,rentamount32,rentdist32,mortgamount32,mortgdist32) values ?';
-                        con.query(query, [fileRows], (error, result) => {
-                            console.log(error || result);
-                            if (error == null){
-                                response.send('CSV has been uploaded successfully with ' + result.affectedRows + ' affected rows');
-                                response.end();
-                            }
-                            else if ((error.sqlMessage.includes('Column count doesn')) == true) {
-                                response.send('Failed to upload data, please ensure the columns and rows are correct - ' + error.sqlMessage + '<br>' +'*Please note, the first line for the header was skipped*');
-                                response.end();
-                            }
-                            else if ((error.sqlMessage.includes('Duplicate entry')) == true){
-                                response.send('Duplicate data in csv file - ' + error.sqlMessage);
-                                response.end();
-                            }
-                           else{
+            if (fileRows[0].toString().includes('survey') == true) {
+                fileRows.shift();
+                try {
+                    let query = 'INSERT INTO survey32 (survey,intro_consent,ID,Xsect_ID,gender,age,agegrp,alone32,partner32,children32,parents32,other32,hhold32,relationc32,workc32,workpt32,workvol32,studypt32,ptcas32,ptsemret32,unempl32,empldec32,paidempstat32,volstatus32,studystat32,ftwork32,seekwork32,ftseekwk32,incomeb32,postcode,partic,lifesate32,s1mate32,s2heae32,s3proe32,s4inte32,s5safe32,s6come32,s7sece32,austlifee32,a1ecoe32,a2enve32,a3soce32,a4gove32,a5buse32,a6nate32,le01b32,le02c32,attack1a32,attack2c32,livingarr32,rentown32,rentamount32,rentdist32,mortgamount32,mortgdist32) values ?';
+                    con.query(query, [fileRows], (error, result) => {
+                        console.log(error || result);
+                        if (error == null) {
+                            response.send('CSV has been uploaded successfully with ' + result.affectedRows + ' affected rows');
+                            response.end();
+                        }
+                        else if ((error.sqlMessage.includes('Column count doesn')) == true) {
+                            response.send('Failed to upload data, please ensure the columns and rows are correct - ' + error.sqlMessage + '<br>' + '*Please note, the first line for the header was skipped*');
+                            response.end();
+                        }
+                        else if ((error.sqlMessage.includes('Duplicate entry')) == true) {
+                            response.send('Duplicate data in csv file - ' + error.sqlMessage);
+                            response.end();
+                        }
+                        else {
                             response.send('Unexpected error, please contact System Administrator');
                             response.end();
-                           }
-                        });
-                    }
-                    catch (err) {
-                    }
-    
-}
-else {
-                    try {
-                        let query = 'INSERT INTO survey32 (survey,intro_consent,ID,Xsect_ID,gender,age,agegrp,alone32,partner32,children32,parents32,other32,hhold32,relationc32,workc32,workpt32,workvol32,studypt32,ptcas32,ptsemret32,unempl32,empldec32,paidempstat32,volstatus32,studystat32,ftwork32,seekwork32,ftseekwk32,incomeb32,postcode,partic,lifesate32,s1mate32,s2heae32,s3proe32,s4inte32,s5safe32,s6come32,s7sece32,austlifee32,a1ecoe32,a2enve32,a3soce32,a4gove32,a5buse32,a6nate32,le01b32,le02c32,attack1a32,attack2c32,livingarr32,rentown32,rentamount32,rentdist32,mortgamount32,mortgdist32) values ?';
-                        con.query(query, [fileRows], (error, result) => {
-                            console.log(error || result);
-                            if (error == null){
-                                response.send('CSV has been uploaded successfully with ' + result.affectedRows + ' affected rows');
-                                response.end();
-                            }
-                            else if ((error.sqlMessage.includes('Column count doesn')) == true) {
-                                response.send('Failed to upload data, please ensure the columns and rows are correct - ' + error.sqlMessage);
-                                response.end();
-                            }
-                            else if ((error.sqlMessage.includes('Duplicate entry')) == true){
-                                response.send('Duplicate data in csv file - ' + error.sqlMessage);
-                                response.end();
-                            }
-                           else{
-                            response.send('Unexpected error, please contact System Administrator');
-                            response.end();
-                           }
-                        });
-                    }
-                    catch (err) {
-                    }
+                        }
+                    });
                 }
+                catch (err) {
+                }
+
+            }
+            else {
+                try {
+                    let query = 'INSERT INTO survey32 (survey,intro_consent,ID,Xsect_ID,gender,age,agegrp,alone32,partner32,children32,parents32,other32,hhold32,relationc32,workc32,workpt32,workvol32,studypt32,ptcas32,ptsemret32,unempl32,empldec32,paidempstat32,volstatus32,studystat32,ftwork32,seekwork32,ftseekwk32,incomeb32,postcode,partic,lifesate32,s1mate32,s2heae32,s3proe32,s4inte32,s5safe32,s6come32,s7sece32,austlifee32,a1ecoe32,a2enve32,a3soce32,a4gove32,a5buse32,a6nate32,le01b32,le02c32,attack1a32,attack2c32,livingarr32,rentown32,rentamount32,rentdist32,mortgamount32,mortgdist32) values ?';
+                    con.query(query, [fileRows], (error, result) => {
+                        console.log(error || result);
+                        if (error == null) {
+                            response.send('CSV has been uploaded successfully with ' + result.affectedRows + ' affected rows');
+                            response.end();
+                        }
+                        else if ((error.sqlMessage.includes('Column count doesn')) == true) {
+                            response.send('Failed to upload data, please ensure the columns and rows are correct - ' + error.sqlMessage);
+                            response.end();
+                        }
+                        else if ((error.sqlMessage.includes('Duplicate entry')) == true) {
+                            response.send('Duplicate data in csv file - ' + error.sqlMessage);
+                            response.end();
+                        }
+                        else {
+                            response.send('Unexpected error, please contact System Administrator');
+                            response.end();
+                        }
+                    });
+                }
+                catch (err) {
+                }
+            }
         });
 
     stream.pipe(csvStream);
@@ -524,25 +519,25 @@ else {
 /* SELECT  MYSQL DATA FOR PREVIEW ANSLEY 24/09/2018 */
 
 app.post('/preview', function (request, response) {
-  
-    var age = request.body.age; 
-    var opage = request.body.opage; 
-    var gender =  request.body.gender;
+
+    var age = request.body.age;
+    var opage = request.body.opage;
+    var gender = request.body.gender;
     var income = request.body.income;
     var maritalstatus = request.body.maritalstatus;
     var mortgageamount = request.body.mortgageamount;
     var rentamount = request.body.rentamount;
     var mortgagedist = request.body.mortgagedist;
-    var rentdist = request.body.rentdist; 
-    var workstatus = request.body.workstatus; 
-    var livingarrangement = request.body.livingarrangement; 
-    var household = request.body.household; 
+    var rentdist = request.body.rentdist;
+    var workstatus = request.body.workstatus;
+    var livingarrangement = request.body.livingarrangement;
+    var household = request.body.household;
     var personalsafetyrating = request.body.personalsafetyrating;
-    var oppsr = request.body.oppsr; 
+    var oppsr = request.body.oppsr;
     var communityrating = request.body.communityrating;
-    var opcr = request.body.opcr; 
+    var opcr = request.body.opcr;
     var futuresecurityrating = request.body.futuresecurityrating;
-    var opfsr = request.body.opfsr; 
+    var opfsr = request.body.opfsr;
     var postcode = request.body.postcode;
     var postcodeRequired = request.body.postcodeRequired;
 
@@ -563,66 +558,66 @@ app.post('/preview', function (request, response) {
     var sqlpostcode = '';
 
 
-if (opage != ''){
-    var sqlage = ' age ' + opage + ' ' + '\"' + age + '\"';
-}
-if (gender != ''){
-    var sqlgender = " AND gender = " + gender;
-}
-if (income != ''){
-    var sqlincome = " AND incomeb32 = " + income;
-}
-if (maritalstatus != ''){
-    var sqlmaritalstatus = " AND relationc32 = " + maritalstatus;
-}
-if (mortgageamount != ''){
-    var sqlmortgageamount = " AND mortgamount32 = " + mortgageamount;
-}
-if (rentamount != ''){
-    var sqlrentamount = " AND rentamount32 = " + rentamount;
-}
-if (mortgagedist != ''){
-   var sqlmortgagedist = ' AND mortgdist32 = \"' + mortgagedist + '\"'
-}
-if (rentdist != ''){
-   var sqlrentdist = ' AND rentdist32 = \"' + rentdist + '\"'
-}
-if (workstatus != ''){
-    var sqlworkstatus = " AND workc32 = " +  workstatus;
-}
-if (livingarrangement != ''){
-    var sqllivingarrangement = " AND livingarr32 = " + livingarrangement;
-}
-if (household != ''){
-    var sqlhousehold = " AND hhold32 = " + household;
-}
-if (oppsr != ''){
-    var sqlpersonalsafetyrating = " AND s5safe32 " + oppsr + " " + personalsafetyrating;
-}
-if (opcr != ''){
-    var sqlcommunityrating = " AND s6come32 " + opcr + " " + communityrating;
-}
-if (opfsr != ''){
-    var sqlfuturesecurityrating = " AND s7sece32 " + opfsr + " " + futuresecurityrating;
-}
-if (postcodeRequired != ''){
-    var sqlpostcode = ' AND postcode in (' + '\"' + postcode + '\"' + ' )'
-}
+    if (opage != '') {
+        var sqlage = ' age ' + opage + ' ' + '\"' + age + '\"';
+    }
+    if (gender != '') {
+        var sqlgender = " AND gender = " + gender;
+    }
+    if (income != '') {
+        var sqlincome = " AND incomeb32 = " + income;
+    }
+    if (maritalstatus != '') {
+        var sqlmaritalstatus = " AND relationc32 = " + maritalstatus;
+    }
+    if (mortgageamount != '') {
+        var sqlmortgageamount = " AND mortgamount32 = " + mortgageamount;
+    }
+    if (rentamount != '') {
+        var sqlrentamount = " AND rentamount32 = " + rentamount;
+    }
+    if (mortgagedist != '') {
+        var sqlmortgagedist = ' AND mortgdist32 = \"' + mortgagedist + '\"'
+    }
+    if (rentdist != '') {
+        var sqlrentdist = ' AND rentdist32 = \"' + rentdist + '\"'
+    }
+    if (workstatus != '') {
+        var sqlworkstatus = " AND workc32 = " + workstatus;
+    }
+    if (livingarrangement != '') {
+        var sqllivingarrangement = " AND livingarr32 = " + livingarrangement;
+    }
+    if (household != '') {
+        var sqlhousehold = " AND hhold32 = " + household;
+    }
+    if (oppsr != '') {
+        var sqlpersonalsafetyrating = " AND s5safe32 " + oppsr + " " + personalsafetyrating;
+    }
+    if (opcr != '') {
+        var sqlcommunityrating = " AND s6come32 " + opcr + " " + communityrating;
+    }
+    if (opfsr != '') {
+        var sqlfuturesecurityrating = " AND s7sece32 " + opfsr + " " + futuresecurityrating;
+    }
+    if (postcodeRequired != '') {
+        var sqlpostcode = ' AND postcode in (' + '\"' + postcode + '\"' + ' )'
+    }
 
 
-    var condition = sqlage + sqlgender + sqlincome + sqlmaritalstatus + sqlmortgageamount + sqlmortgagedist + sqlrentdist + sqlworkstatus + sqllivingarrangement + 
-    sqlhousehold + sqlpersonalsafetyrating + sqlcommunityrating + sqlfuturesecurityrating + sqlpostcode;
+    var condition = sqlage + sqlgender + sqlincome + sqlmaritalstatus + sqlmortgageamount + sqlmortgagedist + sqlrentdist + sqlworkstatus + sqllivingarrangement +
+        sqlhousehold + sqlpersonalsafetyrating + sqlcommunityrating + sqlfuturesecurityrating + sqlpostcode;
 
-    console.log('='+condition.slice(1,4)+'=');
+    console.log('=' + condition.slice(1, 4) + '=');
 
-    if ((condition.slice(1,4)) == 'AND'){
-        var condition = condition.slice(4,condition.length);
-        }
+    if ((condition.slice(1, 4)) == 'AND') {
+        var condition = condition.slice(4, condition.length);
+    }
 
-    var selectquery = 'SELECT * FROM survey32 WHERE ' + condition + ' limit 50'; 
+    var selectquery = 'SELECT * FROM survey32 WHERE ' + condition + ' limit 50';
 
-    if (condition == ''){
-    var selectquery = 'SELECT * FROM survey32 limit 50'
+    if (condition == '') {
+        var selectquery = 'SELECT * FROM survey32 limit 50'
     }
 
     console.log('This is the conditions ==' + condition);
@@ -633,7 +628,7 @@ if (postcodeRequired != ''){
             //console.log(rows[0]);
             var table = "";
             table += "<thead><tr>";
-            table += "<th>ID</th>"  + "<th>gender</th>" + "<th>age</th>"  + "<th>alone32</th>" + "<th>partner32</th>" + //5
+            table += "<th>ID</th>" + "<th>gender</th>" + "<th>age</th>" + "<th>alone32</th>" + "<th>partner32</th>" + //5
                 "<th>children32</th>" + "<th>parents32</th>" + "<th>other32</th>" + "<th>hhold32</th>" + "<th>relationc32</th>" + "<th>workc32</th>" + "<th>workpt32</th>" + "<th>workvol32</th>" + //8
                 "<th>studypt32</th>" + "<th>ptcas32</th>" + "<th>ptsemret32</th>" + "<th>unempl32</th>" + "<th>empldec32</th>" + "<th>paidempstat32</th>" + "<th>volstatus32</th>" + "<th>studystat32</th>" + //8
                 "<th>ftwork32</th>" + "<th>seekwork32</th>" + "<th>ftseekwk32</th>" + "<th>incomeb32</th>" + "<th>postcode</th>" + "<th>partic</th>" + "<th>lifesate32</th>" + "<th>s1mate32</th>" + "<th>s2heae32</th>" + //9
@@ -641,162 +636,157 @@ if (postcodeRequired != ''){
                 "<th>a4gove32</th>" + "<th>a5buse32</th>" + "<th>a6nate32</th>" + "<th>le01b32</th>" + "<th>le02c32</th>" + "<th>attack1a32</th>" + "<th>attack2c32</th>" + "<th>livingarr32</th>" + "<th>rentown32</th>" +//9
                 "<th>rentamount32</th>" + "<th>rentdist32</th>" + "<th>mortgamount32</th>" + "<th>mortgdist32<th>"; //4
             //52 COLUMN
-            table+="</tr></thead>";
-            table+= "<tbody>";
+            table += "</tr></thead>";
+            table += "<tbody>";
             if (rows.length > 0) {
-                for(var i =0; i<rows.length; i++)
-                {
+                for (var i = 0; i < rows.length; i++) {
                     //'survey','intro_consent','ID','Xsect_ID','gender','age','agegrp','alone32','partner32',
 
                     table += '<tr>';
                     //table += '<td>'+ rows[i].survey + '</td>';
                     //table += '<td>'+ rows[i].intro_consent + '</td>';
-                    table += '<td>'+ rows[i].ID + '</td>';
+                    table += '<td>' + rows[i].ID + '</td>';
                     //table += '<td>'+ rows[i].Xsect_ID + '</td>';
-                    if(rows[i].gender === 0 )
-                    {
+                    if (rows[i].gender === 0) {
                         table += '<td>Male</td>';
                     }
-                    else
-                    {
+                    else {
                         table += '<td>Female</td>';
                     }
 
-                    table += '<td>'+ rows[i].age + '</td>';
+                    table += '<td>' + rows[i].age + '</td>';
                     //table += '<td>'+ rows[i].agegrp + '</td>';
-                    if(rows[i].alone32 == 0 )
-                    {
+                    if (rows[i].alone32 == 0) {
                         table += '<td>No</td>';
                     }
-                    else
-                    {
+                    else {
                         table += '<td>Yes</td>';
                     }
                     //table += '<td>'+ rows[i].alone32 + '</td>';
-                    table += '<td>'+ rows[i].partner32 + '</td>'; //5
+                    table += '<td>' + rows[i].partner32 + '</td>'; //5
                     // 'children32','parents32','other32','hhold32','relationc32','workc32','workpt32','workvol32', 8
 
-                    table += '<td>'+ rows[i].children32 + '</td>';
-                    table += '<td>'+ rows[i].parents32 + '</td>';
-                    table += '<td>'+ rows[i].other32 + '</td>';
-                    table += '<td>'+ rows[i].hhold32 + '</td>';
-                    table += '<td>'+ rows[i].relationc32 + '</td>';
-                    table += '<td>'+ rows[i].workc32 + '</td>';
-                    table += '<td>'+ rows[i].workpt32 + '</td>';
-                    table += '<td>'+ rows[i].workvol32 + '</td>';
+                    table += '<td>' + rows[i].children32 + '</td>';
+                    table += '<td>' + rows[i].parents32 + '</td>';
+                    table += '<td>' + rows[i].other32 + '</td>';
+                    table += '<td>' + rows[i].hhold32 + '</td>';
+                    table += '<td>' + rows[i].relationc32 + '</td>';
+                    table += '<td>' + rows[i].workc32 + '</td>';
+                    table += '<td>' + rows[i].workpt32 + '</td>';
+                    table += '<td>' + rows[i].workvol32 + '</td>';
                     // 'studypt32','ptcas32','ptsemret32','unempl32','empldec32','paidempstat32','volstatus32','studystat32', 8
 
-                    table += '<td>'+ rows[i].studypt32 + '</td>';
-                    table += '<td>'+ rows[i].ptcas32 + '</td>';
-                    table += '<td>'+ rows[i].ptsemret32 + '</td>';
-                    table += '<td>'+ rows[i].unempl32 + '</td>';
-                    table += '<td>'+ rows[i].empldec32 + '</td>';
-                    table += '<td>'+ rows[i].paidempstat32 + '</td>';
-                    table += '<td>'+ rows[i].volstatus32 + '</td>';
-                    table += '<td>'+ rows[i].studystat32 + '</td>';
+                    table += '<td>' + rows[i].studypt32 + '</td>';
+                    table += '<td>' + rows[i].ptcas32 + '</td>';
+                    table += '<td>' + rows[i].ptsemret32 + '</td>';
+                    table += '<td>' + rows[i].unempl32 + '</td>';
+                    table += '<td>' + rows[i].empldec32 + '</td>';
+                    table += '<td>' + rows[i].paidempstat32 + '</td>';
+                    table += '<td>' + rows[i].volstatus32 + '</td>';
+                    table += '<td>' + rows[i].studystat32 + '</td>';
                     // 'ftwork32','seekwork32','ftseekwk32','incomeb32','postcode','partic','lifesate32','s1mate32','s2heae32',9
 
-                    table += '<td>'+ rows[i].ftwork32 + '</td>';
-                    table += '<td>'+ rows[i].seekwork32 + '</td>';
-                    table += '<td>'+ rows[i].ftseekwk32 + '</td>';
-                    table += '<td>'+ rows[i].incomeb32 + '</td>';
-                    table += '<td>'+ rows[i].postcode + '</td>';
-                    table += '<td>'+ rows[i].partic + '</td>';
-                    table += '<td>'+ rows[i].lifesate32 + '</td>';
-                    table += '<td>'+ rows[i].s1mate32 + '</td>';
-                    table += '<td>'+ rows[i].s2heae32 + '</td>';
+                    table += '<td>' + rows[i].ftwork32 + '</td>';
+                    table += '<td>' + rows[i].seekwork32 + '</td>';
+                    table += '<td>' + rows[i].ftseekwk32 + '</td>';
+                    table += '<td>' + rows[i].incomeb32 + '</td>';
+                    table += '<td>' + rows[i].postcode + '</td>';
+                    table += '<td>' + rows[i].partic + '</td>';
+                    table += '<td>' + rows[i].lifesate32 + '</td>';
+                    table += '<td>' + rows[i].s1mate32 + '</td>';
+                    table += '<td>' + rows[i].s2heae32 + '</td>';
                     // 's3proe32','s4inte32','s5safe32','s6come32','s7sece32','austlifee32','a1ecoe32','a2enve32','a3soce32',9
 
-                    table += '<td>'+ rows[i].s3proe32 + '</td>';
-                    table += '<td>'+ rows[i].s4inte32 + '</td>';
-                    table += '<td>'+ rows[i].s5safe32 + '</td>';
-                    table += '<td>'+ rows[i].s6come32 + '</td>';
-                    table += '<td>'+ rows[i].s7sece32 + '</td>';
-                    table += '<td>'+ rows[i].austlifee32 + '</td>';
-                    table += '<td>'+ rows[i].a1ecoe32 + '</td>';
-                    table += '<td>'+ rows[i].a2enve32 + '</td>';
-                    table += '<td>'+ rows[i].a3soce32 + '</td>';
+                    table += '<td>' + rows[i].s3proe32 + '</td>';
+                    table += '<td>' + rows[i].s4inte32 + '</td>';
+                    table += '<td>' + rows[i].s5safe32 + '</td>';
+                    table += '<td>' + rows[i].s6come32 + '</td>';
+                    table += '<td>' + rows[i].s7sece32 + '</td>';
+                    table += '<td>' + rows[i].austlifee32 + '</td>';
+                    table += '<td>' + rows[i].a1ecoe32 + '</td>';
+                    table += '<td>' + rows[i].a2enve32 + '</td>';
+                    table += '<td>' + rows[i].a3soce32 + '</td>';
                     // 'a4gove32','a5buse32','a6nate32','le01b32','le02c32','attack1a32','attack2c32','livingarr32','rentown32',9
 
-                    table += '<td>'+ rows[i].a4gove32 + '</td>';
-                    table += '<td>'+ rows[i].a5buse32 + '</td>';
-                    table += '<td>'+ rows[i].a6nate32 + '</td>';
-                    table += '<td>'+ rows[i].le01b32 + '</td>';
-                    table += '<td>'+ rows[i].le02c32 + '</td>';
-                    table += '<td>'+ rows[i].attack1a32 + '</td>';
-                    table += '<td>'+ rows[i].attack2c32 + '</td>';
-                    table += '<td>'+ rows[i].livingarr32 + '</td>';
-                    table += '<td>'+ rows[i].rentown32 + '</td>';
+                    table += '<td>' + rows[i].a4gove32 + '</td>';
+                    table += '<td>' + rows[i].a5buse32 + '</td>';
+                    table += '<td>' + rows[i].a6nate32 + '</td>';
+                    table += '<td>' + rows[i].le01b32 + '</td>';
+                    table += '<td>' + rows[i].le02c32 + '</td>';
+                    table += '<td>' + rows[i].attack1a32 + '</td>';
+                    table += '<td>' + rows[i].attack2c32 + '</td>';
+                    table += '<td>' + rows[i].livingarr32 + '</td>';
+                    table += '<td>' + rows[i].rentown32 + '</td>';
                     // 'rentamount32','rentdist32','mortgamount32','mortgdist32'4
-                    table += '<td>'+ rows[i].rentamount32 + '</td>';
-                    table += '<td>'+ rows[i].rentdist32 + '</td>';
-                    table += '<td>'+ rows[i].mortgamount32 + '</td>';
-                    table += '<td>'+ rows[i].mortgdist32 + '</td>';
+                    table += '<td>' + rows[i].rentamount32 + '</td>';
+                    table += '<td>' + rows[i].rentdist32 + '</td>';
+                    table += '<td>' + rows[i].mortgamount32 + '</td>';
+                    table += '<td>' + rows[i].mortgdist32 + '</td>';
                     table += '</tr>';
                 }
                 table += '</tbody>';
                 response.send(table);
             }
-         
+
         }
-        else if (rows == ''){
+        else if (rows == '') {
             response.send('NO DATA FOUND');
-            response.end();   
+            response.end();
         }
-        else{
+        else {
             response.send('UNEXPECTED ERROR, PLEASE CONTACT THE SYSTEM ADMINISTRATOR');
             response.end();
         }
-        });
     });
+});
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /* DELETE MYSQL DATA  ANSLEY 26/08/2018 */
 
 app.post('/delete', function (request, response) {
-  
-                    try {
-                        let deletequery = 'delete from survey32'; 
-                        con.query(deletequery, (error, result) => {
-                        console.log(error || result);
-                        if (error == null){
-                            response.send('Data has been deleted successfully');
-                            response.end();
-                        }
-                        else{
-                            response.send('Unexpected error, please contact System Administrator');
-                            response.end();
-                           }
-                        });
-                    }
-                   catch (err) {
-                    }
+
+    try {
+        let deletequery = 'delete from survey32';
+        con.query(deletequery, (error, result) => {
+            console.log(error || result);
+            if (error == null) {
+                response.send('Data has been deleted successfully');
+                response.end();
+            }
+            else {
+                response.send('Unexpected error, please contact System Administrator');
+                response.end();
+            }
+        });
+    }
+    catch (err) {
+    }
 
 });
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /* SELECT (DISABLE & ENABLE FILTERS) MYSQL DATA  ANSLEY 19/09/2018 */
 
 app.post('/select2', function (request, response) {
-  
+
     var filter = request.body.filter;
-    var age = request.body.age; 
-    var opage = request.body.opage; 
-    var gender =  request.body.gender;
+    var age = request.body.age;
+    var opage = request.body.opage;
+    var gender = request.body.gender;
     var income = request.body.income;
     var maritalstatus = request.body.maritalstatus;
     var mortgageamount = request.body.mortgageamount;
     var rentamount = request.body.rentamount;
     var mortgagedist = request.body.mortgagedist;
-    var rentdist = request.body.rentdist; 
-    var workstatus = request.body.workstatus; 
-    var livingarrangement = request.body.livingarrangement; 
-    var household = request.body.household; 
+    var rentdist = request.body.rentdist;
+    var workstatus = request.body.workstatus;
+    var livingarrangement = request.body.livingarrangement;
+    var household = request.body.household;
     var personalsafetyrating = request.body.personalsafetyrating;
-    var oppsr = request.body.oppsr; 
+    var oppsr = request.body.oppsr;
     var communityrating = request.body.communityrating;
-    var opcr = request.body.opcr; 
+    var opcr = request.body.opcr;
     var futuresecurityrating = request.body.futuresecurityrating;
-    var opfsr = request.body.opfsr; 
+    var opfsr = request.body.opfsr;
     var postcode = request.body.postcode;
     var postcodeRequired = request.body.postcodeRequired;
 
@@ -817,97 +807,97 @@ app.post('/select2', function (request, response) {
     var sqlpostcode = '';
 
 
-if (opage != ''){
-    var sqlage = ' age ' + opage + ' ' + '\"' + age + '\"';
-}
-if (gender != ''){
-    var sqlgender = " AND gender = " + gender;
-}
-if (income != ''){
-    var sqlincome = " AND incomeb32 = " + income;
-}
-if (maritalstatus != ''){
-    var sqlmaritalstatus = " AND relationc32 = " + maritalstatus;
-}
-if (mortgageamount != ''){
-    var sqlmortgageamount = " AND mortgamount32 = " + mortgageamount;
-}
-if (rentamount != ''){
-    var sqlrentamount = " AND rentamount32 = " + rentamount;
-}
-if (mortgagedist != ''){
-   // var sqlmortgagedist = " AND mortgdist32 = " + mortgagedist;
-   var sqlmortgagedist = ' AND mortgdist32 = \"' + mortgagedist + '\"'
-}
-if (rentdist != ''){
-   // var sqlrentdist = " AND rentdist32 = " + rentdist;
-   var sqlrentdist = ' AND rentdist32 = \"' + rentdist + '\"'
-}
-if (workstatus != ''){
-    var sqlworkstatus = " AND workc32 = " +  workstatus;
-}
-if (livingarrangement != ''){
-    var sqllivingarrangement = " AND livingarr32 = " + livingarrangement;
-}
-if (household != ''){
-    var sqlhousehold = " AND hhold32 = " + household;
-}
-if (oppsr != ''){
-    var sqlpersonalsafetyrating = " AND s5safe32 " + oppsr + " " + personalsafetyrating;
-}
-if (opcr != ''){
-    var sqlcommunityrating = " AND s6come32 " + opcr + " " + communityrating;
-}
-if (opfsr != ''){
-    var sqlfuturesecurityrating = " AND s7sece32 " + opfsr + " " + futuresecurityrating;
-}
-if (postcodeRequired != ''){
-    var sqlpostcode = ' AND postcode in (' + '\"' + postcode + '\"' + ' )'
-}
+    if (opage != '') {
+        var sqlage = ' age ' + opage + ' ' + '\"' + age + '\"';
+    }
+    if (gender != '') {
+        var sqlgender = " AND gender = " + gender;
+    }
+    if (income != '') {
+        var sqlincome = " AND incomeb32 = " + income;
+    }
+    if (maritalstatus != '') {
+        var sqlmaritalstatus = " AND relationc32 = " + maritalstatus;
+    }
+    if (mortgageamount != '') {
+        var sqlmortgageamount = " AND mortgamount32 = " + mortgageamount;
+    }
+    if (rentamount != '') {
+        var sqlrentamount = " AND rentamount32 = " + rentamount;
+    }
+    if (mortgagedist != '') {
+        // var sqlmortgagedist = " AND mortgdist32 = " + mortgagedist;
+        var sqlmortgagedist = ' AND mortgdist32 = \"' + mortgagedist + '\"'
+    }
+    if (rentdist != '') {
+        // var sqlrentdist = " AND rentdist32 = " + rentdist;
+        var sqlrentdist = ' AND rentdist32 = \"' + rentdist + '\"'
+    }
+    if (workstatus != '') {
+        var sqlworkstatus = " AND workc32 = " + workstatus;
+    }
+    if (livingarrangement != '') {
+        var sqllivingarrangement = " AND livingarr32 = " + livingarrangement;
+    }
+    if (household != '') {
+        var sqlhousehold = " AND hhold32 = " + household;
+    }
+    if (oppsr != '') {
+        var sqlpersonalsafetyrating = " AND s5safe32 " + oppsr + " " + personalsafetyrating;
+    }
+    if (opcr != '') {
+        var sqlcommunityrating = " AND s6come32 " + opcr + " " + communityrating;
+    }
+    if (opfsr != '') {
+        var sqlfuturesecurityrating = " AND s7sece32 " + opfsr + " " + futuresecurityrating;
+    }
+    if (postcodeRequired != '') {
+        var sqlpostcode = ' AND postcode in (' + '\"' + postcode + '\"' + ' )'
+    }
 
 
-    var condition = sqlage + sqlgender + sqlincome + sqlmaritalstatus + sqlmortgageamount + sqlmortgagedist + sqlrentdist + sqlworkstatus + sqllivingarrangement + 
-    sqlhousehold + sqlpersonalsafetyrating + sqlcommunityrating + sqlfuturesecurityrating + sqlpostcode;
+    var condition = sqlage + sqlgender + sqlincome + sqlmaritalstatus + sqlmortgageamount + sqlmortgagedist + sqlrentdist + sqlworkstatus + sqllivingarrangement +
+        sqlhousehold + sqlpersonalsafetyrating + sqlcommunityrating + sqlfuturesecurityrating + sqlpostcode;
 
-    console.log('='+condition.slice(1,4)+'=');
+    console.log('=' + condition.slice(1, 4) + '=');
 
-    if ((condition.slice(1,4)) == 'AND'){
-        var condition = condition.slice(4,condition.length);
-        }
+    if ((condition.slice(1, 4)) == 'AND') {
+        var condition = condition.slice(4, condition.length);
+    }
 
-    var selectquery = 'SELECT * FROM survey32 WHERE ' + condition; 
+    var selectquery = 'SELECT * FROM survey32 WHERE ' + condition;
 
-    if (condition == ''){
-    var selectquery = 'SELECT * FROM survey32'
+    if (condition == '') {
+        var selectquery = 'SELECT * FROM survey32'
     }
 
     console.log('This is the conditions ==' + condition);
     console.log('This is the SQL query ==' + selectquery);
 
-        con.query(selectquery, (error, result) => {
-      //  console.log(error || result);
-        if (error === null && result != ''){
-           
-            const fields = ['survey','intro_consent','ID','Xsect_ID','gender','age','agegrp','alone32','partner32','children32','parents32','other32','hhold32','relationc32','workc32','workpt32','workvol32','studypt32','ptcas32','ptsemret32','unempl32','empldec32','paidempstat32','volstatus32','studystat32','ftwork32','seekwork32','ftseekwk32','incomeb32','postcode','partic','lifesate32','s1mate32','s2heae32','s3proe32','s4inte32','s5safe32','s6come32','s7sece32','austlifee32','a1ecoe32','a2enve32','a3soce32','a4gove32','a5buse32','a6nate32','le01b32','le02c32','attack1a32','attack2c32','livingarr32','rentown32','rentamount32','rentdist32','mortgamount32','mortgdist32'];
-            const json2csvParser = new Json2csvParser({ fields });
+    con.query(selectquery, (error, result) => {
+        //  console.log(error || result);
+        if (error === null && result != '') {
+
+            const fields = ['survey', 'intro_consent', 'ID', 'Xsect_ID', 'gender', 'age', 'agegrp', 'alone32', 'partner32', 'children32', 'parents32', 'other32', 'hhold32', 'relationc32', 'workc32', 'workpt32', 'workvol32', 'studypt32', 'ptcas32', 'ptsemret32', 'unempl32', 'empldec32', 'paidempstat32', 'volstatus32', 'studystat32', 'ftwork32', 'seekwork32', 'ftseekwk32', 'incomeb32', 'postcode', 'partic', 'lifesate32', 's1mate32', 's2heae32', 's3proe32', 's4inte32', 's5safe32', 's6come32', 's7sece32', 'austlifee32', 'a1ecoe32', 'a2enve32', 'a3soce32', 'a4gove32', 'a5buse32', 'a6nate32', 'le01b32', 'le02c32', 'attack1a32', 'attack2c32', 'livingarr32', 'rentown32', 'rentamount32', 'rentdist32', 'mortgamount32', 'mortgdist32'];
+            const json2csvParser = new Json2csvParser({fields});
             const csv = json2csvParser.parse(result);
-            response.attachment(date.getFullYear() + '_' + date.getMonth() + '_' + date.getDate() +'_acqoldata.csv');
+            response.attachment(date.getFullYear() + '_' + date.getMonth() + '_' + date.getDate() + '_acqoldata.csv');
             response.type('csv');
             response.send(csv);
             response.end();
-        
+
         }
-        else if (result == ''){
+        else if (result == '') {
             //response.send('No data found');
             response.render('error.html', {message: 'NO DATA FOUND - PLEASE TRY AGAIN'});
-            response.end();   
+            response.end();
         }
-        else{
-           // response.send('Unexpected error, please contact System Administrator');
+        else {
+            // response.send('Unexpected error, please contact System Administrator');
             response.render('error.html', {message: 'UNEXPECTED ERROR, PLEASE CONTACT THE SYSTEM ADMINISTRATOR'});
             response.end();
-           }
-        });
+        }
+    });
 
 });
 
@@ -915,91 +905,91 @@ if (postcodeRequired != ''){
 /* SELECT MYSQL DATA  ANSLEY 26/08/2018 */
 
 app.post('/select', function (request, response) {
-  
+
     var filter = request.body.filter;
 
-    var age = request.body.age; 
-    var opage = request.body.opage; 
+    var age = request.body.age;
+    var opage = request.body.opage;
 
-    var gender =  request.body.gender;
+    var gender = request.body.gender;
     var income = request.body.income;
     var maritalstatus = request.body.maritalstatus;
     var mortgageamount = request.body.mortgageamount;
     var rentamount = request.body.rentamount;
     var mortgagedist = request.body.mortgagedist;
-    var rentdist = request.body.rentdist; 
-    var workstatus = request.body.workstatus; 
-    var livingarrangement = request.body.livingarrangement; 
-    var household = request.body.household; 
+    var rentdist = request.body.rentdist;
+    var workstatus = request.body.workstatus;
+    var livingarrangement = request.body.livingarrangement;
+    var household = request.body.household;
 
     var personalsafetyrating = request.body.personalsafetyrating;
-    var oppsr = request.body.oppsr; 
+    var oppsr = request.body.oppsr;
 
     var communityrating = request.body.communityrating;
-    var opcr = request.body.opcr; 
+    var opcr = request.body.opcr;
 
     var futuresecurityrating = request.body.futuresecurityrating;
-    var opfsr = request.body.opfsr; 
+    var opfsr = request.body.opfsr;
 
     var postcode = request.body.postcode;
 
-        if (filter == 'YES') { 
-       // let selectquery = 'select * from survey32 where age ' + opage + ' ' + age + ' and ' + 'gender = \"' + gender + '\" and incomeb32 = \"' + income + '\"'
-        let selectquery = 'select * from survey32 where age ' + opage + ' ' + age + ' and gender = \"' + gender + '\" and incomeb32 = \"' + income + 
-        '\" and relationc32 = \"' + maritalstatus +  '\" and mortgamount32 = \"' + mortgageamount + '\" and rentamount32 = \"' + rentamount + 
-        '\" and mortgdist32 = \"' + mortgagedist + '\" and rentdist32 = \"' + rentdist + '\" and workc32 = \"' + workstatus + '\" and livingarr32 = \"' + livingarrangement +    
-        '\" and hhold32 = \"' + household + '\" and s5safe32 ' + oppsr + ' ' + personalsafetyrating + ' and s6come32 ' + opcr + ' ' + communityrating + 
-       ' and s7sece32 ' + opfsr + '\"' + futuresecurityrating +  '\" and postcode in ( \"' + postcode + '\")'
-        
-       console.log(selectquery)
+    if (filter == 'YES') {
+        // let selectquery = 'select * from survey32 where age ' + opage + ' ' + age + ' and ' + 'gender = \"' + gender + '\" and incomeb32 = \"' + income + '\"'
+        let selectquery = 'select * from survey32 where age ' + opage + ' ' + age + ' and gender = \"' + gender + '\" and incomeb32 = \"' + income +
+            '\" and relationc32 = \"' + maritalstatus + '\" and mortgamount32 = \"' + mortgageamount + '\" and rentamount32 = \"' + rentamount +
+            '\" and mortgdist32 = \"' + mortgagedist + '\" and rentdist32 = \"' + rentdist + '\" and workc32 = \"' + workstatus + '\" and livingarr32 = \"' + livingarrangement +
+            '\" and hhold32 = \"' + household + '\" and s5safe32 ' + oppsr + ' ' + personalsafetyrating + ' and s6come32 ' + opcr + ' ' + communityrating +
+            ' and s7sece32 ' + opfsr + '\"' + futuresecurityrating + '\" and postcode in ( \"' + postcode + '\")'
+
+        console.log(selectquery)
 
         con.query(selectquery, (error, result) => {
-        console.log(error || result);
-        if (error === null && result != ''){
-            console.log('this is the result - ' + result);
-            const fields = ['survey','intro_consent','ID','Xsect_ID','gender','age','agegrp','alone32','partner32','children32','parents32','other32','hhold32','relationc32','workc32','workpt32','workvol32','studypt32','ptcas32','ptsemret32','unempl32','empldec32','paidempstat32','volstatus32','studystat32','ftwork32','seekwork32','ftseekwk32','incomeb32','postcode','partic','lifesate32','s1mate32','s2heae32','s3proe32','s4inte32','s5safe32','s6come32','s7sece32','austlifee32','a1ecoe32','a2enve32','a3soce32','a4gove32','a5buse32','a6nate32','le01b32','le02c32','attack1a32','attack2c32','livingarr32','rentown32','rentamount32','rentdist32','mortgamount32','mortgdist32'];
-            const json2csvParser = new Json2csvParser({ fields });
-            const csv = json2csvParser.parse(result);
-            response.attachment(date.getFullYear() + '_' + date.getMonth() + '_' + date.getDate() +'_acqoldata.csv');
-            response.type('csv');
-            response.send(csv);
-            response.end();
-        
-        }
-        else if (result == ''){
-            //response.send('No data found');
-            response.render('error.html', {message: 'NO DATA FOUND - PLEASE TRY AGAIN'});
-            response.end();   
-        }
-        else{
-           // response.send('Unexpected error, please contact System Administrator');
-            response.render('error.html', {message: 'UNEXPECTED ERROR, PLEASE CONTACT THE SYSTEM ADMINISTRATOR'});
-            response.end();
-           }
+            console.log(error || result);
+            if (error === null && result != '') {
+                console.log('this is the result - ' + result);
+                const fields = ['survey', 'intro_consent', 'ID', 'Xsect_ID', 'gender', 'age', 'agegrp', 'alone32', 'partner32', 'children32', 'parents32', 'other32', 'hhold32', 'relationc32', 'workc32', 'workpt32', 'workvol32', 'studypt32', 'ptcas32', 'ptsemret32', 'unempl32', 'empldec32', 'paidempstat32', 'volstatus32', 'studystat32', 'ftwork32', 'seekwork32', 'ftseekwk32', 'incomeb32', 'postcode', 'partic', 'lifesate32', 's1mate32', 's2heae32', 's3proe32', 's4inte32', 's5safe32', 's6come32', 's7sece32', 'austlifee32', 'a1ecoe32', 'a2enve32', 'a3soce32', 'a4gove32', 'a5buse32', 'a6nate32', 'le01b32', 'le02c32', 'attack1a32', 'attack2c32', 'livingarr32', 'rentown32', 'rentamount32', 'rentdist32', 'mortgamount32', 'mortgdist32'];
+                const json2csvParser = new Json2csvParser({fields});
+                const csv = json2csvParser.parse(result);
+                response.attachment(date.getFullYear() + '_' + date.getMonth() + '_' + date.getDate() + '_acqoldata.csv');
+                response.type('csv');
+                response.send(csv);
+                response.end();
+
+            }
+            else if (result == '') {
+                //response.send('No data found');
+                response.render('error.html', {message: 'NO DATA FOUND - PLEASE TRY AGAIN'});
+                response.end();
+            }
+            else {
+                // response.send('Unexpected error, please contact System Administrator');
+                response.render('error.html', {message: 'UNEXPECTED ERROR, PLEASE CONTACT THE SYSTEM ADMINISTRATOR'});
+                response.end();
+            }
         });
     }
-        else if (filter == 'NO') {
+    else if (filter == 'NO') {
         let selectquery = 'select * from survey32';
         con.query(selectquery, (error, result) => {
-        console.log(error || result);
-        if (error === null && result != ''){
-            console.log('this is the result - ' + result);
-            const fields = ['survey','intro_consent','ID','Xsect_ID','gender','age','agegrp','alone32','partner32','children32','parents32','other32','hhold32','relationc32','workc32','workpt32','workvol32','studypt32','ptcas32','ptsemret32','unempl32','empldec32','paidempstat32','volstatus32','studystat32','ftwork32','seekwork32','ftseekwk32','incomeb32','postcode','partic','lifesate32','s1mate32','s2heae32','s3proe32','s4inte32','s5safe32','s6come32','s7sece32','austlifee32','a1ecoe32','a2enve32','a3soce32','a4gove32','a5buse32','a6nate32','le01b32','le02c32','attack1a32','attack2c32','livingarr32','rentown32','rentamount32','rentdist32','mortgamount32','mortgdist32'];
-            const json2csvParser = new Json2csvParser({ fields });
-            const csv = json2csvParser.parse(result);
-            response.attachment(date.getFullYear() + '_' + date.getMonth() + '_' + date.getDate() +'_acqoldata.csv');
-            response.type('csv');
-            response.send(csv);
-            response.end();
-        }
-        else if (result == ''){
-            response.render('error.html', {message: 'NO DATA FOUND - PLEASE TRY AGAIN'});
-            response.end();   
-        }
-        else{
-            response.render('error.html', {message: 'UNEXPECTED ERROR, PLEASE CONTACT THE SYSTEM ADMINISTRATOR'});
-            response.end();
-           }
+            console.log(error || result);
+            if (error === null && result != '') {
+                console.log('this is the result - ' + result);
+                const fields = ['survey', 'intro_consent', 'ID', 'Xsect_ID', 'gender', 'age', 'agegrp', 'alone32', 'partner32', 'children32', 'parents32', 'other32', 'hhold32', 'relationc32', 'workc32', 'workpt32', 'workvol32', 'studypt32', 'ptcas32', 'ptsemret32', 'unempl32', 'empldec32', 'paidempstat32', 'volstatus32', 'studystat32', 'ftwork32', 'seekwork32', 'ftseekwk32', 'incomeb32', 'postcode', 'partic', 'lifesate32', 's1mate32', 's2heae32', 's3proe32', 's4inte32', 's5safe32', 's6come32', 's7sece32', 'austlifee32', 'a1ecoe32', 'a2enve32', 'a3soce32', 'a4gove32', 'a5buse32', 'a6nate32', 'le01b32', 'le02c32', 'attack1a32', 'attack2c32', 'livingarr32', 'rentown32', 'rentamount32', 'rentdist32', 'mortgamount32', 'mortgdist32'];
+                const json2csvParser = new Json2csvParser({fields});
+                const csv = json2csvParser.parse(result);
+                response.attachment(date.getFullYear() + '_' + date.getMonth() + '_' + date.getDate() + '_acqoldata.csv');
+                response.type('csv');
+                response.send(csv);
+                response.end();
+            }
+            else if (result == '') {
+                response.render('error.html', {message: 'NO DATA FOUND - PLEASE TRY AGAIN'});
+                response.end();
+            }
+            else {
+                response.render('error.html', {message: 'UNEXPECTED ERROR, PLEASE CONTACT THE SYSTEM ADMINISTRATOR'});
+                response.end();
+            }
         });
     }
 
@@ -1011,8 +1001,7 @@ app.post('/select', function (request, response) {
 app.get("/preset", function (request, response) {
 
     var selectquery;
-    switch(request.body.key)
-    {
+    switch (request.body.key) {
         case 0:
             selectquery = "select incomeb32, age from survey32 where age <= '65'";
             break;
@@ -1025,13 +1014,13 @@ app.get("/preset", function (request, response) {
     }
     con.query(selectquery, (error, result) => {
         console.log(error || result);
-        if (error === null){
+        if (error === null) {
             response.attachment('dataset.csv');
             response.type('csv');
             response.send(result);
             response.end();
         }
-        else{
+        else {
             //thats basic error handle, use a HTML with value in it
             response.render('error.html', {message: 'UNEXPECTED ERROR, PLEASE CONTACT THE SYSTEM ADMINISTRATOR'})
             response.end();
@@ -1046,20 +1035,20 @@ app.get("/dataset1", function (request, response) {
     let selectquery = "select incomeb32, age from survey32 where age <= '65'";
     con.query(selectquery, (error, result) => {
         console.log(error || result);
-        if (error === null && result != ''){
+        if (error === null && result != '') {
             const fields = ['incomeb32', 'age'];
-            const json2csvParser = new Json2csvParser({ fields });
+            const json2csvParser = new Json2csvParser({fields});
             const csv = json2csvParser.parse(result);
             response.attachment('dataset1.csv');
             response.type('csv');
             response.send(csv);
             response.end();
         }
-        else if (result == ''){
+        else if (result == '') {
             response.render('error.html', {message: 'NO DATA FOUND - PLEASE TRY AGAIN'});
-            response.end();   
+            response.end();
         }
-        else{
+        else {
             response.render('error.html', {message: 'UNEXPECTED ERROR, PLEASE CONTACT THE SYSTEM ADMINISTRATOR'});
             response.end();
         }
@@ -1067,24 +1056,24 @@ app.get("/dataset1", function (request, response) {
 });
 
 app.post('/dataset1', function (request, response) {
-    
-        let selectquery = "select incomeb32, age from survey32 where age <= '65'"
-        con.query(selectquery, (error, result) => {
+
+    let selectquery = "select incomeb32, age from survey32 where age <= '65'"
+    con.query(selectquery, (error, result) => {
         console.log(error || result);
-        if (error === null && result != ''){
+        if (error === null && result != '') {
             response.send(result);
             response.end();
         }
-        else if (result == ''){
+        else if (result == '') {
             response.render('error.html', {message: 'NO DATA FOUND - PLEASE TRY AGAIN'});
-            response.end();   
+            response.end();
         }
-        else{
+        else {
             response.render('error.html', {message: 'UNEXPECTED ERROR, PLEASE CONTACT THE SYSTEM ADMINISTRATOR'});
             response.end();
-           }
-        });
-    
+        }
+    });
+
 });
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1094,20 +1083,20 @@ app.get("/dataset2", function (request, response) {
     let selectquery = "select incomeb32, age, relationc32 from survey32 where age between '60' and '65' and relationc32 = '2'";
     con.query(selectquery, (error, result) => {
         console.log(error || result);
-        if (error === null && result != ''){
+        if (error === null && result != '') {
             const fields = ['incomeb32', 'age', 'relationc32'];
-            const json2csvParser = new Json2csvParser({ fields });
+            const json2csvParser = new Json2csvParser({fields});
             const csv = json2csvParser.parse(result);
             response.attachment('dataset2.csv');
             response.type('csv');
             response.send(csv);
             response.end();
         }
-        else if (result == ''){
+        else if (result == '') {
             response.render('error.html', {message: 'NO DATA FOUND - PLEASE TRY AGAIN'});
-            response.end();   
+            response.end();
         }
-        else{
+        else {
             response.render('error.html', {message: 'UNEXPECTED ERROR, PLEASE CONTACT THE SYSTEM ADMINISTRATOR'});
             response.end();
         }
@@ -1115,22 +1104,22 @@ app.get("/dataset2", function (request, response) {
 });
 
 app.post('/dataset2', function (request, response) {
-    
+
     let selectquery = "select incomeb32, age, relationc32 from survey32 where age between '60' and '65' and relationc32 = '2'"
     con.query(selectquery, (error, result) => {
-    console.log(error || result);
-    if (error === null && result != ''){
-        response.send(result);
-        response.end();
-    }
-    else if (result == ''){
-        response.render('error.html', {message: 'NO DATA FOUND - PLEASE TRY AGAIN'});
-        response.end();   
-    }
-    else{
-        response.render('error.html', {message: 'UNEXPECTED ERROR, PLEASE CONTACT THE SYSTEM ADMINISTRATOR'});
-        response.end();
-       }
+        console.log(error || result);
+        if (error === null && result != '') {
+            response.send(result);
+            response.end();
+        }
+        else if (result == '') {
+            response.render('error.html', {message: 'NO DATA FOUND - PLEASE TRY AGAIN'});
+            response.end();
+        }
+        else {
+            response.render('error.html', {message: 'UNEXPECTED ERROR, PLEASE CONTACT THE SYSTEM ADMINISTRATOR'});
+            response.end();
+        }
     });
 
 });
@@ -1142,42 +1131,42 @@ app.get("/dataset3", function (request, response) {
     let selectquery = "select incomeb32, gender, relationc32 from survey32 where gender = '0' and relationc32 = '2'";
     con.query(selectquery, (error, result) => {
         console.log(error || result);
-        if (error === null && result != ''){
+        if (error === null && result != '') {
             const fields = ['incomeb32', 'gender', 'relationc32'];
-            const json2csvParser = new Json2csvParser({ fields });
+            const json2csvParser = new Json2csvParser({fields});
             const csv = json2csvParser.parse(result);
             response.attachment('dataset3.csv');
             response.type('csv');
             response.send(csv);
             response.end();
         }
-        else if (result == ''){
+        else if (result == '') {
             response.render('error.html', {message: 'NO DATA FOUND - PLEASE TRY AGAIN'});
-            response.end();   
+            response.end();
         }
-        else{
+        else {
             response.render('error.html', {message: 'UNEXPECTED ERROR, PLEASE CONTACT THE SYSTEM ADMINISTRATOR'});
             response.end();
         }
     });
 });
 app.post('/dataset3', function (request, response) {
-    
+
     let selectquery = "select incomeb32, gender, relationc32 from survey32 where gender = '0' and relationc32 = '2'"
     con.query(selectquery, (error, result) => {
-    console.log(error || result);
-    if (error === null && result != ''){
-        response.send(result);
-        response.end();
-    }
-    else if (result == ''){
-        response.render('error.html', {message: 'NO DATA FOUND - PLEASE TRY AGAIN'});
-        response.end();   
-    }
-    else{
-        response.render('error.html', {message: 'UNEXPECTED ERROR, PLEASE CONTACT THE SYSTEM ADMINISTRATOR'});
-        response.end();
-       }
+        console.log(error || result);
+        if (error === null && result != '') {
+            response.send(result);
+            response.end();
+        }
+        else if (result == '') {
+            response.render('error.html', {message: 'NO DATA FOUND - PLEASE TRY AGAIN'});
+            response.end();
+        }
+        else {
+            response.render('error.html', {message: 'UNEXPECTED ERROR, PLEASE CONTACT THE SYSTEM ADMINISTRATOR'});
+            response.end();
+        }
     });
 
 });
@@ -1189,20 +1178,20 @@ app.get("/dataset4", function (request, response) {
     let selectquery = "select incomeb32, gender, relationc32 from survey32 where gender = '1' and relationc32 = '2'";
     con.query(selectquery, (error, result) => {
         console.log(error || result);
-        if (error === null && result != ''){
+        if (error === null && result != '') {
             const fields = ['incomeb32', 'age', 'relationc32'];
-            const json2csvParser = new Json2csvParser({ fields });
+            const json2csvParser = new Json2csvParser({fields});
             const csv = json2csvParser.parse(result);
             response.attachment('dataset4.csv');
             response.type('csv');
             response.send(csv);
             response.end();
         }
-        else if (result == ''){
+        else if (result == '') {
             response.render('error.html', {message: 'NO DATA FOUND - PLEASE TRY AGAIN'});
-            response.end();   
+            response.end();
         }
-        else{
+        else {
             response.render('error.html', {message: 'UNEXPECTED ERROR, PLEASE CONTACT THE SYSTEM ADMINISTRATOR'});
             response.end();
         }
@@ -1212,19 +1201,19 @@ app.post('/dataset4', function (request, response) {
 
     let selectquery = "select incomeb32, gender, relationc32 from survey32 where gender = '1' and relationc32 = '2'"
     con.query(selectquery, (error, result) => {
-    console.log(error || result);
-    if (error === null && result != ''){
-        response.send(result);
-        response.end();
-    }
-    else if (result == ''){
-        response.render('error.html', {message: 'NO DATA FOUND - PLEASE TRY AGAIN'});
-        response.end();   
-    }
-    else{
-        response.render('error.html', {message: 'UNEXPECTED ERROR, PLEASE CONTACT THE SYSTEM ADMINISTRATOR'});
-        response.end();
-       }
+        console.log(error || result);
+        if (error === null && result != '') {
+            response.send(result);
+            response.end();
+        }
+        else if (result == '') {
+            response.render('error.html', {message: 'NO DATA FOUND - PLEASE TRY AGAIN'});
+            response.end();
+        }
+        else {
+            response.render('error.html', {message: 'UNEXPECTED ERROR, PLEASE CONTACT THE SYSTEM ADMINISTRATOR'});
+            response.end();
+        }
     });
 
 });
