@@ -10,6 +10,7 @@
 /**
  * Module dependencies.
  */
+require('dotenv').load();
 var express = require('express'),
     routes = require('./routes'),
     user = require('./routes/user'),
@@ -23,7 +24,7 @@ var express = require('express'),
 //HTML Render engine
 var ejs = require('ejs');
 var date = new Date();
-
+const tokenGenerator = require('./library/token_generator');
 /////////////////////////////DATEBASE//////////////////////////////////////
 /**
  * @DATEBASE
@@ -45,7 +46,6 @@ var db;
 var cloudant;
 var fileToUpload;
 ///////////////////////////////////////////////////////////////////////////
-
 
 /**
  * @Expressvalues
@@ -150,6 +150,12 @@ var encrypt = require('./library/encryption');
 *  Login Part
 *  Note: The default backend should check session status, if fail (unlogin), then should go to here.
 * */
+app.get('/token', function (request, response) {
+    const identity = request.query.identity || 'identity';
+    const room = request.query.room;
+    response.send(tokenGenerator(identity, room));
+});
+
 app.get("/login", function (request, response) {
     response.sendFile(__dirname + '/public/login.html');
 });

@@ -17,10 +17,16 @@
     "method-override": "2.3.x",
     "morgan": "1.8.x",
     "multer": "^1.1.0",
-    "mysql": "^2.5.4"
+    "mysql": "^2.5.4",
+    "dotenv": "^4.0.0",
+    "twilio": "^3.0.0"
   },
   "repository": {},
   "engines": {
     "node": "6.x"
+  },
+  "devDependencies": {
+    "jest": "^19.0.2",
+    "jsonwebtoken": "^7.4.0"
   }
 }
